@@ -12,3 +12,7 @@ struct Bid {
     address owner;
     uint128 value;
 }
+
+library Errors {
+    uint16 constant IS_NOT_ROOT = 101;
+}

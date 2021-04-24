@@ -5,6 +5,9 @@ import "../Lib.sol";
 
 abstract contract BaseAuction {
 
+    uint128 BID_FEE = 1 ton;
+
+
     address static _root;
     uint64 static _id;
 
@@ -23,6 +26,11 @@ abstract contract BaseAuction {
 
     modifier inPhase(Phase p) {
         require(_phase == p, 10101);
+        _;
+    }
+
+    modifier doUpdate() virtual {
+        require(false, 125);  // todo not implemented
         _;
     }
 

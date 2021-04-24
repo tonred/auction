@@ -27,18 +27,26 @@ clean-tmp:
 dev: build deploy tests
 	@echo "dev"
 
-build:
-	@echo "Compiling Auction"
-	$(call compile_all,$(CONTRACTS_PATH),$(AUCTION_CONTRACT))
-	$(call compile_all,$(CONTRACTS_PATH),$(AUCTION_ROOT_CONTRACT))
-	$(call compile_all,$(CONTRACTS_PATH),$(BID_CONTRACT))
-	$(call compile_all,$(TEST_CONTRACTS_PATH),$(TEST_WALLET_CONTRACT))
+build: build-english-forward build-test-wallet
+	@echo "Compiling all contracts"
+#	$(call compile_all,$(CONTRACTS_PATH),$(AUCTION_CONTRACT))
+#	$(call compile_all,$(CONTRACTS_PATH),$(AUCTION_ROOT_CONTRACT))
+#	$(call compile_all,$(CONTRACTS_PATH),$(BID_CONTRACT))
+#	$(call compile_all,$(TEST_CONTRACTS_PATH),$(TEST_WALLET_CONTRACT))
 
-buildx:
+build-english-forward:
 	@echo "Compiling EnglishForwardAuction"
 	$(call compile_all,./contracts,EnglishForwardAuction)
 
-builda:
+buildt:
+	@echo "Compiling EnglishForwardAuctionTest"
+	$(call compile_all,./contracts/test,EnglishForwardAuctionTest)
+
+build-test-wallet:
+	@echo "Compiling TestWallet"
+	$(call compile_all,./contracts/test,TestWallet)
+
+build-root:
 	@echo "Compiling AuctionRoot"
 	$(call compile_all,./contracts,AuctionRoot)
 

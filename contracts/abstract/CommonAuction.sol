@@ -6,20 +6,31 @@ import "../Lib.sol";
 
 abstract contract CommonAuction is BaseAuction {
 
+
     PhaseTime _openTime;
 
+
+    modifier doUpdate() override {
+        _update();
+        _;
+    }
 
     constructor(uint32 startTime, uint32 openDuration) public onlyRoot BaseAuction() {
         require(openDuration > 0, 11);
         _openTime = PhaseTime(startTime, startTime + openDuration);
-        update();
+        _update();
     }
 
     function getOpenTime() public view returns (PhaseTime) {
         return _openTime;
     }
 
-    function update() public override {
+    function update() doUpdate override virtual public {
+        _update();
+//        msg.sender.transfer({value: 0, flag: 64, bounce: false});  // todo in test call from TestWallet
+    }
+
+    function _update() private {
         if (_phase == Phase.WAIT && now >= _openTime.startTime) {
             _phase = Phase.OPEN;
         }
@@ -28,14 +39,5 @@ abstract contract CommonAuction is BaseAuction {
             _finish();
         }
     }
-
-    function isHigher(uint128, uint128, uint128, uint128) public virtual pure returns (bool) {
-        require(false, 1101);  // todo not implemented
-        return false;
-    }
-
-//    function isLower(uint128, uint128, uint128, uint128) public virtual pure returns (bool) {
-//        return !isHigher();
-//    }
 
 }

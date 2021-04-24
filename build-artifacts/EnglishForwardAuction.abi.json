@@ -14,15 +14,11 @@
 			]
 		},
 		{
-			"name": "isHigher",
+			"name": "makeBid",
 			"inputs": [
-				{"name":"value","type":"uint128"},
-				{"name":"highest","type":"uint128"},
-				{"name":"startValue","type":"uint128"},
-				{"name":"stepValue","type":"uint128"}
+				{"name":"value","type":"uint128"}
 			],
 			"outputs": [
-				{"name":"value0","type":"bool"}
 			]
 		},
 		{
@@ -50,26 +46,11 @@
 			]
 		},
 		{
-			"name": "getHighestValue",
+			"name": "getWinnerValue",
 			"inputs": [
 			],
 			"outputs": [
 				{"name":"value0","type":"uint128"}
-			]
-		},
-		{
-			"name": "getBestBidValue",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"value0","type":"uint128"}
-			]
-		},
-		{
-			"name": "makeBid",
-			"inputs": [
-			],
-			"outputs": [
 			]
 		},
 		{
