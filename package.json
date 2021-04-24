@@ -1,0 +1,33 @@
+{
+  "name": "ton-dens",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deploy.js",
+  "scripts": {
+    "test": "mocha test --exit",
+    "migrate": "node migration/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tonclient/core": "^1.9.0",
+    "@tonclient/lib-node": "^1.9.0",
+    "bignumber.js": "^9.0.1",
+    "chai": "^4.3.0",
+    "dotenv": "^8.2.0",
+    "handlebars": "^4.7.7",
+    "mocha": "^8.3.0",
+    "mocha-logger": "^1.0.7",
+    "ton-client-node-js": "^0.28.0",
+    "ton-testing-suite": "github:broxus/ton-testing-suite"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-modules-commonjs": "^7.9.6",
+    "@babel/preset-flow": "^7.8.3",
+    "flow": "^0.2.3",
+    "flow-bin": "0.123.0"
+  }
+}
