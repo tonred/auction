@@ -24,19 +24,14 @@ contract TestWallet {
         dest.transfer(value, bounce, flags, payload);
     }
 
-    function makeBid(
-        address dest,
-        uint128 value,
-//        bool bounce,
-//        uint8 flags,
-        uint128 bidValue
-    ) public pure {
+    function update(address dest, uint128 value) public pure {
         tvm.accept();
-//        TvmBuilder builder;
-//        builder.store(bidValue);
-//        TvmCell payload = builder.toCell();
+        BaseAuction(dest).update{value: value}();
+    }
+
+    function makeBid(address dest, uint128 value, uint128 bidValue) public pure {
+        tvm.accept();
         EnglishAuction(dest).makeBid{value: value}(bidValue);
-//        dest.transfer(value, bounce, flags, payload);
     }
 
 

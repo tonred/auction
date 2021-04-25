@@ -1,11 +1,18 @@
 from tonos_ts4 import ts4
 
-from utils import random_address
+from utils.utils import random_address
 
 
 class TestWallet(ts4.BaseContract):
     def __init__(self):
         super().__init__('TestWallet', {}, nickname='TestWallet', override_address=random_address())
+
+    def update(self, dest: ts4.Address, value: int):
+        self.call_method('update', {
+            'dest': dest,
+            'value': value,
+        })
+        ts4.dispatch_messages()
 
     def make_bid(self,
                  dest: ts4.Address,

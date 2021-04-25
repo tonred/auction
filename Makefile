@@ -56,6 +56,10 @@ deploy:
 
 tests:
 	@echo "Testing Auction"
+	python3 test/ts4/english_forward.py
+
+tests-x:
+	@echo "Testing Auction"
 	npm run test
 
 define compile_all
