@@ -22,11 +22,11 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
     def test_bid_in_open_phase(self):
         wallet = TestWallet()
         self._setup_phase_time(Phase.OPEN, update=True)
-        self._make_bid(wallet, bid_value=3)
+        self._make_bid(wallet, bid_value=5)
         self._check_bids_count(1)
 
         print('BALANCE AUCTION: ', self.contract.balance())  # todo why not token spent for gas
-        self.assertEqual((100 - (3 + 1)) * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual((100 - (5 + 1)) * ts4.GRAM, wallet.balance(), 'Bid is not made')
 
     def test_increasing_bids(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -49,8 +49,8 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
     def test_low_bids_step(self):
         self._setup_phase_time(Phase.OPEN, update=True)
         wallet = TestWallet()
-        self._make_bid(wallet, bid_value=3)  # good bid
-        self._make_bid(wallet, bid_value=3.1, expect_ec=125)
+        self._make_bid(wallet, bid_value=5)  # good bid
+        self._make_bid(wallet, bid_value=5.1, expect_ec=125)
         self._check_bids_count(1)
 
     def test_bid_return(self):

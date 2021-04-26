@@ -6,7 +6,7 @@ from utils.phase import Phase
 
 class CommonAuctionTest(BaseAuctionTest):
     START_TIME = 10
-    OPEN_DURATION = 30
+    OPEN_DURATION = 40
 
     def test_open_time(self):
         open_time = self.contract.call_getter('getOpenTime')
@@ -17,22 +17,19 @@ class CommonAuctionTest(BaseAuctionTest):
         self.assertEqual(open_time_expected, open_time, 'Open time is wrong')
 
     def test_phases(self):
-        phase = self.contract.call_getter('getPhase')
-        self.assertEqual(Phase.WAIT, phase, 'Phase must be WAIT')
+        self.assertEqual(Phase.WAIT, self._phase(), 'Phase must be WAIT')
 
         self._setup_phase_time(Phase.OPEN, update=True)
-        phase = self.contract.call_getter('getPhase')
-        self.assertEqual(Phase.OPEN, phase, 'Phase must be OPEN')
+        self.assertEqual(Phase.OPEN, self._phase(), 'Phase must be OPEN')
 
         self._setup_phase_time(Phase.CLOSE, update=True)
-        phase = self.contract.call_getter('getPhase')
-        self.assertEqual(Phase.CLOSE, phase, 'Phase must be CLOSE')
+        self.assertEqual(Phase.CLOSE, self._phase(), 'Phase must be CLOSE')
 
     def _setup_phase_time(self, phase: Phase, update: bool = False):
         if phase == Phase.WAIT:
             ts4.core.set_now(self.START_TIME - 1)
         if phase == Phase.OPEN:
-            ts4.core.set_now(self.START_TIME + 1)
+            ts4.core.set_now(self.START_TIME + self.OPEN_DURATION // 2)
         if phase == Phase.CONFIRMATION:
             raise Exception('Undefined phase for "CommonAuction"')
         if phase == phase.CLOSE:

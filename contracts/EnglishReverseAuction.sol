@@ -12,7 +12,7 @@ contract EnglishReverseAuction is EnglishAuction {
         uint32 openDuration
     ) public onlyRoot EnglishAuction(startValue, stepValue, startTime, openDuration) {}
 
-    function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override virtual public {
+    function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _checkBid(value);
         _winner = Bid(msg.sender, value);
         _bidsCount++;

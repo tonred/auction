@@ -27,6 +27,19 @@ class TestWallet(ts4.BaseContract):
         ts4.dispatch_one_message(expect_ec=expect_ec)
         ts4.dispatch_messages()
 
+    def buy(self,
+            dest: ts4.Address,
+            value: int,
+            bid_value: int,
+            expect_ec: int = 0):
+        self.call_method('buy', {
+            'dest': dest,
+            'value': value,
+            'bidValue': bid_value,
+        })
+        ts4.dispatch_one_message(expect_ec=expect_ec)
+        ts4.dispatch_messages()
+
     def send_transaction(self,
                          dest: ts4.Address,
                          value: int,

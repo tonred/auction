@@ -12,7 +12,7 @@ contract EnglishForwardAuction is EnglishAuction {
         uint32 openDuration
     ) public onlyRoot EnglishAuction(startValue, stepValue, startTime, openDuration) {}
 
-    function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override virtual public {
+    function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _checkBid(value);
 //        _reserve(value - _winner.value);  // todo ??? q1
         if (_winner.owner != address(0)) {

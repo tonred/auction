@@ -54,7 +54,8 @@ abstract contract BaseAuction {
 
     function update() public virtual;
 
-    function _finish() internal view {
+    function _finish() internal {
+        _phase = Phase.CLOSE;
         // todo proxy to root
     }
 

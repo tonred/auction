@@ -28,21 +28,10 @@ abstract contract DutchAuction is CommonAuction {
         return _finishValue;
     }
 
-    function getCurrentPrice() public pure returns (uint128) {
-        return (_openTime.finishTime - now) / (_openTime.finishTime - _openTime.startTime) * (_startValue - _finishValue) + _finishValue;
+    function getCurrentPrice() public view returns (uint128) {
+        return uint128((int256(_startValue) - _finishValue) * (int256(_openTime.finishTime) - now) / (int256(_openTime.finishTime) - _openTime.startTime) + _finishValue);
     }
 
     function buy(uint128 value) virtual public;
-
-    function buy() public {
-        require(canBuy(msg.value), 121);
-        _winner = Bid(msg.sender, msg.value);
-        _finish();
-    }
-
-    function canBuy(uint128 value) public view returns (bool) {
-        uint128 current = getCurrentPrice();
-        //        return isHigher(value, highest, _startValue, _stepValue);
-    }
 
 }

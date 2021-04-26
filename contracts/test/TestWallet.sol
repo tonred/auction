@@ -1,6 +1,7 @@
 pragma ton-solidity >=0.39.0;
 
 import "../EnglishAuction.sol";
+import "../DutchAuction.sol";
 
 
 contract TestWallet {
@@ -32,6 +33,11 @@ contract TestWallet {
     function makeBid(address dest, uint128 value, uint128 bidValue) public pure {
         tvm.accept();
         EnglishAuction(dest).makeBid{value: value}(bidValue);
+    }
+
+    function buy(address dest, uint128 value, uint128 bidValue) public pure {
+        tvm.accept();
+        DutchAuction(dest).buy{value: value}(bidValue);
     }
 
 
