@@ -29,11 +29,6 @@ abstract contract BaseAuction {
         _;
     }
 
-    modifier doUpdate() virtual {
-        require(false, 125);  // todo not implemented
-        _;
-    }
-
 
     constructor() public onlyRoot {
         tvm.accept();
@@ -57,10 +52,14 @@ abstract contract BaseAuction {
         return _phase;
     }
 
-    function _finish() internal view {  // todo ?????
+    function update() public virtual;
+
+    function _finish() internal view {
         // todo proxy to root
     }
 
-    function update() public virtual;
+    function _reserve(uint128 additional) internal view {
+        tvm.rawReserve(address(this).balance - msg.value + additional, 2);
+    }
 
 }

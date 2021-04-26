@@ -29,9 +29,10 @@ abstract contract DutchAuction is CommonAuction {
     }
 
     function getCurrentPrice() public pure returns (uint128) {
-        // todo reverse support ???
         return (_openTime.finishTime - now) / (_openTime.finishTime - _openTime.startTime) * (_startValue - _finishValue) + _finishValue;
     }
+
+    function buy(uint128 value) virtual public;
 
     function buy() public {
         require(canBuy(msg.value), 121);

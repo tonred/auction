@@ -10,7 +10,7 @@ abstract contract CommonAuction is BaseAuction {
     PhaseTime _openTime;
 
 
-    modifier doUpdate() override {
+    modifier doUpdate() {
         _update();
         _;
     }
@@ -26,8 +26,7 @@ abstract contract CommonAuction is BaseAuction {
     }
 
     function update() doUpdate override virtual public {
-        _update();
-//        msg.sender.transfer({value: 0, flag: 64, bounce: false});  // todo in test call from TestWallet
+        msg.sender.transfer({value: 0, flag: 64, bounce: false});
     }
 
     function _update() private {

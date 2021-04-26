@@ -38,10 +38,6 @@ abstract contract EnglishAuction is CommonAuction {
         return _winner.value;
     }
 
-//    function getBestBidValue() public view returns (uint128) {
-//        return _bidsCount == 0 ? _startValue : _winner.value + _stepValue;  // todo reverse support
-//    }
-
     function makeBid(uint128 value) virtual public;
 
 }

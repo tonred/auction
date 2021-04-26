@@ -1,6 +1,5 @@
 pragma ton -solidity >= 0.39.0;
 
-import "./abstract/Forward.sol";
 import "./EnglishAuction.sol";
 
 
@@ -13,25 +12,25 @@ contract EnglishForwardAuction is EnglishAuction {
         uint32 openDuration
     ) public onlyRoot EnglishAuction(startValue, stepValue, startTime, openDuration) {}
 
-    function makeBid(uint128 value) inPhase(Phase.OPEN) doUpdate override virtual public {
-        require(_canMakeBid(value), 199);
+    function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override virtual public {
+        _checkBid(value);
+//        _reserve(value - _winner.value);  // todo ??? q1
         if (_winner.owner != address(0)) {
             _winner.owner.transfer(_winner.value);
         }
         _winner = Bid(msg.sender, value);
         _bidsCount++;
+//        msg.sender.transfer({value: 0, flag: 64, bounce: false}); // todo ??? q1
     }
 
-    function _canMakeBid(uint128 value) private view returns (bool) {
-        if (msg.value < value + BID_FEE) {
-            return false;
-        }
+    function _checkBid(uint128 value) private view {
+        require(msg.value >= value + BID_FEE, 123);
 
         if (_winner.owner == address(0)) {
-            return value >= _startValue;
+            require(value >= _startValue, 124);
         } else {
             uint128 highest = getWinnerValue();
-            return value >= highest + _stepValue;
+            require(value >= highest + _stepValue, 125);
         }
     }
 
