@@ -20,12 +20,12 @@ abstract contract BaseAuction {
      *************/
 
     modifier onlyRoot() {
-        require(msg.sender == _root, 1009);
+        require(msg.sender == _root, Errors.IS_NOT_ROOT);
         _;
     }
 
     modifier inPhase(Phase p) {
-        require(_phase == p, 10101);
+        require(_phase == p, Errors.WRONG_PHASE);
         _;
     }
 

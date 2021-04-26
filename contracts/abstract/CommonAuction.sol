@@ -16,7 +16,7 @@ abstract contract CommonAuction is BaseAuction {
     }
 
     constructor(uint32 startTime, uint32 openDuration) public onlyRoot BaseAuction() {
-        require(openDuration > 0, 11);
+        require(openDuration > 0, Errors.LOW_OPEN_DURATION);
         _openTime = PhaseTime(startTime, startTime + openDuration);
         _update();
     }

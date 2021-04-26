@@ -4,6 +4,7 @@ import tonos_ts4.ts4 as ts4
 
 from abstract.dutch import DutchAuctionTest
 from test_wallet import TestWallet
+from utils.errors import Errors
 from utils.phase import Phase
 from utils.utils import random_address
 
@@ -39,15 +40,15 @@ class DutchReverseAuctionTest(DutchAuctionTest):
         self.assertEqual(Phase.CLOSE, self._phase(), 'Auction is not finished')
         self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not made')
 
-    def test_low_bids_start(self):
+    def test_high_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)
         wallet = TestWallet()
-        self._buy(wallet, bid_value=11, expect_ec=125)
+        self._buy(wallet, bid_value=11, expect_ec=Errors.VALUE_MORE_THAN_CURRENT_PRICE)
 
-    def test_low_bids_step(self):
+    def test_high_bids_step(self):
         ts4.core.set_now(int(self.START_TIME + 0.5 * self.OPEN_DURATION))
         wallet = TestWallet()
-        self._buy(wallet, bid_value=6.5, expect_ec=125)
+        self._buy(wallet, bid_value=6.5, expect_ec=Errors.VALUE_MORE_THAN_CURRENT_PRICE)
 
     def _buy(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):
         destination = self.contract.address()

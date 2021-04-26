@@ -19,14 +19,14 @@ contract EnglishReverseAuction is EnglishAuction {
     }
 
     function _checkBid(uint128 value) private view {
-        require(msg.value >= BID_FEE, 223);
+        require(msg.value >= BID_FEE, Errors.LOW_MSG_VALUE);
 
         if (_winner.owner == address(0)) {
-            require(value <= _startValue, 224);
+            require(value <= _startValue, Errors.VALUE_MORE_THAN_START_VALUE);
         } else {
             uint128 lowest = getWinnerValue();
             // `lowest` must not be less than `_stepValue`, otherwise we already have the least possible value
-            require(lowest >= _stepValue && value <= lowest - _stepValue, 225);
+            require(lowest >= _stepValue && value <= lowest - _stepValue, Errors.VALUE_MORE_THAN_STEP_FROM_LOWEST_VALUE);
         }
     }
 

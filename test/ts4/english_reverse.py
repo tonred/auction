@@ -4,6 +4,7 @@ import tonos_ts4.ts4 as ts4
 
 from abstract.english import EnglishAuctionTest
 from test_wallet import TestWallet
+from utils.errors import Errors
 from utils.phase import Phase
 from utils.utils import random_address
 
@@ -41,14 +42,14 @@ class EnglishReverseAuctionTest(EnglishAuctionTest):
     def test_high_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)
         wallet = TestWallet()
-        self._make_bid(wallet, bid_value=100, expect_ec=224)
+        self._make_bid(wallet, bid_value=100, expect_ec=Errors.VALUE_MORE_THAN_START_VALUE)
         self._check_bids_count(0)
 
     def test_low_bids_step(self):
         self._setup_phase_time(Phase.OPEN, update=True)
         wallet = TestWallet()
         self._make_bid(wallet, bid_value=10)  # good bid
-        self._make_bid(wallet, bid_value=9.9, expect_ec=225)
+        self._make_bid(wallet, bid_value=9.9, expect_ec=Errors.VALUE_MORE_THAN_STEP_FROM_LOWEST_VALUE)
         self._check_bids_count(1)
 
     def _make_bid(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):

@@ -24,13 +24,13 @@ contract EnglishForwardAuction is EnglishAuction {
     }
 
     function _checkBid(uint128 value) private view {
-        require(msg.value >= value + BID_FEE, 123);
+        require(msg.value >= value + BID_FEE, Errors.LOW_MSG_VALUE);
 
         if (_winner.owner == address(0)) {
-            require(value >= _startValue, 124);
+            require(value >= _startValue, Errors.VALUE_LESS_THAN_START_VALUE);
         } else {
             uint128 highest = getWinnerValue();
-            require(value >= highest + _stepValue, 125);
+            require(value >= highest + _stepValue, Errors.VALUE_LESS_THAN_STEP_FROM_HIGHEST_VALUE);
         }
     }
 

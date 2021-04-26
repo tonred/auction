@@ -17,7 +17,7 @@ abstract contract EnglishAuction is CommonAuction {
         uint32 startTime,
         uint32 openDuration
     ) public onlyRoot CommonAuction(startTime, openDuration) {
-        require(stepValue > 0, 1012);
+        require(stepValue > 0, Errors.LOW_STEP_VALUE);
         _startValue = startValue;
         _stepValue = stepValue;
     }
