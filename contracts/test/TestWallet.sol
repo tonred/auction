@@ -1,7 +1,7 @@
 pragma ton-solidity >=0.39.0;
 
-import "../EnglishAuction.sol";
-import "../DutchAuction.sol";
+import "../abstract/EnglishAuction.sol";
+import "../abstract/DutchAuction.sol";
 
 
 contract TestWallet {

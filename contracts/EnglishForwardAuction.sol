@@ -1,6 +1,6 @@
 pragma ton -solidity >= 0.39.0;
 
-import "./EnglishAuction.sol";
+import "./abstract/EnglishAuction.sol";
 
 
 contract EnglishForwardAuction is EnglishAuction {

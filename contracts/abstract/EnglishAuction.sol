@@ -1,7 +1,7 @@
 pragma ton-solidity >= 0.39.0;
 
-import "./abstract/CommonAuction.sol";
-import "./Lib.sol";
+import "./CommonAuction.sol";
+import "../Lib.sol";
 
 
 abstract contract EnglishAuction is CommonAuction {
