@@ -7,6 +7,7 @@ import "../Lib.sol";
 abstract contract CommonAuction is BaseAuction {
 
 
+    uint128 _fee;
     PhaseTime _openTime;
 
 
@@ -15,8 +16,9 @@ abstract contract CommonAuction is BaseAuction {
         _;
     }
 
-    constructor(uint32 startTime, uint32 openDuration) public onlyRoot BaseAuction() {
+    constructor(uint128 fee, uint32 startTime, uint32 openDuration) public onlyRoot BaseAuction() {
         require(openDuration > 0, Errors.LOW_OPEN_DURATION);
+        _fee = fee;
         _openTime = PhaseTime(startTime, startTime + openDuration);
         _update();
     }

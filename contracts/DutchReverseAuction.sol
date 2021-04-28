@@ -6,11 +6,12 @@ import "./abstract/DutchAuction.sol";
 contract DutchForwardAuction is DutchAuction {
 
     constructor(
+        uint128 fee,
         uint128 startValue,
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) public onlyRoot DutchAuction(startValue, finishValue, startTime, openDuration) {
+    ) public onlyRoot DutchAuction(fee, startValue, finishValue, startTime, openDuration) {
         require(startValue < finishValue, Errors.START_MORE_THAN_FINISH);
     }
 
@@ -22,7 +23,7 @@ contract DutchForwardAuction is DutchAuction {
     }
 
     function _canBuy(uint128 value) private view {
-        require(msg.value >= BID_FEE, Errors.LOW_MSG_VALUE);
+        require(msg.value >= _fee, Errors.LOW_MSG_VALUE);
         require(value <= getCurrentPrice(), Errors.VALUE_MORE_THAN_CURRENT_PRICE);
     }
 

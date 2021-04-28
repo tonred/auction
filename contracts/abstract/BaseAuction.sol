@@ -5,8 +5,6 @@ import "../Lib.sol";
 
 abstract contract BaseAuction {
 
-    uint128 BID_FEE = 1 ton;
-
 
     address static _root;
     uint64 static _id;

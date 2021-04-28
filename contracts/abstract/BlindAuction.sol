@@ -62,7 +62,7 @@ abstract contract BlindAuction is BaseAuction {
         TvmCell bidCode
     ) public onlyRoot {
         require(fee > DEPLOY_BID_VALUE, Errors.SMALL_FEE_VALUE);
-        require(deposit > fee + DEPLOY_BID_VALUE, Errors.SMALL_DEPOSIT_VALUE);
+        require(deposit > fee, Errors.SMALL_DEPOSIT_VALUE);
         tvm.accept();
         _fee = fee;
         _deposit = deposit;
@@ -112,15 +112,12 @@ abstract contract BlindAuction is BaseAuction {
     */
     function makeBid(uint256 hash) public doUpdate inPhase(Phase.OPEN) {
         require(msg.value >= _deposit, Errors.VALUE_LESS_THAN_DEPOSIT);
-        _reserve(10000e9);
         TvmCell stateInit = _buildBidStateInit(msg.sender, hash);
         new BlindBid{
             stateInit : stateInit,
             value : DEPLOY_BID_VALUE
         }();
         _bidsHashesCount++;
-//        msg.sender.transfer({value : 0, flag : SEND_ALL_GAS, bounce: false});
-        // todo return all value except _deposit
         msg.sender.transfer(msg.value - _deposit);
     }
 
@@ -144,8 +141,6 @@ abstract contract BlindAuction is BaseAuction {
     }
 
     function confirmBid(uint128 value, uint256 salt) virtual public view;
-
-//    function confirmBidCallback(address owner, uint256 hash, uint128 value, uint128 msgValue) virtual public;
 
     function update() doUpdate override virtual public {
         msg.sender.transfer({value: 0, flag: SEND_ALL_GAS, bounce: false});

@@ -5,6 +5,7 @@
 		{
 			"name": "constructor",
 			"inputs": [
+				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"finishValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},

@@ -12,11 +12,12 @@ abstract contract EnglishAuction is CommonAuction {
 
 
     constructor(
+        uint128 fee,
         uint128 startValue,
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) public onlyRoot CommonAuction(startTime, openDuration) {
+    ) public onlyRoot CommonAuction(fee, startTime, openDuration) {
         require(stepValue > 0, Errors.LOW_STEP_VALUE);
         _startValue = startValue;
         _stepValue = stepValue;

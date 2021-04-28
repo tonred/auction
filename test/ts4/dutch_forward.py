@@ -14,6 +14,7 @@ class DutchForwardAuctionTest(DutchAuctionTest):
     def setUp(self):
         self._setup_phase_time(Phase.WAIT)
         self.contract = ts4.BaseContract('DutchForwardAuction', {
+            'fee': 1 * ts4.GRAM,
             'startValue': 10 * ts4.GRAM,
             'finishValue': 2 * ts4.GRAM,
             'startTime': self.START_TIME,

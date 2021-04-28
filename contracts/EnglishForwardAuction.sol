@@ -6,11 +6,12 @@ import "./abstract/EnglishAuction.sol";
 contract EnglishForwardAuction is EnglishAuction {
 
     constructor(
+        uint128 fee,
         uint128 startValue,
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) public onlyRoot EnglishAuction(startValue, stepValue, startTime, openDuration) {}
+    ) public onlyRoot EnglishAuction(fee, startValue, stepValue, startTime, openDuration) {}
 
     function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _checkBid(value);
@@ -24,7 +25,7 @@ contract EnglishForwardAuction is EnglishAuction {
     }
 
     function _checkBid(uint128 value) private view {
-        require(msg.value >= value + BID_FEE, Errors.LOW_MSG_VALUE);
+        require(msg.value >= value + _fee, Errors.LOW_MSG_VALUE);
 
         if (_winner.owner == address(0)) {
             require(value >= _startValue, Errors.VALUE_LESS_THAN_START_VALUE);

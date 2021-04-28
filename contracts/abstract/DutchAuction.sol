@@ -11,11 +11,12 @@ abstract contract DutchAuction is CommonAuction {
 
 
     constructor(
+        uint128 fee,
         uint128 startValue,
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) public onlyRoot CommonAuction(startTime, openDuration) {
+    ) public onlyRoot CommonAuction(fee, startTime, openDuration) {
         _startValue = startValue;
         _finishValue = finishValue;
     }
