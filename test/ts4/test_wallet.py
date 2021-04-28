@@ -40,6 +40,47 @@ class TestWallet(ts4.BaseContract):
         ts4.dispatch_one_message(expect_ec=expect_ec)
         ts4.dispatch_messages()
 
+    def blind_make_bid(self,
+                       dest: ts4.Address,
+                       value: int,
+                       hash_: int,
+                       expect_ec: int = 0):
+        self.call_method('blindMakeBid', {
+            'dest': dest,
+            'value': value,
+            'hash': hash_,
+        })
+        ts4.dispatch_one_message(expect_ec=expect_ec)
+        ts4.dispatch_messages()
+
+    def blind_remove_bid(self,
+                         dest: ts4.Address,
+                         value: int,
+                         hash_: int,
+                         expect_ec: int = 0):
+        self.call_method('blindRemoveBid', {
+            'dest': dest,
+            'value': value,
+            'hash': hash_,
+        })
+        ts4.dispatch_one_message(expect_ec=expect_ec)
+        ts4.dispatch_messages()
+
+    def blind_confirm_bid(self,
+                          dest: ts4.Address,
+                          value: int,
+                          bid_value: int,
+                          salt: int,
+                          expect_ec: int = 0):
+        self.call_method('blindConfirmBid', {
+            'dest': dest,
+            'value': value,
+            'bidValue': bid_value,
+            'salt': salt,
+        })
+        ts4.dispatch_one_message(expect_ec=expect_ec)
+        ts4.dispatch_messages()
+
     def send_transaction(self,
                          dest: ts4.Address,
                          value: int,

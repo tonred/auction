@@ -34,8 +34,8 @@ class DutchReverseAuctionTest(DutchAuctionTest):
         self.assertEqual(10 * ts4.GRAM, self._current_price(), 'Wrong price calculation')
 
     def test_bid_in_open_phase(self):
-        wallet = TestWallet()
         self._setup_phase_time(Phase.OPEN, update=True)
+        wallet = TestWallet()
         self._buy(wallet, bid_value=5)
         self.assertEqual(Phase.CLOSE, self._phase(), 'Auction is not finished')
         self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not made')

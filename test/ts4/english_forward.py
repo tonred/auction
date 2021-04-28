@@ -21,8 +21,8 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
         }, nickname='Auction', override_address=random_address())
 
     def test_bid_in_open_phase(self):
-        wallet = TestWallet()
         self._setup_phase_time(Phase.OPEN, update=True)
+        wallet = TestWallet()
         self._make_bid(wallet, bid_value=5)
         self._check_bids_count(1)
 

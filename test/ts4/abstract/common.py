@@ -12,7 +12,7 @@ class CommonAuctionTest(BaseAuctionTest):
         open_time = self.contract.call_getter('getOpenTime')
         open_time_expected = {
             'startTime': self.START_TIME,
-            'finishTime': self.START_TIME + self.OPEN_DURATION
+            'finishTime': self.START_TIME + self.OPEN_DURATION,
         }
         self.assertEqual(open_time_expected, open_time, 'Open time is wrong')
 

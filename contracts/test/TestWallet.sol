@@ -2,6 +2,7 @@ pragma ton-solidity >=0.39.0;
 
 import "../abstract/EnglishAuction.sol";
 import "../abstract/DutchAuction.sol";
+import "../abstract/BlindAuction.sol";
 
 
 contract TestWallet {
@@ -38,6 +39,21 @@ contract TestWallet {
     function buy(address dest, uint128 value, uint128 bidValue) public pure {
         tvm.accept();
         DutchAuction(dest).buy{value: value}(bidValue);
+    }
+
+    function blindMakeBid(address dest, uint128 value, uint256 hash) public pure {
+        tvm.accept();
+        BlindAuction(dest).makeBid{value: value}(hash);
+    }
+
+    function blindRemoveBid(address dest, uint128 value, uint256 hash) public pure {
+        tvm.accept();
+        BlindAuction(dest).removeBid{value: value}(hash);
+    }
+
+    function blindConfirmBid(address dest, uint128 value, uint128 bidValue, uint256 salt) public pure {
+        tvm.accept();
+        BlindAuction(dest).confirmBid{value: value}(bidValue, salt);
     }
 
 

@@ -32,4 +32,12 @@ library Errors {
     uint16 constant START_MORE_THAN_FINISH = 302;
     uint16 constant VALUE_LESS_THAN_CURRENT_PRICE = 303;
     uint16 constant VALUE_MORE_THAN_CURRENT_PRICE = 304;
+
+    // Blind
+    uint16 constant SMALL_FEE_VALUE = 401;
+    uint16 constant SMALL_DEPOSIT_VALUE = 402;
+    uint16 constant VALUE_LESS_THAN_DEPOSIT = 403;
+    uint16 constant IS_NOT_FROM_BID = 404;
+    uint16 constant NOT_ENOUGH_TOKENS = 405;
+    uint16 constant IS_NOT_AUCTION = 444;
 }
