@@ -1,0 +1,143 @@
+{
+	"ABI version": 2,
+	"header": ["time"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"fee","type":"uint128"},
+				{"name":"deposit","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"},
+				{"name":"confirmationDuration","type":"uint32"},
+				{"name":"bidCode","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "confirmBid",
+			"inputs": [
+				{"name":"value","type":"uint128"},
+				{"name":"salt","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "confirmBidCallback",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"hash","type":"uint256"},
+				{"name":"value","type":"uint128"},
+				{"name":"msgValue","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getOpenTime",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"startTime","type":"uint32"},{"name":"finishTime","type":"uint32"}],"name":"value0","type":"tuple"}
+			]
+		},
+		{
+			"name": "getConfirmationTime",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"startTime","type":"uint32"},{"name":"finishTime","type":"uint32"}],"name":"value0","type":"tuple"}
+			]
+		},
+		{
+			"name": "getBidsCount",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint128"}
+			]
+		},
+		{
+			"name": "getConfirmedBidsCount",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint128"}
+			]
+		},
+		{
+			"name": "makeBid",
+			"inputs": [
+				{"name":"hash","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "removeBid",
+			"inputs": [
+				{"name":"hash","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "removeBidCallback",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"hash","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "update",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "calcBidHash",
+			"inputs": [
+				{"name":"value","type":"uint128"},
+				{"name":"salt","type":"uint256"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint256"}
+			]
+		},
+		{
+			"name": "getRoot",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "getId",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint64"}
+			]
+		},
+		{
+			"name": "getPhase",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint8"}
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"_root","type":"address"},
+		{"key":2,"name":"_id","type":"uint64"}
+	],
+	"events": [
+	]
+}
