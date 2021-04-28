@@ -57,6 +57,25 @@ class BlindAuctionTest(BaseAuctionTest):
         self._setup_phase_time(Phase.CONFIRMATION, update=False)
         self._wrong_bid_test()
 
+    def test_bid_in_open_phase(self):
+        self._setup_phase_time(Phase.OPEN, update=True)
+        wallet = TestWallet()
+        salt = self._generate_salt()
+        self._make_bid(wallet, value=10, bid_value=5, salt=salt)
+        self._check_bids_count(1)
+        self.assertEqual((100 - 10) * ts4.GRAM, wallet.balance(), 'Bid is not made')
+
+    def test_remove_bid(self):
+        self._setup_phase_time(Phase.OPEN, update=True)
+        wallet = TestWallet()
+        salt = self._generate_salt()
+        self._make_bid(wallet, value=10.1, bid_value=5, salt=salt)
+        self._check_bids_count(1)  # bid really made
+
+        self._remove_bid(wallet, value=1, bid_value=5, salt=salt)
+        self._check_bids_count(0)  # bid really removed
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not removed')
+
     def _wrong_bid_test(self):
         wallet = TestWallet()
         salt = self._generate_salt()

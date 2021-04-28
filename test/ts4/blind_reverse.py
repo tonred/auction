@@ -13,7 +13,7 @@ class BlindForwardAuctionTest(BlindAuctionTest):
     def setUp(self):
         self._setup_phase_time(Phase.WAIT)
         bid_code = ts4.load_code_cell('BlindBid')
-        self.contract = ts4.BaseContract('BlindForwardAuction', {
+        self.contract = ts4.BaseContract('BlindReverseAuction', {
             'fee': 1 * ts4.GRAM,
             'deposit': 10 * ts4.GRAM,
             'startTime': self.START_TIME,
@@ -31,9 +31,9 @@ class BlindForwardAuctionTest(BlindAuctionTest):
         self._check_bids_count(1)  # bid really made
 
         self._setup_phase_time(Phase.CONFIRMATION, update=True)
-        self._confirm_bid(wallet, value=5, bid_value=5, salt=salt)
+        self._confirm_bid(wallet, value=1, bid_value=5, salt=salt)
         self._check_confirmed_bids_count(1)  # bid really confirmed
-        self.assertEqual((100 - (5 + 1)) * ts4.GRAM, wallet.balance(), 'Bid is not confirmed')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not confirmed')
 
     def test_several_bids(self):
         wallet1 = TestWallet()
@@ -56,13 +56,15 @@ class BlindForwardAuctionTest(BlindAuctionTest):
         self._check_confirmed_bids_count(3)
 
         self.assertEqual((100 - 1) * ts4.GRAM, wallet1.balance(), 'Bid is not returned')
-        self.assertEqual((100 - (25 + 1)) * ts4.GRAM, wallet2.balance(), 'Bid is not confirmed')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet2.balance(), 'Bid is not returned')
         self.assertEqual((100 - 1) * ts4.GRAM, wallet3.balance(), 'Bid is not returned')
+        # todo is winner really best price
 
     # todo
     # less than deposit
     # confirmation value less than value
     # confirmation after remove ?
+    # todo callbacks and bids are not called from another contract
 
 
 if __name__ == '__main__':
