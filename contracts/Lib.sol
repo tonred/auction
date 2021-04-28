@@ -34,8 +34,8 @@ library Errors {
     uint16 constant VALUE_MORE_THAN_CURRENT_PRICE = 304;
 
     // Blind
-    uint16 constant SMALL_FEE_VALUE = 401;
-    uint16 constant SMALL_DEPOSIT_VALUE = 402;
+    uint16 constant LOW_FEE_VALUE = 401;
+    uint16 constant LOW_DEPOSIT_VALUE = 402;
     uint16 constant VALUE_LESS_THAN_DEPOSIT = 403;
     uint16 constant IS_NOT_FROM_BID = 404;
     uint16 constant NOT_ENOUGH_TOKENS = 405;

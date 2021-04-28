@@ -26,8 +26,6 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
         wallet = TestWallet()
         self._make_bid(wallet, bid_value=5)
         self._check_bids_count(1)
-
-        print('BALANCE AUCTION: ', self.contract.balance())  # todo why not token spent for gas
         self.assertEqual((100 - (5 + 1)) * ts4.GRAM, wallet.balance(), 'Bid is not made')
 
     def test_increasing_bids(self):
@@ -40,7 +38,11 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
         self._make_bid(wallet_2, bid_value=5)
         self._make_bid(wallet_3, bid_value=12)
         self._check_bids_count(3)
+
         self.assertEqual(12 * ts4.GRAM, self.contract.call_getter('getWinnerValue'), 'Bid is not made')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet_1.balance(), 'Bid is not returned')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet_2.balance(), 'Bid is not returned')
+        self.assertEqual((100 - 13) * ts4.GRAM, wallet_3.balance(), 'Bid is not made')
 
     def test_low_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)

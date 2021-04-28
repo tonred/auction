@@ -4,6 +4,7 @@ import tonos_ts4.ts4 as ts4
 
 from abstract.blind import BlindAuctionTest
 from test_wallet import TestWallet
+from utils.errors import Errors
 from utils.phase import Phase
 from utils.utils import random_address
 
@@ -59,10 +60,20 @@ class BlindForwardAuctionTest(BlindAuctionTest):
         self.assertEqual((100 - (25 + 1)) * ts4.GRAM, wallet2.balance(), 'Bid is not confirmed')
         self.assertEqual((100 - 1) * ts4.GRAM, wallet3.balance(), 'Bid is not returned')
 
-    # todo
-    # less than deposit
-    # confirmation value less than value
-    # confirmation after remove ?
+    def test_low_confirmation_value(self):
+        wallet = TestWallet()
+        salt = self._generate_salt()
+
+        self._setup_phase_time(Phase.OPEN, update=True)
+        self._make_bid(wallet, value=10, bid_value=20, salt=salt)
+        self._check_bids_count(1)
+
+        self._setup_phase_time(Phase.CONFIRMATION, update=True)
+        self._confirm_bid(wallet, value=5, bid_value=20, salt=salt, expect_ec=Errors.NOT_ENOUGH_TOKENS)
+        self._check_confirmed_bids_count(0)
+
+        # (100 - 10) - deposit is not returned because bid is not confirmed
+        self.assertEqual((100 - 10) * ts4.GRAM, wallet.balance(), 'Confirmation bid is not returned')
 
 
 if __name__ == '__main__':

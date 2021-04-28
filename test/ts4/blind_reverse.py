@@ -58,13 +58,6 @@ class BlindForwardAuctionTest(BlindAuctionTest):
         self.assertEqual((100 - 1) * ts4.GRAM, wallet1.balance(), 'Bid is not returned')
         self.assertEqual((100 - 1) * ts4.GRAM, wallet2.balance(), 'Bid is not returned')
         self.assertEqual((100 - 1) * ts4.GRAM, wallet3.balance(), 'Bid is not returned')
-        # todo is winner really best price
-
-    # todo
-    # less than deposit
-    # confirmation value less than value
-    # confirmation after remove ?
-    # todo callbacks and bids are not called from another contract
 
 
 if __name__ == '__main__':

@@ -42,20 +42,20 @@ class BlindAuctionTest(BaseAuctionTest):
         self.assertEqual(Phase.CLOSE, self._phase(), 'Phase must be CLOSE')
 
     def test_bid_in_wait_phase(self):
-        self._wrong_bid_test()
+        self._wrong_phase_bid_test()
 
     def test_bid_in_confirmation_phase(self):
         self._setup_phase_time(Phase.CONFIRMATION, update=True)
-        self._wrong_bid_test()
+        self._wrong_phase_bid_test()
 
     def test_bid_in_close_phase(self):
         self._setup_phase_time(Phase.CLOSE, update=True)
-        self._wrong_bid_test()
+        self._wrong_phase_bid_test()
 
-    def test_bid_in_confirmation(self):
+    def test_bid_on_confirmation(self):
         self._setup_phase_time(Phase.OPEN, update=True)
         self._setup_phase_time(Phase.CONFIRMATION, update=False)
-        self._wrong_bid_test()
+        self._wrong_phase_bid_test()
 
     def test_bid_in_open_phase(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -66,9 +66,10 @@ class BlindAuctionTest(BaseAuctionTest):
         self.assertEqual((100 - 10) * ts4.GRAM, wallet.balance(), 'Bid is not made')
 
     def test_remove_bid(self):
-        self._setup_phase_time(Phase.OPEN, update=True)
         wallet = TestWallet()
         salt = self._generate_salt()
+
+        self._setup_phase_time(Phase.OPEN, update=True)
         self._make_bid(wallet, value=10.1, bid_value=5, salt=salt)
         self._check_bids_count(1)  # bid really made
 
@@ -76,7 +77,15 @@ class BlindAuctionTest(BaseAuctionTest):
         self._check_bids_count(0)  # bid really removed
         self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not removed')
 
-    def _wrong_bid_test(self):
+    def test_low_bid_value(self):
+        self._setup_phase_time(Phase.OPEN, update=True)
+        wallet = TestWallet()
+        salt = self._generate_salt()
+        self._make_bid(wallet, value=9, bid_value=5, salt=salt, expect_ec=Errors.VALUE_LESS_THAN_DEPOSIT)
+        self._check_bids_count(0)
+        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not made')
+
+    def _wrong_phase_bid_test(self):
         wallet = TestWallet()
         salt = self._generate_salt()
         self._make_bid(wallet, value=10, bid_value=5, salt=salt, expect_ec=Errors.WRONG_PHASE)

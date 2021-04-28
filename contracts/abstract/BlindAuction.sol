@@ -61,8 +61,8 @@ abstract contract BlindAuction is BaseAuction {
         uint32 confirmationDuration,
         TvmCell bidCode
     ) public onlyRoot {
-        require(fee > DEPLOY_BID_VALUE, Errors.SMALL_FEE_VALUE);
-        require(deposit > fee, Errors.SMALL_DEPOSIT_VALUE);
+        require(fee > DEPLOY_BID_VALUE, Errors.LOW_FEE_VALUE);
+        require(deposit > fee, Errors.LOW_DEPOSIT_VALUE);
         tvm.accept();
         _fee = fee;
         _deposit = deposit;
