@@ -40,4 +40,10 @@ library Errors {
     uint16 constant IS_NOT_FROM_BID = 404;
     uint16 constant NOT_ENOUGH_TOKENS = 405;
     uint16 constant IS_NOT_AUCTION = 444;
+
+    // Root
+    uint16 constant IS_NOT_INITED = 501;
+    uint16 constant IS_ALREADY_INITED = 502;
+    uint16 constant LOW_DEPLOY_VALUE = 503;
+    uint16 constant AUCTIONS_CODES_NOT_INITED = 504;
 }

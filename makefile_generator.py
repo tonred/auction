@@ -41,6 +41,14 @@ build-blind-bid:
 	@echo "Compiling BlindBid"
 	$(call compile_all,$(CONTRACTS_PATH),BlindBid)
 
+build-auction-root:
+	@echo "Compiling AuctionRoot"
+	$(call compile_all,$(CONTRACTS_PATH),AuctionRoot)
+
+build-test-auction-root:
+	@echo "Compiling TestAuctionRoot"
+	$(call compile_all,$(TEST_CONTRACTS_PATH),TestAuctionRoot)
+
 build-test-wallet:
 	@echo "Compiling TestWallet"
 	$(call compile_all,$(TEST_CONTRACTS_PATH),TestWallet)
@@ -91,7 +99,7 @@ tests-{}:
 '''
 
 BUILD_ALL_TEMPLATE = '''
-build: {} build-blind-bid build-test-wallet
+build: {} build-blind-bid build-auction-root build-test-auction-root build-test-wallet
 	@echo "Building all"
 '''
 

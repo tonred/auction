@@ -94,5 +94,6 @@ class TestWallet(ts4.BaseContract):
             'flags': flags,
             'payload': payload,
         })
-        # ts4.dispatch_one_message()
-        ts4.dispatch_messages()
+        print(ts4.peek_msg())
+        ts4.dispatch_one_message()
+        # ts4.dispatch_messages()

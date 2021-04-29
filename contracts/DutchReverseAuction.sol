@@ -1,9 +1,9 @@
-pragma ton -solidity >= 0.39.0;
+pragma ton-solidity >= 0.39.0;
 
 import "./abstract/DutchAuction.sol";
 
 
-contract DutchForwardAuction is DutchAuction {
+contract DutchReverseAuction is DutchAuction {
 
     constructor(
         uint128 fee,
