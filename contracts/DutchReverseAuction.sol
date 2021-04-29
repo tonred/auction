@@ -20,7 +20,7 @@ contract DutchReverseAuction is DutchAuction {
         _canBuy(value);
         _winner = Bid(msg.sender, msg.value);
         _finish();
-        // todo reserve ++ (q1?)
+        msg.sender.transfer({value : 0, flag : SEND_ALL_GAS, bounce: false});
     }
 
     function _canBuy(uint128 value) private view {

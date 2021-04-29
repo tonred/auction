@@ -115,22 +115,3 @@ class RootAuctionTest(unittest.TestCase):
         address = self.auction_root.call_method(f'deploy{auction_name}Auction', ctor_params)
         ts4.dispatch_messages()
         self.assertIsNotNone(address)
-
-    # def setUp(self):
-    #     address = self.auction_root.call_method('deployEnglishForwardAuction', {
-    #         'startValue': 1 * ts4.GRAM,
-    #         'stepValue': 1 * ts4.GRAM,
-    #         'startTime': 10,
-    #         'openDuration': 20,
-    #     })
-    #     ts4.dispatch_messages()
-    #     print(address, type(address))
-    #     self.contract = ts4.BaseContract('EnglishForwardAuction', {}, nickname='Auction', address=address)
-    #     ts4.dispatch_messages()
-
-    def _update(self):
-        wallet = TestWallet()
-        wallet.update(self.contract.address(), 1 * ts4.GRAM)
-
-    def _phase(self) -> Phase:
-        return Phase(self.contract.call_getter('getPhase'))

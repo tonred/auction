@@ -23,7 +23,7 @@ contract DutchForwardAuction is DutchAuction {
     }
 
     function _canBuy(uint128 value) private view {
-        require(msg.value >= _fee, Errors.LOW_MSG_VALUE);
+        require(msg.value >= value + _fee, Errors.LOW_MSG_VALUE);
         require(value >= getCurrentPrice(), Errors.VALUE_LESS_THAN_CURRENT_PRICE);
     }
 

@@ -27,7 +27,7 @@ class EnglishReverseAuctionTest(EnglishAuctionTest):
         wallet = TestWallet()
         self._make_bid(wallet, bid_value=3)
         self._check_bids_count(1)
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not made')
 
     def test_decreasing_bids(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -41,9 +41,9 @@ class EnglishReverseAuctionTest(EnglishAuctionTest):
         self._check_bids_count(3)
 
         self.assertEqual(3 * ts4.GRAM, self.contract.call_getter('getWinnerValue'), 'Bid is not made')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet_1.balance(), 'Bid is not made')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet_2.balance(), 'Bid is not made')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet_3.balance(), 'Bid is not made')
+        self.assertEqual(100 * ts4.GRAM, wallet_1.balance(), 'Bid is not made')
+        self.assertEqual(100 * ts4.GRAM, wallet_2.balance(), 'Bid is not made')
+        self.assertEqual(100 * ts4.GRAM, wallet_3.balance(), 'Bid is not made')
 
     def test_high_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)

@@ -18,6 +18,7 @@ contract EnglishReverseAuction is EnglishAuction {
         _checkBid(value);
         _winner = Bid(msg.sender, value);
         _bidsCount++;
+        msg.sender.transfer({value : 0, flag : SEND_ALL_GAS, bounce: false});
     }
 
     function _checkBid(uint128 value) private view {
