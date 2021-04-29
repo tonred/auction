@@ -6,7 +6,6 @@ import "../Lib.sol";
 
 abstract contract CommonAuction is BaseAuction {
 
-
     uint128 _fee;
     PhaseTime _openTime;
 

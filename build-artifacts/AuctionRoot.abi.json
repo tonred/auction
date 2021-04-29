@@ -282,6 +282,18 @@
 			"outputs": [
 				{"name":"value0","type":"cell"}
 			]
+		},
+		{
+			"name": "finish",
+			"inputs": [
+				{"name":"auctionType","type":"uint8"},
+				{"name":"id","type":"uint64"},
+				{"components":[{"name":"owner","type":"address"},{"name":"value","type":"uint128"}],"name":"winner","type":"tuple"},
+				{"name":"finishAddress","type":"address"},
+				{"name":"finishPayload","type":"cell"}
+			],
+			"outputs": [
+			]
 		}
 	],
 	"data": [

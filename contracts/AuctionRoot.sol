@@ -6,13 +6,17 @@ import "DutchForwardAuction.sol";
 import "DutchReverseAuction.sol";
 import "EnglishForwardAuction.sol";
 import "EnglishReverseAuction.sol";
+import "./interface/IAuctionRoot.sol";
+import "./interface/IAuctionFinishCallback.sol";
 
 
-contract AuctionRoot {
+contract AuctionRoot is IAuctionRoot {
+    uint8 constant SEND_ALL_GAS = 64;
+
+
     uint128 _deployValue = 1 ton;
     uint128 _defaultFeeValue = 1 ton;
     uint128 _defaultDepositValue = 10 ton;
-
 
     TvmCell _codeEnglishForwardAuction;
     TvmCell _codeEnglishReverseAuction;
@@ -148,6 +152,7 @@ contract AuctionRoot {
         return tvm.buildStateInit({
             contr: EnglishForwardAuction,
             varInit: {
+                _type: AuctionType.ENGLISH_FORWARD,
                 _root: address(this),
                 _id: id
             },
@@ -188,6 +193,7 @@ contract AuctionRoot {
         return tvm.buildStateInit({
             contr: EnglishReverseAuction,
             varInit: {
+                _type: AuctionType.ENGLISH_REVERSE,
                 _root: address(this),
                 _id: id
             },
@@ -228,6 +234,7 @@ contract AuctionRoot {
         return tvm.buildStateInit({
             contr: DutchForwardAuction,
             varInit: {
+                _type: AuctionType.DUTCH_FORWARD,
                 _root: address(this),
                 _id: id
             },
@@ -268,6 +275,7 @@ contract AuctionRoot {
         return tvm.buildStateInit({
             contr: DutchReverseAuction,
             varInit: {
+                _type: AuctionType.DUTCH_REVERSE,
                 _root: address(this),
                 _id: id
             },
@@ -307,6 +315,7 @@ contract AuctionRoot {
         return tvm.buildStateInit({
             contr: BlindForwardAuction,
             varInit: {
+                _type: AuctionType.BLIND_FORWARD,
                 _root: address(this),
                 _id: id
             },
@@ -346,11 +355,39 @@ contract AuctionRoot {
         return tvm.buildStateInit({
             contr: BlindReverseAuction,
             varInit: {
+                _type: AuctionType.BLIND_REVERSE,
                 _root: address(this),
                 _id: id
             },
             code: _codeBlindReverseAuction
         });
+    }
+
+
+    function finish(AuctionType auctionType, uint64 id, Bid winner, address finishAddress, TvmCell finishPayload) override public {
+        _checkIsAuctionCallback(auctionType, id);
+        IAuctionFinishCallback(finishAddress).onAuctionFinish{value: 0, flag: SEND_ALL_GAS, bounce: false}
+            (winner.owner, winner.value, finishPayload);
+    }
+
+    function _checkIsAuctionCallback(AuctionType auctionType, uint64 id) internal view {
+        address auctionAddress = _calcAuctionAddress(auctionType, id);
+        require(msg.sender == auctionAddress, Errors.IS_NOT_FROM_AUCTION);
+    }
+
+    function _calcAuctionAddress(AuctionType auctionType, uint64 id) internal view returns (address) {
+        TvmCell stateInit;
+        if (auctionType == AuctionType.ENGLISH_FORWARD) stateInit = buildEnglishForwardStateInit(id);
+        if (auctionType == AuctionType.ENGLISH_REVERSE) stateInit = buildEnglishReverseStateInit(id);
+        if (auctionType == AuctionType.DUTCH_FORWARD) stateInit = buildDutchForwardStateInit(id);
+        if (auctionType == AuctionType.DUTCH_REVERSE) stateInit = buildDutchReverseStateInit(id);
+        if (auctionType == AuctionType.BLIND_FORWARD) stateInit = buildBlindForwardStateInit(id);
+        if (auctionType == AuctionType.BLIND_REVERSE) stateInit = buildBlindReverseStateInit(id);
+        return _calcAddress(stateInit);
+    }
+
+    function _calcAddress(TvmCell stateInit) private pure returns (address) {
+        return address.makeAddrStd(0, tvm.hash(stateInit));
     }
 
 }

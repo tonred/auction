@@ -13,12 +13,19 @@ struct Bid {
     uint128 value;
 }
 
+enum AuctionType {
+    ENGLISH_FORWARD, ENGLISH_REVERSE,
+    DUTCH_FORWARD, DUTCH_REVERSE,
+    BLIND_FORWARD, BLIND_REVERSE
+}
+
 library Errors {
     // Common
     uint16 constant IS_NOT_ROOT = 101;
-    uint16 constant WRONG_PHASE = 102;
-    uint16 constant LOW_OPEN_DURATION = 103;
-    uint16 constant LOW_MSG_VALUE = 104;
+    uint16 constant IS_NOT_OWNER = 102;
+    uint16 constant WRONG_PHASE = 103;
+    uint16 constant LOW_OPEN_DURATION = 104;
+    uint16 constant LOW_MSG_VALUE = 105;
 
     // English
     uint16 constant LOW_STEP_VALUE = 201;
@@ -46,4 +53,5 @@ library Errors {
     uint16 constant IS_ALREADY_INITED = 502;
     uint16 constant LOW_DEPLOY_VALUE = 503;
     uint16 constant AUCTIONS_CODES_NOT_INITED = 504;
+    uint16 constant IS_NOT_FROM_AUCTION = 505;
 }
