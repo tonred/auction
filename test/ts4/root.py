@@ -3,9 +3,7 @@ import unittest
 import tonos_ts4.ts4 as ts4
 
 from config import BUILD_ARTIFACTS_PATH, VERBOSE
-from test_wallet import TestWallet
 from utils.errors import Errors
-from utils.phase import Phase
 from utils.utils import random_address
 
 
@@ -112,6 +110,6 @@ class RootAuctionTest(unittest.TestCase):
         })
 
     def _deploy(self, auction_name: str, ctor_params: dict):
-        address = self.auction_root.call_method(f'deploy{auction_name}Auction', ctor_params)
+        address = self.auction_root.call_method(f'testDeploy{auction_name}Auction', ctor_params)
         ts4.dispatch_messages()
         self.assertIsNotNone(address)

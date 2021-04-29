@@ -11,32 +11,32 @@ contract TestAuctionRoot is AuctionRoot {
     }
 
 
-    function deployEnglishForwardAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration) override public returns (address) {
+    function testDeployEnglishForwardAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
         return AuctionRoot.deployEnglishForwardAuction(startValue, stepValue, startTime, openDuration);
     }
 
-    function deployEnglishReverseAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration) override public returns (address) {
+    function testDeployEnglishReverseAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
         return AuctionRoot.deployEnglishReverseAuction(startValue, stepValue, startTime, openDuration);
     }
 
-    function deployDutchForwardAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration) override public returns (address) {
+    function testDeployDutchForwardAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
         return AuctionRoot.deployDutchForwardAuction(startValue, finishValue, startTime, openDuration);
     }
 
-    function deployDutchReverseAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration) override public returns (address) {
+    function testDeployDutchReverseAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
         return AuctionRoot.deployDutchReverseAuction(startValue, finishValue, startTime, openDuration);
     }
 
-    function deployBlindForwardAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration) override public returns (address) {
+    function testDeployBlindForwardAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration) public returns (address) {
         tvm.accept();
         return AuctionRoot.deployBlindForwardAuction(startTime, openDuration, confirmationDuration);
     }
 
-    function deployBlindReverseAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration) override public returns (address) {
+    function testDeployBlindReverseAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration) public returns (address) {
         tvm.accept();
         return AuctionRoot.deployBlindReverseAuction(startTime, openDuration, confirmationDuration);
     }

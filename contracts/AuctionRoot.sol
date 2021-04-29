@@ -126,7 +126,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) virtual checkValue inited public returns (address) {
+    ) checkValue inited public returns (address) {
         return deployEnglishForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
     }
 
@@ -167,7 +167,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) virtual checkValue inited public returns (address) {
+    ) checkValue inited public returns (address) {
         return deployEnglishReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
     }
 
@@ -208,7 +208,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) virtual checkValue inited public returns (address) {
+    ) checkValue inited public returns (address) {
         return deployDutchForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
     }
 
@@ -249,7 +249,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) virtual checkValue inited public returns (address) {
+    ) checkValue inited public returns (address) {
         return deployDutchReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
     }
 
@@ -289,7 +289,7 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) virtual checkValue inited public returns (address) {
+    ) checkValue inited public returns (address) {
         return deployBlindForwardAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
     }
 
@@ -329,7 +329,7 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) virtual checkValue inited public returns (address) {
+    ) checkValue inited public returns (address) {
         return deployBlindReverseAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
     }
 
