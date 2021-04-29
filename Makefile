@@ -14,6 +14,7 @@ help:
 setup:
 	@echo "Setup"
 	cp .env.dist .env
+	npm install
 
 create:
 	@echo "Creating makefile"
