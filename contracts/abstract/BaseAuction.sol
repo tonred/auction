@@ -46,6 +46,8 @@ abstract contract BaseAuction {
         tvm.accept();
         _owner = owner;
         _phase = Phase.WAIT;
+        _finishAddress = owner;
+        _finishPayload = tvm.buildEmptyData(0);
     }
 
 

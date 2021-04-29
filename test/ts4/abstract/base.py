@@ -5,6 +5,7 @@ import tonos_ts4.ts4 as ts4
 
 from config import BUILD_ARTIFACTS_PATH, VERBOSE
 from test_wallet import TestWallet
+from utils.errors import Errors
 from utils.phase import Phase
 
 
@@ -21,6 +22,9 @@ class BaseAuctionTest(unittest.TestCase):
     def test_owner(self):
         owner = self.contract.call_getter('getOwner')
         self.assertIsNotNone(owner)
+
+    def test_finish_outside(self):
+        self.contract.call_getter('finish', expect_ec=Errors.IS_NOT_SELF)
 
     def _update(self):
         wallet = TestWallet()
