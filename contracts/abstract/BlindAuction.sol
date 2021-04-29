@@ -54,13 +54,14 @@ abstract contract BlindAuction is BaseAuction {
     @param bidCode              Code of bid contract
     */
     constructor(
+        address owner,
         uint128 fee,
         uint128 deposit,
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration,
         TvmCell bidCode
-    ) public onlyRoot {
+    ) public onlyRoot BaseAuction(owner) {
         require(fee > DEPLOY_BID_VALUE, Errors.LOW_FEE_VALUE);
         require(deposit > fee, Errors.LOW_DEPOSIT_VALUE);
         tvm.accept();

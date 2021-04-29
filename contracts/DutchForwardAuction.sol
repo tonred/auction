@@ -6,12 +6,13 @@ import "./abstract/DutchAuction.sol";
 contract DutchForwardAuction is DutchAuction {
 
     constructor(
+        address owner,
         uint128 fee,
         uint128 startValue,
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) public onlyRoot DutchAuction(fee, startValue, finishValue, startTime, openDuration) {
+    ) public onlyRoot DutchAuction(owner, fee, startValue, finishValue, startTime, openDuration) {
         require(startValue > finishValue, Errors.START_LESS_THAN_FINISH);
     }
 

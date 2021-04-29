@@ -6,13 +6,14 @@ import "./abstract/BlindAuction.sol";
 contract BlindForwardAuction is BlindAuction {
 
     constructor(
+        address owner,
         uint128 fee,
         uint128 deposit,
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration,
         TvmCell bidCode
-    ) public onlyRoot BlindAuction(fee, deposit, startTime, openDuration, confirmationDuration, bidCode) {}
+    ) public onlyRoot BlindAuction(owner, fee, deposit, startTime, openDuration, confirmationDuration, bidCode) {}
 
     /*
     @param value Real value of bid

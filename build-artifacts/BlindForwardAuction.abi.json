@@ -5,6 +5,7 @@
 		{
 			"name": "constructor",
 			"inputs": [
+				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"deposit","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
@@ -123,6 +124,14 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"uint64"}
+			]
+		},
+		{
+			"name": "getOwner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
 			]
 		},
 		{

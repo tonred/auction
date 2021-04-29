@@ -123,11 +123,12 @@ contract AuctionRoot {
         uint32 startTime,
         uint32 openDuration
     ) virtual checkValue inited public returns (address) {
-        return deployEnglishForwardAuctionCustom(_defaultFeeValue, startValue, stepValue, startTime, openDuration);
+        return deployEnglishForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
     }
 
     // ENGLISH FORWARD
     function deployEnglishForwardAuctionCustom(
+        address owner,
         uint128 fee,
         uint128 startValue,
         uint128 stepValue,
@@ -138,7 +139,7 @@ contract AuctionRoot {
         EnglishForwardAuction _auction = new EnglishForwardAuction{
             stateInit: stateInit,
             value: _deployValue
-        }(fee, startValue, stepValue, startTime, openDuration);
+        }(owner, fee, startValue, stepValue, startTime, openDuration);
         return _auction;
     }
 
@@ -162,11 +163,12 @@ contract AuctionRoot {
         uint32 startTime,
         uint32 openDuration
     ) virtual checkValue inited public returns (address) {
-        return deployEnglishReverseAuctionCustom(_defaultFeeValue, startValue, stepValue, startTime, openDuration);
+        return deployEnglishReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
     }
 
     // ENGLISH REVERSE
     function deployEnglishReverseAuctionCustom(
+        address owner,
         uint128 fee,
         uint128 startValue,
         uint128 stepValue,
@@ -177,7 +179,7 @@ contract AuctionRoot {
         EnglishReverseAuction _auction = new EnglishReverseAuction{
             stateInit: stateInit,
             value: _deployValue
-        }(fee, startValue, stepValue, startTime, openDuration);
+        }(owner, fee, startValue, stepValue, startTime, openDuration);
         return _auction;
     }
 
@@ -201,11 +203,12 @@ contract AuctionRoot {
         uint32 startTime,
         uint32 openDuration
     ) virtual checkValue inited public returns (address) {
-        return deployDutchForwardAuctionCustom(_defaultFeeValue, startValue, finishValue, startTime, openDuration);
+        return deployDutchForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
     }
 
     // DUTCH FORWARD
     function deployDutchForwardAuctionCustom(
+        address owner,
         uint128 fee,
         uint128 startValue,
         uint128 finishValue,
@@ -216,7 +219,7 @@ contract AuctionRoot {
         DutchForwardAuction _auction = new DutchForwardAuction{
             stateInit: stateInit,
             value: _deployValue
-        }(fee, startValue, finishValue, startTime, openDuration);
+        }(owner, fee, startValue, finishValue, startTime, openDuration);
         return _auction;
     }
 
@@ -240,11 +243,12 @@ contract AuctionRoot {
         uint32 startTime,
         uint32 openDuration
     ) virtual checkValue inited public returns (address) {
-        return deployDutchReverseAuctionCustom(_defaultFeeValue, startValue, finishValue, startTime, openDuration);
+        return deployDutchReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
     }
 
     // DUTCH REVERSE
     function deployDutchReverseAuctionCustom(
+        address owner,
         uint128 fee,
         uint128 startValue,
         uint128 finishValue,
@@ -255,7 +259,7 @@ contract AuctionRoot {
         DutchReverseAuction _auction = new DutchReverseAuction{
             stateInit: stateInit,
             value: _deployValue
-        }(fee, startValue, finishValue, startTime, openDuration);
+        }(owner, fee, startValue, finishValue, startTime, openDuration);
         return _auction;
     }
 
@@ -278,11 +282,12 @@ contract AuctionRoot {
         uint32 openDuration,
         uint32 confirmationDuration
     ) virtual checkValue inited public returns (address) {
-        return deployBlindForwardAuctionCustom(_defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
+        return deployBlindForwardAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
     }
 
     // BLIND FORWARD
     function deployBlindForwardAuctionCustom(
+        address owner,
         uint128 fee,
         uint128 deposit,
         uint32 startTime,
@@ -293,7 +298,7 @@ contract AuctionRoot {
         BlindForwardAuction _auction = new BlindForwardAuction{
             stateInit: stateInit,
             value: _deployValue
-        }(fee, deposit, startTime, openDuration, confirmationDuration, _codeBlindBid);
+        }(owner, fee, deposit, startTime, openDuration, confirmationDuration, _codeBlindBid);
         return _auction;
     }
 
@@ -316,11 +321,12 @@ contract AuctionRoot {
         uint32 openDuration,
         uint32 confirmationDuration
     ) virtual checkValue inited public returns (address) {
-        return deployBlindReverseAuctionCustom(_defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
+        return deployBlindReverseAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
     }
 
     // BLIND REVERSE
     function deployBlindReverseAuctionCustom(
+        address owner,
         uint128 fee,
         uint128 deposit,
         uint32 startTime,
@@ -331,7 +337,7 @@ contract AuctionRoot {
         BlindReverseAuction _auction = new BlindReverseAuction{
             stateInit: stateInit,
             value: _deployValue
-        }(fee, deposit, startTime, openDuration, confirmationDuration, _codeBlindBid);
+        }(owner, fee, deposit, startTime, openDuration, confirmationDuration, _codeBlindBid);
         return _auction;
     }
 

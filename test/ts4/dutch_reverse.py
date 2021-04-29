@@ -14,6 +14,7 @@ class DutchReverseAuctionTest(DutchAuctionTest):
     def setUp(self):
         self._setup_phase_time(Phase.WAIT)
         self.contract = ts4.BaseContract('DutchReverseAuction', {
+            'owner': random_address(),
             'fee': 1 * ts4.GRAM,
             'startValue': 2 * ts4.GRAM,
             'finishValue': 10 * ts4.GRAM,

@@ -1,0 +1,291 @@
+{
+	"ABI version": 2,
+	"header": ["time"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"deployValue","type":"uint128"},
+				{"name":"defaultFeeValue","type":"uint128"},
+				{"name":"defaultDepositValue","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCodeEnglishForwardAuction",
+			"inputs": [
+				{"name":"codeEnglishForwardAuction","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCodeEnglishReverseAuction",
+			"inputs": [
+				{"name":"codeEnglishReverseAuction","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCodeDutchForwardAuction",
+			"inputs": [
+				{"name":"codeDutchForwardAuction","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCodeDutchReverseAuction",
+			"inputs": [
+				{"name":"codeDutchReverseAuction","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCodeBlindForwardAuction",
+			"inputs": [
+				{"name":"codeBlindForwardAuction","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCodeBlindReverseAuction",
+			"inputs": [
+				{"name":"codeBlindReverseAuction","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCodeBlindBid",
+			"inputs": [
+				{"name":"codeBlindBid","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "finishInit",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "deployEnglishForwardAuction",
+			"inputs": [
+				{"name":"startValue","type":"uint128"},
+				{"name":"stepValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployEnglishForwardAuctionCustom",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"fee","type":"uint128"},
+				{"name":"startValue","type":"uint128"},
+				{"name":"stepValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "buildEnglishForwardStateInit",
+			"inputs": [
+				{"name":"id","type":"uint64"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "deployEnglishReverseAuction",
+			"inputs": [
+				{"name":"startValue","type":"uint128"},
+				{"name":"stepValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployEnglishReverseAuctionCustom",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"fee","type":"uint128"},
+				{"name":"startValue","type":"uint128"},
+				{"name":"stepValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "buildEnglishReverseStateInit",
+			"inputs": [
+				{"name":"id","type":"uint64"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "deployDutchForwardAuction",
+			"inputs": [
+				{"name":"startValue","type":"uint128"},
+				{"name":"finishValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployDutchForwardAuctionCustom",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"fee","type":"uint128"},
+				{"name":"startValue","type":"uint128"},
+				{"name":"finishValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "buildDutchForwardStateInit",
+			"inputs": [
+				{"name":"id","type":"uint64"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "deployDutchReverseAuction",
+			"inputs": [
+				{"name":"startValue","type":"uint128"},
+				{"name":"finishValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployDutchReverseAuctionCustom",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"fee","type":"uint128"},
+				{"name":"startValue","type":"uint128"},
+				{"name":"finishValue","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "buildDutchReverseStateInit",
+			"inputs": [
+				{"name":"id","type":"uint64"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "deployBlindForwardAuction",
+			"inputs": [
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"},
+				{"name":"confirmationDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployBlindForwardAuctionCustom",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"fee","type":"uint128"},
+				{"name":"deposit","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"},
+				{"name":"confirmationDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "buildBlindForwardStateInit",
+			"inputs": [
+				{"name":"id","type":"uint64"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "deployBlindReverseAuction",
+			"inputs": [
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"},
+				{"name":"confirmationDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployBlindReverseAuctionCustom",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"fee","type":"uint128"},
+				{"name":"deposit","type":"uint128"},
+				{"name":"startTime","type":"uint32"},
+				{"name":"openDuration","type":"uint32"},
+				{"name":"confirmationDuration","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "buildBlindReverseStateInit",
+			"inputs": [
+				{"name":"id","type":"uint64"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	]
+}

@@ -8,12 +8,13 @@ from utils.phase import Phase
 from utils.utils import random_address
 
 
-class BlindForwardAuctionTest(BlindAuctionTest):
+class BlindReverseAuctionTest(BlindAuctionTest):
 
     def setUp(self):
         self._setup_phase_time(Phase.WAIT)
         bid_code = ts4.load_code_cell('BlindBid')
         self.contract = ts4.BaseContract('BlindReverseAuction', {
+            'owner': random_address(),
             'fee': 1 * ts4.GRAM,
             'deposit': 10 * ts4.GRAM,
             'startTime': self.START_TIME,

@@ -14,6 +14,14 @@ class BaseAuctionTest(unittest.TestCase):
         ts4.init(BUILD_ARTIFACTS_PATH, verbose=VERBOSE)
         cls.contract: typing.Optional[ts4.BaseContract] = None
 
+    def test_id(self):
+        _id = self.contract.call_getter('getId')
+        self.assertEqual(0, _id)
+
+    def test_owner(self):
+        owner = self.contract.call_getter('getOwner')
+        self.assertIsNotNone(owner)
+
     def _update(self):
         wallet = TestWallet()
         wallet.update(self.contract.address(), 1 * ts4.GRAM)

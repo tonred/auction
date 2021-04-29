@@ -6,12 +6,13 @@ import "./abstract/EnglishAuction.sol";
 contract EnglishReverseAuction is EnglishAuction {
 
     constructor(
+        address owner,
         uint128 fee,
         uint128 startValue,
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) public onlyRoot EnglishAuction(fee, startValue, stepValue, startTime, openDuration) {}
+    ) public onlyRoot EnglishAuction(owner, fee, startValue, stepValue, startTime, openDuration) {}
 
     function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _checkBid(value);

@@ -9,6 +9,7 @@ abstract contract BaseAuction {
     address static _root;
     uint64 static _id;
 
+    address _owner;
     Phase _phase;
     Bid _winner;
 
@@ -28,8 +29,9 @@ abstract contract BaseAuction {
     }
 
 
-    constructor() public onlyRoot {
+    constructor(address owner) public onlyRoot {
         tvm.accept();
+        _owner = owner;
         _phase = Phase.WAIT;
     }
 
@@ -44,6 +46,10 @@ abstract contract BaseAuction {
 
     function getId() public view returns (uint64) {
         return _id;
+    }
+
+    function getOwner() public view returns (address) {
+        return _owner;
     }
 
     function getPhase() public view returns (Phase) {
