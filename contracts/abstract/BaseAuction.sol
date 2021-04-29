@@ -89,7 +89,7 @@ abstract contract BaseAuction {
     function finish() public view {
         require(msg.sender == address(this), Errors.IS_NOT_SELF);
         tvm.accept();
-        IAuctionRoot(_finishAddress).finish{value: address(this).balance - LEAVE_VALUE, flag: 0, bounce: false}
+        IAuctionRoot(_root).finish{value: address(this).balance - LEAVE_VALUE, flag: 0, bounce: false}
             (_type, _id, _winner, _finishAddress, _finishPayload);
     }
 

@@ -40,11 +40,6 @@ contract AuctionRoot is IAuctionRoot {
         _;
     }
 
-    modifier checkValue() {
-        require(msg.value >= _deployValue, Errors.LOW_DEPLOY_VALUE);
-        _;
-    }
-
 
     constructor(uint128 deployValue, uint128 defaultFeeValue, uint128 defaultDepositValue) public {
         tvm.accept();
@@ -126,7 +121,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         return deployEnglishForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
     }
 
@@ -138,7 +133,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         TvmCell stateInit = buildEnglishForwardStateInit(_counter++);
         EnglishForwardAuction _auction = new EnglishForwardAuction{
             stateInit: stateInit,
@@ -167,7 +162,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         return deployEnglishReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
     }
 
@@ -179,7 +174,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         TvmCell stateInit = buildEnglishReverseStateInit(_counter++);
         EnglishReverseAuction _auction = new EnglishReverseAuction{
             stateInit: stateInit,
@@ -208,7 +203,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         return deployDutchForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
     }
 
@@ -220,7 +215,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         TvmCell stateInit = buildDutchForwardStateInit(_counter++);
         DutchForwardAuction _auction = new DutchForwardAuction{
             stateInit: stateInit,
@@ -249,7 +244,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         return deployDutchReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
     }
 
@@ -261,7 +256,7 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         TvmCell stateInit = buildDutchReverseStateInit(_counter++);
         DutchReverseAuction _auction = new DutchReverseAuction{
             stateInit: stateInit,
@@ -289,7 +284,7 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         return deployBlindForwardAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
     }
 
@@ -301,7 +296,7 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         TvmCell stateInit = buildBlindForwardStateInit(_counter++);
         BlindForwardAuction _auction = new BlindForwardAuction{
             stateInit: stateInit,
@@ -329,7 +324,7 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         return deployBlindReverseAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
     }
 
@@ -341,7 +336,7 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
+    ) inited public responsible returns (address) {
         TvmCell stateInit = buildBlindReverseStateInit(_counter++);
         BlindReverseAuction _auction = new BlindReverseAuction{
             stateInit: stateInit,

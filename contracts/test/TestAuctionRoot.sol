@@ -5,10 +5,7 @@ import "../AuctionRoot.sol";
 
 contract TestAuctionRoot is AuctionRoot {
 
-    constructor(uint128 deployValue, uint128 defaultFeeValue, uint128 defaultDepositValue) public AuctionRoot(deployValue, defaultFeeValue, defaultDepositValue) {
-        tvm.accept();
-        _deployValue = 0;  // in order to pass `checkValue` modifier
-    }
+    constructor(uint128 deployValue, uint128 defaultFeeValue, uint128 defaultDepositValue) public AuctionRoot(deployValue, defaultFeeValue, defaultDepositValue) {}
 
 
     function testDeployEnglishForwardAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration) public returns (address) {
