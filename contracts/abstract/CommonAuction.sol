@@ -36,7 +36,7 @@ abstract contract CommonAuction is BaseAuction {
         }
         if (_phase == Phase.OPEN && now >= _openTime.finishTime) {
             _phase = Phase.CLOSE;
-            _finish();
+            _sendFinish();
         }
     }
 

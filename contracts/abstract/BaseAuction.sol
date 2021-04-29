@@ -80,9 +80,15 @@ abstract contract BaseAuction {
         _finishPayload = payload;
     }
 
-    function _finish() internal {
+    function _sendFinish() internal {
         _phase = Phase.CLOSE;
-        IAuctionRoot(_finishAddress).finish{value: 0, flag: SEND_ALL_GAS, bounce: false}
+        BaseAuction(address(this)).finish();
+    }
+
+    function finish() public view {
+        require(msg.sender == address(this), Errors.IS_NOT_SELF);
+        tvm.accept();
+        IAuctionRoot(_finishAddress).finish{value: msg.value, flag: 0, bounce: false}
             (_type, _id, _winner, _finishAddress, _finishPayload);
     }
 

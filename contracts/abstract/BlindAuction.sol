@@ -35,7 +35,7 @@ abstract contract BlindAuction is BaseAuction {
         }
         if (_phase == Phase.CONFIRMATION && now >= _confirmationTime.finishTime) {
             _phase = Phase.CLOSE;
-            _finish();
+            _sendFinish();
         }
         _;
     }

@@ -19,7 +19,7 @@ contract DutchReverseAuction is DutchAuction {
     function buy(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _canBuy(value);
         _winner = Bid(msg.sender, msg.value);
-        _finish();
+        _sendFinish();
         msg.sender.transfer({value : 0, flag : SEND_ALL_GAS, bounce: false});
     }
 

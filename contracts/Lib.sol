@@ -26,6 +26,7 @@ library Errors {
     uint16 constant WRONG_PHASE = 103;
     uint16 constant LOW_OPEN_DURATION = 104;
     uint16 constant LOW_MSG_VALUE = 105;
+    uint16 constant IS_NOT_SELF = 106;
 
     // English
     uint16 constant LOW_STEP_VALUE = 201;

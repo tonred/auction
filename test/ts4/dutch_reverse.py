@@ -40,7 +40,7 @@ class DutchReverseAuctionTest(DutchAuctionTest):
         wallet = TestWallet()
         self._buy(wallet, bid_value=5)
         self.assertEqual(Phase.CLOSE, self._phase(), 'Auction is not finished')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not made')
 
     def test_high_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)
