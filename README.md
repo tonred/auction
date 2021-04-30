@@ -3,7 +3,9 @@
 ## Key features:
 * Six types of auctions
 * Custom configuration of each auction
-* Надеюсь мы придумаем что написать)
+* Well-tested using `ts4`
+* Го еще четь
+* Про UI и деботов
 
 ## Build and run
 
@@ -30,7 +32,7 @@ For view all make instructions:
 make help
 ```
 
-Compile nad test:
+Compile and test:
 ```shell
 make build
 make tests
@@ -42,7 +44,10 @@ make tests
 
 ## Structure
 
-Я запихну схему наследований сюда
+Contract classes dependencies (as well as test classes) is displayed on this image.
+Easily to extend and add new auction types
+
+![structure.png](docs/structure.png)
 
 ## Types of auctions
 
@@ -101,7 +106,7 @@ In CONFIRMATION phase nobody can do a new bid.
 You can remove your bid in OPEN phase.
 Winner is a person with the highest bid.
 
-_Important:_ there is a deposit value that you should to submit when you make a bid.
+**Important:** there is a deposit value that you should to submit when you make a bid.
 This deposit will be returned after confirmation.
 It is used to prevent spamming, when someone creates a lot of blind bids but don't confirm they.
 
@@ -119,7 +124,7 @@ In CONFIRMATION phase nobody can do a new bid.
 You can remove your bid in OPEN phase.
 Winner is a person with the lowest bid.
 
-_Important:_ there is a deposit value that you should to submit when you make a bid.
+**Important:** there is a deposit value that you should to submit when you make a bid.
 This deposit will be returned after confirmation.
 It is used to prevent spamming, when someone creates a lot of blind bids but don't confirm they.
 
@@ -133,14 +138,12 @@ To run tests use:
 make tests
 ```
 
-After updates in tests, run `errors_generator.py` to update python error's class.
+After updates in tests, run `errors_generator.py` to update python error's class
 
 Test is written on python using `unittest` and `tonos-ts4` libraries.
 There are tests for each type of auction (name of files in equals to auction type), and separate tests for root in `root.py`.
 Moreover, there is an integration test for all workflow in `workflow.py`.
-Test classes inheritance structure is the same as in auction.
-
-Они есть, я рожу четь
+Test classes inheritance structure is the same as in auction
 
 ## UI-фронт
 
