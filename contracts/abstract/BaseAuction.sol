@@ -46,6 +46,8 @@ abstract contract BaseAuction {
         tvm.accept();
         _owner = owner;
         _phase = Phase.WAIT;
+        _finishAddress = owner;
+        _finishPayload = tvm.buildEmptyData(0);
     }
 
 
@@ -89,7 +91,7 @@ abstract contract BaseAuction {
     function finish() public view {
         require(msg.sender == address(this), Errors.IS_NOT_SELF);
         tvm.accept();
-        _reserve(LEAVE_VALUE);
+        _reserve(_root);
         IAuctionRoot(_finishAddress).finish{value: 0, flag: 128, bounce: false}(
             _type,
             _id,
