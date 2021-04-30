@@ -4,7 +4,9 @@ Github: https://github.com/tonred/auction
 
 Viewer: https://auction-viewer.ton.red/?network=net.ton.dev&root=0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce
 
-Root address in net.ton.dev: 0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce
+Root address in net.ton.dev: `0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce`
+
+DeBot address in net.ton.dev: `0:718d360c0aab56ea0aabf40cb28740c5f38e1f6e179cbb70ca8adabd9b5c27d5`
 
 ## Key features:
 * Six types of auctions
@@ -240,10 +242,7 @@ There are tests for each type of auction (name of files in equals to auction typ
 Moreover, there is an integration test for all workflow in `workflow.py`.
 Test classes inheritance structure is the same as in auction
 
-## UI-фронт
+## UI
 
-...
-
-## Debot
-
-Немного скринов что он есть
+![viewer.png](docs/viewer.png)
+![info.png](docs/info.png)

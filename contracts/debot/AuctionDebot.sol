@@ -41,7 +41,7 @@ contract AuctionDebot is Debot {
 
     uint128 auctionTypeChoice;
     address auctionAddressInput;
-    uint128 auctionOpenDuration;
+    uint32 auctionOpenDuration;
     uint128 auctionConfirmationDuration;
     optional(uint256) pubkey;
     uint32 auctionStepValue;
@@ -157,7 +157,7 @@ contract AuctionDebot is Debot {
         }
     }
 
-    function choiceAuctionOpenDuration(uint128 value) public {
+    function choiceAuctionOpenDuration(uint32 value) public {
         auctionOpenDuration = value;
 
         if (auctionTypeChoice == 0 /*EnglishForward*/){
@@ -388,5 +388,5 @@ contract AuctionDebot is Debot {
         onCodeUpgrade();
     }
 
-    function onCodeUpgrade() internal virtual;
+    function onCodeUpgrade() private {}
 }
