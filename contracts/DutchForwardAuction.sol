@@ -16,6 +16,10 @@ contract DutchForwardAuction is DutchAuction {
         require(startValue > finishValue, Errors.START_LESS_THAN_FINISH);
     }
 
+    /*
+    @param value - Real value of bid
+    @value You must send all tokens of your bid plus fee value
+    */
     function buy(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _canBuy(value);
         _winner = Bid(msg.sender, msg.value);

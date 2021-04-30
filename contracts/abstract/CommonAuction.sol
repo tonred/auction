@@ -9,11 +9,13 @@ abstract contract CommonAuction is BaseAuction {
     uint128 _fee;
     PhaseTime _openTime;
 
+
     /**********
      * EVENTS *
      **********/
 
     event BidIsMade(address bettor, uint128 value);
+
 
     /*************
      * MODIFIERS *
@@ -24,6 +26,11 @@ abstract contract CommonAuction is BaseAuction {
         _;
     }
 
+
+    /***************
+     * CONSTRUCTOR *
+     **************/
+
     constructor(address owner, uint128 fee, uint32 startTime, uint32 openDuration) public onlyRoot BaseAuction(owner) {
         require(openDuration > 0, Errors.LOW_OPEN_DURATION);
         _fee = fee;
@@ -31,9 +38,19 @@ abstract contract CommonAuction is BaseAuction {
         _update();
     }
 
+
+    /***********
+     * GETTERS *
+     **********/
+
     function getOpenTime() public view returns (PhaseTime) {
         return _openTime;
     }
+
+
+    /******************
+     * UPDATE METHODS *
+     *****************/
 
     function updateAndGetPhase() public view doUpdate returns (Phase) {
         return _phase;

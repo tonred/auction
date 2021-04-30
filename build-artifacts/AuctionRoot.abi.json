@@ -306,6 +306,14 @@
 			"outputs": [
 				{"name":"_defaultDepositValue","type":"uint128"}
 			]
+		},
+		{
+			"name": "_counter",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_counter","type":"uint64"}
+			]
 		}
 	],
 	"data": [

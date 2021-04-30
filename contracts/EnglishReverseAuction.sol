@@ -14,6 +14,10 @@ contract EnglishReverseAuction is EnglishAuction {
         uint32 openDuration
     ) public onlyRoot EnglishAuction(owner, fee, startValue, stepValue, startTime, openDuration) {}
 
+    /*
+    @param value - Real value of bid
+    @value Must be enough for all gas used in this operation
+    */
     function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _checkBid(value);
         _winner = Bid(msg.sender, value);

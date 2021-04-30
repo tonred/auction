@@ -42,6 +42,10 @@ abstract contract BaseAuction {
     }
 
 
+    /***************
+     * CONSTRUCTOR *
+     **************/
+
     constructor(address owner) public onlyRoot {
         tvm.accept();
         _owner = owner;
@@ -74,6 +78,11 @@ abstract contract BaseAuction {
     function getPhase() public view returns (Phase) {
         return _phase;
     }
+
+
+    /***********
+     * METHODS *
+     **********/
 
     function update() public virtual;
 

@@ -11,6 +11,17 @@ abstract contract EnglishAuction is CommonAuction {
     uint128 _bidsCount;
 
 
+    /***************
+     * CONSTRUCTOR *
+     **************/
+    /*
+    @param owner        Owner of this auction contract
+    @param fee          Fee value for each bid
+    @param startValue   Value when auction is started
+    @param stepValue    Value on which next bid must be greater/lower
+    @param startTime    Timestamp when auction will start
+    @param openDuration Duration of auction in seconds
+    */
     constructor(
         address owner,
         uint128 fee,

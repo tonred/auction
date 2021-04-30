@@ -20,7 +20,7 @@ enum AuctionType {
 }
 
 library Errors {
-    // Common
+    // Basic
     uint16 constant IS_NOT_ROOT = 101;
     uint16 constant IS_NOT_OWNER = 102;
     uint16 constant WRONG_PHASE = 103;

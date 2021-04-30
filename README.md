@@ -44,8 +44,8 @@ make tests
 
 ## Structure
 
-Contract classes dependencies (as well as test classes) is displayed on this image.
-Easily to extend and add new auction types
+Contract classes dependencies (as well as test classes) are displayed on this image.
+Easy to extend and add new auction types
 
 ![structure.png](docs/structure.png)
 
