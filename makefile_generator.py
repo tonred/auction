@@ -90,6 +90,10 @@ tests-workflow:
 deploy-root:
 	@echo "Deploying Root contract"
 	node migration/2-deploy-AuctionRoot.js
+	
+deploy-test-deployer:
+	@echo "Deploying TestDeployer contract"
+	node migration/3-deploy-TestAuctionDeployer.js
 
 define compile_all
 	$(call compile_sol,$(1),$(2))

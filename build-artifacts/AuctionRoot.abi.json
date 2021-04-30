@@ -78,7 +78,6 @@
 		{
 			"name": "deployEnglishForwardAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"stepValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
@@ -90,7 +89,6 @@
 		{
 			"name": "deployEnglishForwardAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -113,7 +111,6 @@
 		{
 			"name": "deployEnglishReverseAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"stepValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
@@ -125,7 +122,6 @@
 		{
 			"name": "deployEnglishReverseAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -148,7 +144,6 @@
 		{
 			"name": "deployDutchForwardAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"finishValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
@@ -160,7 +155,6 @@
 		{
 			"name": "deployDutchForwardAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -183,7 +177,6 @@
 		{
 			"name": "deployDutchReverseAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"finishValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
@@ -195,7 +188,6 @@
 		{
 			"name": "deployDutchReverseAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -218,7 +210,6 @@
 		{
 			"name": "deployBlindForwardAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"},
 				{"name":"confirmationDuration","type":"uint32"}
@@ -229,7 +220,6 @@
 		{
 			"name": "deployBlindForwardAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"deposit","type":"uint128"},
@@ -252,7 +242,6 @@
 		{
 			"name": "deployBlindReverseAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"},
 				{"name":"confirmationDuration","type":"uint32"}
@@ -263,7 +252,6 @@
 		{
 			"name": "deployBlindReverseAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"deposit","type":"uint128"},
