@@ -1,4 +1,4 @@
-# Free TON on-line Auctions
+# Free TON online Auctions
 
 Github: https://github.com/tonred/auction
 
@@ -7,6 +7,8 @@ Viewer: https://auction-viewer.ton.red/?network=net.ton.dev&root=0:18ec0f775d7b1
 Root address in net.ton.dev: `0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce`
 
 DeBot address in net.ton.dev: `0:718d360c0aab56ea0aabf40cb28740c5f38e1f6e179cbb70ca8adabd9b5c27d5`
+
+TG: @Abionics
 
 ## Key features:
 * Six types of auctions
