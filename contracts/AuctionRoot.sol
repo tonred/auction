@@ -27,7 +27,7 @@ contract AuctionRoot is IAuctionRoot {
     TvmCell _codeBlindBid;
 
     bool _inited = false;
-    uint64 _counter = 0;
+    uint64 public _counter = 0;
 
 
     modifier inited() {
