@@ -94,6 +94,14 @@
 			]
 		},
 		{
+			"name": "updateAndGetPhase",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint8"}
+			]
+		},
+		{
 			"name": "update",
 			"inputs": [
 			],
@@ -173,5 +181,14 @@
 		{"key":3,"name":"_id","type":"uint64"}
 	],
 	"events": [
+		{
+			"name": "BidIsMade",
+			"inputs": [
+				{"name":"bettor","type":"address"},
+				{"name":"hash","type":"uint256"}
+			],
+			"outputs": [
+			]
+		}
 	]
 }

@@ -16,11 +16,14 @@ contract EnglishForwardAuction is EnglishAuction {
 
     function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _checkBid(value);
+        _reserve(0);
+
         if (_winner.owner != address(0)) {
-            _winner.owner.transfer(_winner.value);
+            _winner.owner.transfer({value: _winner.value, flag: 1, bounce: false});
         }
         _winner = Bid(msg.sender, value);
         _bidsCount++;
+        emit BidIsMade(msg.sender, value);
     }
 
     function _checkBid(uint128 value) private view {

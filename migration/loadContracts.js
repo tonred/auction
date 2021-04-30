@@ -7,16 +7,34 @@ async function loadContract(tonWrapper, name, address) {
 }
 
 module.exports = {
-    loadAuctionContract: async function (tw) {
-        return await loadContract(tw, process.env.AUCTION_CONTRACT);
-    },
     loadAuctionRootContract: async function (tw) {
         return await loadContract(tw, process.env.AUCTION_ROOT_CONTRACT);
     },
-    loadBidContract: async function (tw) {
-        return await loadContract(tw, process.env.BID_CONTRACT);
+    loadEnglishForwardAuctionContract: async function (tw) {
+        return await loadContract(tw, 'EnglishForwardAuction');
+    },
+    loadEnglishReverseAuctionContract: async function (tw) {
+        return await loadContract(tw, 'EnglishReverseAuction');
+    },
+    loadDutchForwardAuctionContract: async function (tw) {
+        return await loadContract(tw, 'DutchForwardAuction');
+    },
+    loadDutchReverseAuctionContract: async function (tw) {
+        return await loadContract(tw, 'DutchReverseAuction');
+    },
+    loadBlindForwardAuctionContract: async function (tw) {
+        return await loadContract(tw, 'BlindForwardAuction');
+    },
+    loadBlindReverseAuctionContract: async function (tw) {
+        return await loadContract(tw, 'BlindReverseAuction');
+    },
+    loadBlindBidContract: async function (tw) {
+        return await loadContract(tw, 'BlindBid');
     },
     loadTestWalletContract: async function (tw) {
         return await loadContract(tw, process.env.TEST_WALLET_CONTRACT);
+    },
+    loadTestDeployerContract: async function (tw) {
+        return await loadContract(tw, 'TestDeployer');
     },
 }

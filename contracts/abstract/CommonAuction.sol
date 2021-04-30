@@ -9,6 +9,15 @@ abstract contract CommonAuction is BaseAuction {
     uint128 _fee;
     PhaseTime _openTime;
 
+    /**********
+     * EVENTS *
+     **********/
+
+    event BidIsMade(address bettor, uint128 value);
+
+    /*************
+     * MODIFIERS *
+     *************/
 
     modifier doUpdate() {
         _update();
@@ -24,6 +33,10 @@ abstract contract CommonAuction is BaseAuction {
 
     function getOpenTime() public view returns (PhaseTime) {
         return _openTime;
+    }
+
+    function updateAndGetPhase() public view doUpdate returns (Phase) {
+        return _phase;
     }
 
     function update() doUpdate override virtual public {

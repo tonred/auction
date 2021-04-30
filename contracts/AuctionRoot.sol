@@ -8,15 +8,15 @@ import "EnglishForwardAuction.sol";
 import "EnglishReverseAuction.sol";
 import "./interface/IAuctionRoot.sol";
 import "./interface/IAuctionFinishCallback.sol";
+import "./interface/IAuctionDeployedCallback.sol";
 
 
 contract AuctionRoot is IAuctionRoot {
     uint8 constant SEND_ALL_GAS = 64;
 
-
-    uint128 _deployValue = 1 ton;
-    uint128 _defaultFeeValue = 1 ton;
-    uint128 _defaultDepositValue = 10 ton;
+    uint128 public _deployValue;
+    uint128 public _defaultFeeValue;
+    uint128 public _defaultDepositValue;
 
     TvmCell _codeEnglishForwardAuction;
     TvmCell _codeEnglishReverseAuction;
@@ -37,6 +37,7 @@ contract AuctionRoot is IAuctionRoot {
 
     modifier notInited() {
         require(_inited == false, Errors.IS_ALREADY_INITED);
+        tvm.accept();
         _;
     }
 
@@ -45,6 +46,7 @@ contract AuctionRoot is IAuctionRoot {
         _;
     }
 
+    event NewAuctionDeployed(uint64 id, address auction, AuctionType auctionType, address owner, uint32 openDuration);
 
     constructor(uint128 deployValue, uint128 defaultFeeValue, uint128 defaultDepositValue) public {
         tvm.accept();
@@ -54,53 +56,32 @@ contract AuctionRoot is IAuctionRoot {
     }
 
 
-    function setCodeEnglishForwardAuction(
-        TvmCell codeEnglishForwardAuction
-    ) notInited public {
-        tvm.accept();
-        _codeEnglishForwardAuction = codeEnglishForwardAuction;
+    function setCodeEnglishForwardAuction(TvmCell code) notInited public {
+        _codeEnglishForwardAuction = code;
     }
 
-    function setCodeEnglishReverseAuction(
-        TvmCell codeEnglishReverseAuction
-    ) notInited public {
-        tvm.accept();
-        _codeEnglishReverseAuction = codeEnglishReverseAuction;
+    function setCodeEnglishReverseAuction(TvmCell code) notInited public {
+        _codeEnglishReverseAuction = code;
     }
 
-    function setCodeDutchForwardAuction(
-        TvmCell codeDutchForwardAuction
-    ) notInited public {
-        tvm.accept();
-        _codeDutchForwardAuction = codeDutchForwardAuction;
+    function setCodeDutchForwardAuction(TvmCell code) notInited public {
+        _codeDutchForwardAuction = code;
     }
 
-    function setCodeDutchReverseAuction(
-        TvmCell codeDutchReverseAuction
-    ) notInited public {
-        tvm.accept();
-        _codeDutchReverseAuction = codeDutchReverseAuction;
+    function setCodeDutchReverseAuction(TvmCell code) notInited public {
+        _codeDutchReverseAuction = code;
     }
 
-    function setCodeBlindForwardAuction(
-        TvmCell codeBlindForwardAuction
-    ) notInited public {
-        tvm.accept();
-        _codeBlindForwardAuction = codeBlindForwardAuction;
+    function setCodeBlindForwardAuction(TvmCell code) notInited public {
+        _codeBlindForwardAuction = code;
     }
 
-    function setCodeBlindReverseAuction(
-        TvmCell codeBlindReverseAuction
-    ) notInited public {
-        tvm.accept();
-        _codeBlindReverseAuction = codeBlindReverseAuction;
+    function setCodeBlindReverseAuction(TvmCell code) notInited public {
+        _codeBlindReverseAuction = code;
     }
 
-    function setCodeBlindBid(
-        TvmCell codeBlindBid
-    ) notInited public {
-        tvm.accept();
-        _codeBlindBid = codeBlindBid;
+    function setCodeBlindBid(TvmCell code) notInited public {
+        _codeBlindBid = code;
     }
 
     function finishInit() notInited public {
@@ -111,7 +92,6 @@ contract AuctionRoot is IAuctionRoot {
             _isNotEmpty(_codeBlindBid),
             Errors.AUCTIONS_CODES_NOT_INITED
         );
-        tvm.accept();
         _inited = true;
     }
 
@@ -126,8 +106,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
-        return deployEnglishForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
+    ) public override {
+        deployEnglishForwardAuctionCustom(
+            msg.sender,
+            _defaultFeeValue,
+            startValue,
+            stepValue,
+            startTime,
+            openDuration
+        );
     }
 
     // ENGLISH FORWARD
@@ -138,13 +125,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) public override checkValue inited {
+        reserve(0);
         TvmCell stateInit = buildEnglishForwardStateInit(_counter++);
-        EnglishForwardAuction _auction = new EnglishForwardAuction{
+        address auction = new EnglishForwardAuction{
             stateInit: stateInit,
             value: _deployValue
         }(owner, fee, startValue, stepValue, startTime, openDuration);
-        return _auction;
+        emit NewAuctionDeployed(_counter, auction, AuctionType.ENGLISH_FORWARD, msg.sender, openDuration);
+        IAuctionDeployedCallback(msg.sender).onAuctionDeployed{value: 0, flag: 128, bounce: false}(auction, _counter);
     }
 
     // ENGLISH FORWARD
@@ -167,8 +156,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
-        return deployEnglishReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, stepValue, startTime, openDuration);
+    ) public override {
+        deployEnglishReverseAuctionCustom(
+            msg.sender,
+            _defaultFeeValue,
+            startValue,
+            stepValue,
+            startTime,
+            openDuration
+        );
     }
 
     // ENGLISH REVERSE
@@ -179,13 +175,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 stepValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) public override checkValue inited {
+        reserve(0);
         TvmCell stateInit = buildEnglishReverseStateInit(_counter++);
-        EnglishReverseAuction _auction = new EnglishReverseAuction{
+        address auction = new EnglishReverseAuction{
             stateInit: stateInit,
             value: _deployValue
         }(owner, fee, startValue, stepValue, startTime, openDuration);
-        return _auction;
+        emit NewAuctionDeployed(_counter, auction, AuctionType.ENGLISH_REVERSE, msg.sender, openDuration);
+        IAuctionDeployedCallback(msg.sender).onAuctionDeployed{value: 0, flag: 128, bounce: false}(auction, _counter);
     }
 
     // ENGLISH REVERSE
@@ -208,8 +206,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
-        return deployDutchForwardAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
+    ) public override {
+        deployDutchForwardAuctionCustom(
+            msg.sender,
+            _defaultFeeValue,
+            startValue,
+            finishValue,
+            startTime,
+            openDuration
+        );
     }
 
     // DUTCH FORWARD
@@ -220,13 +225,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) public override checkValue inited {
+        reserve(0);
         TvmCell stateInit = buildDutchForwardStateInit(_counter++);
-        DutchForwardAuction _auction = new DutchForwardAuction{
+        address auction = new DutchForwardAuction{
             stateInit: stateInit,
             value: _deployValue
         }(owner, fee, startValue, finishValue, startTime, openDuration);
-        return _auction;
+        emit NewAuctionDeployed(_counter, auction, AuctionType.DUTCH_FORWARD, msg.sender, openDuration);
+        IAuctionDeployedCallback(msg.sender).onAuctionDeployed{value: 0, flag: 128, bounce: false}(auction, _counter);
     }
 
     // DUTCH FORWARD
@@ -249,8 +256,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
-        return deployDutchReverseAuctionCustom(msg.sender, _defaultFeeValue, startValue, finishValue, startTime, openDuration);
+    ) public override {
+        deployDutchReverseAuctionCustom(
+            msg.sender,
+            _defaultFeeValue,
+            startValue,
+            finishValue,
+            startTime,
+            openDuration
+        );
     }
 
     // DUTCH REVERSE
@@ -261,13 +275,15 @@ contract AuctionRoot is IAuctionRoot {
         uint128 finishValue,
         uint32 startTime,
         uint32 openDuration
-    ) checkValue inited public returns (address) {
+    ) public override checkValue inited {
+        reserve(0);
         TvmCell stateInit = buildDutchReverseStateInit(_counter++);
-        DutchReverseAuction _auction = new DutchReverseAuction{
+        address auction = new DutchReverseAuction{
             stateInit: stateInit,
             value: _deployValue
         }(owner, fee, startValue, finishValue, startTime, openDuration);
-        return _auction;
+        emit NewAuctionDeployed(_counter, auction, AuctionType.DUTCH_REVERSE, msg.sender, openDuration);
+        IAuctionDeployedCallback(msg.sender).onAuctionDeployed{value: 0, flag: 128, bounce: false}(auction, _counter);
     }
 
     // DUTCH REVERSE
@@ -289,8 +305,15 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
-        return deployBlindForwardAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
+    ) public override {
+        deployBlindForwardAuctionCustom(
+            msg.sender,
+            _defaultFeeValue,
+            _defaultDepositValue,
+            startTime,
+            openDuration,
+            confirmationDuration
+        );
     }
 
     // BLIND FORWARD
@@ -301,13 +324,15 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
+    ) public override checkValue inited {
+        reserve(0);
         TvmCell stateInit = buildBlindForwardStateInit(_counter++);
-        BlindForwardAuction _auction = new BlindForwardAuction{
+        address auction = new BlindForwardAuction{
             stateInit: stateInit,
             value: _deployValue
         }(owner, fee, deposit, startTime, openDuration, confirmationDuration, _codeBlindBid);
-        return _auction;
+        emit NewAuctionDeployed(_counter, auction, AuctionType.BLIND_FORWARD, msg.sender, openDuration);
+        IAuctionDeployedCallback(msg.sender).onAuctionDeployed{value: 0, flag: 128, bounce: false}(auction, _counter);
     }
 
     // BLIND FORWARD
@@ -329,8 +354,16 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
-        return deployBlindReverseAuctionCustom(msg.sender, _defaultFeeValue, _defaultDepositValue, startTime, openDuration, confirmationDuration);
+    ) public override {
+        deployBlindReverseAuctionCustom(
+            msg.sender,
+            _defaultFeeValue,
+            _defaultDepositValue,
+            startTime,
+            openDuration,
+            confirmationDuration
+        );
+
     }
 
     // BLIND REVERSE
@@ -341,13 +374,15 @@ contract AuctionRoot is IAuctionRoot {
         uint32 startTime,
         uint32 openDuration,
         uint32 confirmationDuration
-    ) checkValue inited public returns (address) {
+    ) public override checkValue inited {
+        reserve(0);
         TvmCell stateInit = buildBlindReverseStateInit(_counter++);
-        BlindReverseAuction _auction = new BlindReverseAuction{
+        address auction = new BlindReverseAuction{
             stateInit: stateInit,
             value: _deployValue
         }(owner, fee, deposit, startTime, openDuration, confirmationDuration, _codeBlindBid);
-        return _auction;
+        emit NewAuctionDeployed(_counter, auction, AuctionType.BLIND_REVERSE, msg.sender, openDuration);
+        IAuctionDeployedCallback(msg.sender).onAuctionDeployed{value: 0, flag: 128, bounce: false}(auction, _counter);
     }
 
     // BLIND REVERSE
@@ -364,10 +399,16 @@ contract AuctionRoot is IAuctionRoot {
     }
 
 
-    function finish(AuctionType auctionType, uint64 id, Bid winner, address finishAddress, TvmCell finishPayload) override public {
+    function finish(
+        AuctionType auctionType,
+        uint64 id,
+        Bid winner,
+        address finishAddress,
+        TvmCell finishPayload
+    ) override public {
         _checkIsAuctionCallback(auctionType, id);
         IAuctionFinishCallback(finishAddress).onAuctionFinish{value: 0, flag: SEND_ALL_GAS, bounce: false}
-            (winner.owner, winner.value, finishPayload);
+            (id, msg.sender, winner.owner, winner.value, finishPayload);
     }
 
     function _checkIsAuctionCallback(AuctionType auctionType, uint64 id) internal view {
@@ -388,6 +429,10 @@ contract AuctionRoot is IAuctionRoot {
 
     function _calcAddress(TvmCell stateInit) private pure returns (address) {
         return address.makeAddrStd(0, tvm.hash(stateInit));
+    }
+
+     function reserve(uint128 additional) private view {
+        tvm.rawReserve(address(this).balance - msg.value + additional, 2);
     }
 
 }

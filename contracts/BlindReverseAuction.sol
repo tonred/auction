@@ -34,7 +34,7 @@ contract BlindReverseAuction is BlindAuction {
     function confirmBidCallback(address owner, uint256 hash, uint128 value, uint128) public {
         _checkIsBidCallback(owner, hash);
         _bidsCount++;
-        owner.transfer(_deposit - _fee);
+        owner.transfer({value: _deposit - _fee, flag: 1, bounce: false});
         Bid bid = Bid(owner, value);
         _updateResults(bid);
     }
