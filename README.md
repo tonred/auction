@@ -17,9 +17,9 @@
 ### English Forward
 Most common type of auction. There are start value and step value.
 Every bid must be greater than previous on this step value (or more).
-Winner is a person with the highest bid.
+The winner is a person with the highest bid.
 Every bid must be confirmed by real crystals in a message.
-When some makes bid more than your bid, you will get back you crystals values for previous bid.
+When somebody makes a bid more than your bid, you will get back your crystals values for the previous bid.
 
 In root use method `deployEnglishForwardAuction` or `deployEnglishForwardAuctionCustom` to create auction.
 Use method `makeBid` in auction to submit a bid
@@ -65,13 +65,13 @@ To do this, you must generate random salt, locally encode your bid via `calcBidH
 After then, you must wait for CONFIRMATION phase and confirm your bid.
 In this step you must send your salt, bid value and crystals.
 This algorithm guarantees that nobody will see your bid in OPEN phase.
-In CONFIRMATION phase nobody can do new bid.
+In CONFIRMATION phase nobody can do a new bid.
 You can remove your bid in OPEN phase.
 Winner is a person with the highest bid.
 
 _Important:_ there is a deposit value that you should to submit when you make a bid.
 This deposit will be returned after confirmation.
-It is used to prevent spamming, when someone creates a lot of blind bid but don't confirm they.
+It is used to prevent spamming, when someone creates a lot of blind bids but don't confirm they.
 
 In root use method `deployBlindForwardAuction` or `deployBlindForwardAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
@@ -83,13 +83,13 @@ To do this, you must generate random salt, locally encode your bid via `calcBidH
 After then, you must wait for CONFIRMATION phase and confirm your bid.
 In this step you must send your salt and bid value.
 This algorithm guarantees that nobody will see your bid in OPEN phase.
-In CONFIRMATION phase nobody can do new bid.
+In CONFIRMATION phase nobody can do a new bid.
 You can remove your bid in OPEN phase.
 Winner is a person with the lowest bid.
 
 _Important:_ there is a deposit value that you should to submit when you make a bid.
 This deposit will be returned after confirmation.
-It is used to prevent spamming, when someone creates a lot of blind bid but don't confirm they.
+It is used to prevent spamming, when someone creates a lot of blind bids but don't confirm they.
 
 In root use method `deployBlindReverseAuction` or `deployBlindReverseAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
