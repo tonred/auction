@@ -3,6 +3,7 @@
 ## Key features:
 * Six types of auctions
 * Custom configuration of each auction
+* Infinity amount of auctions and bids, no mapping
 * Well-tested using `ts4`
 * Го еще четь
 * Про UI и деботов
@@ -12,7 +13,7 @@
 ### Requirements:
 * ton-solidity `0.39.0` from broxus (https://github.com/broxus/TON-Solidity-Compiler)
 * tvm-linker
-* python `>=3.7` with `tonos-ts4` lib
+* python `>=3.7`
 * nodejs
 
 ### Setup environment
@@ -25,6 +26,11 @@ Copy `.env.dist` to `.env` and change variables up to you
 Install node js dependencies:
 ```shell
 npm install
+```
+
+Install test suit 4:
+```shell
+pip install tonos-ts4
 ```
 
 For view all make instructions:
