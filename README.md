@@ -1,20 +1,20 @@
-# Free TON on-line auctions
+# Free TON on-line Auctions
 
-### Key features:
+## Key features:
 * Six types of auctions
 * Надеюсь мы придумаем что написать)
 
-### Deployment
+## Deployment
 
 Он же должен быть
 
-### Structure
+## Structure
 
 Я запихну схему наследований сюда
 
-### Types of auctions
+## Types of auctions
 
-#### English Forward
+### English Forward
 Most common type of auction. There are start value and step value.
 Every bid must be greater than previous on this step value (or more).
 Winner is a person with the highest bid.
@@ -24,7 +24,7 @@ When some makes bid more than your bid, you will get back you crystals values fo
 In root use method `deployEnglishForwardAuction` or `deployEnglishForwardAuctionCustom` to create auction.
 Use method `makeBid` in auction to submit a bid
 
-#### English Reverse
+### English Reverse
 
 There are start value and step value. 
 Every bid must be lower than previous on this step value (or more).
@@ -34,7 +34,7 @@ Bids must not be confirmed by real crystals.
 In root use method `deployEnglishReverseAuction` or `deployEnglishReverseAuctionCustom` to create auction.
 Use method `makeBid` in auction to submit a bid
 
-#### Dutch Forward
+### Dutch Forward
 
 You must set start and finish values in a constructor.
 Bid price decreases from bigger (start) to smaller (finish) value.
@@ -46,7 +46,7 @@ Winner is a first person who make a bid.
 In root use method `deployDutchForwardAuction` or `deployDutchForwardAuctionCustom` to create auction.
 Use method `buy` in auction to submit a bid (and make a buy)
 
-#### Dutch Reverse
+### Dutch Reverse
 
 You must set start and finish values in a constructor.
 Bid price increases from smaller (start) to bigger (finish) value.
@@ -58,7 +58,7 @@ Winner is a first person who make a bid.
 In root use method `deployDutchReverseAuction` or `deployDutchReverseAuctionCustom` to create auction.
 Use method `buy` in auction to submit a bid (and make a buy)
 
-#### Blind Forward
+### Blind Forward
 
 Firstly you must make your bid in OPEN phase.
 To do this, you must generate random salt, locally encode your bid via `calcBidHash` method and then send this hash.
@@ -76,7 +76,7 @@ It is used to prevent spamming, when someone creates a lot of blind bid but don'
 In root use method `deployBlindForwardAuction` or `deployBlindForwardAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
 
-#### Blind Reverse
+### Blind Reverse
 
 Firstly you must make your bid in OPEN phase.
 To do this, you must generate random salt, locally encode your bid via `calcBidHash` method and then send this hash.
@@ -94,14 +94,14 @@ It is used to prevent spamming, when someone creates a lot of blind bid but don'
 In root use method `deployBlindReverseAuction` or `deployBlindReverseAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
 
-### Tests
+## Tests
 
 Они есть, я рожу четь
 
-### UI-фронт
+## UI-фронт
 
 ...
 
-### Debot
+## Debot
 
 Немного скринов что он есть
