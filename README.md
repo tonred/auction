@@ -2,7 +2,7 @@
 
 Github: https://github.com/tonred/auction
 
-Viewer: https://auction-viewer.ton.red
+Viewer: https://auction-viewer.ton.red/?network=net.ton.dev&root=0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce
 
 Root address in net.ton.dev: 0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce
 
