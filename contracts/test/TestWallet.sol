@@ -6,6 +6,7 @@ import "../abstract/BlindAuction.sol";
 
 
 contract TestWallet {
+
     constructor() public {
         tvm.accept();
     }

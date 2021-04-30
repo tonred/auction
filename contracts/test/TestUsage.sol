@@ -11,12 +11,15 @@ contract TestUsage is IAuctionFinishCallback, IAuctionDeployedCallback {
     address _auctionContract;
     address _winner;
 
+
     event AuctionCompleted(address winner, uint128 value, TvmCell payload);
+
 
     constructor(address auctionRoot) public {
         tvm.accept();
         _auctionRoot = auctionRoot;
     }
+
 
     function getAuctionContract() public view returns (address) {
         return _auctionContract;
@@ -25,6 +28,7 @@ contract TestUsage is IAuctionFinishCallback, IAuctionDeployedCallback {
     function getBestPerson() public view returns (address) {
         return _winner;
     }
+
 
     function createAuction() public view {
         tvm.accept();
@@ -41,9 +45,7 @@ contract TestUsage is IAuctionFinishCallback, IAuctionDeployedCallback {
         require(msg.sender == _auctionRoot, 101);
         tvm.accept();
         _winner = winnerAddress;
-        uint128 x = winnerValue;
-        TvmCell y = payload;
-        emit AuctionCompleted(winnerAddress, x, y);
+        emit AuctionCompleted(winnerAddress, winnerValue, payload);
     }
 
 

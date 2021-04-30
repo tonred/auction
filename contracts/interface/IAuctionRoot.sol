@@ -4,6 +4,7 @@ import "../Lib.sol";
 
 
 interface IAuctionRoot {
+
     function finish(
         AuctionType auctionType,
         uint64 id,

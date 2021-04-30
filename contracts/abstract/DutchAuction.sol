@@ -10,6 +10,17 @@ abstract contract DutchAuction is CommonAuction {
     uint128 _finishValue;
 
 
+    /***************
+     * CONSTRUCTOR *
+     **************/
+    /*
+    @param owner        Owner of this auction contract
+    @param fee          Fee value for each bid
+    @param startValue   Value when auction is started
+    @param finishValue  Value when auction is finished
+    @param startTime    Timestamp when auction will start
+    @param openDuration Duration of auction in seconds
+    */
     constructor(
         address owner,
         uint128 fee,
@@ -30,6 +41,7 @@ abstract contract DutchAuction is CommonAuction {
         return _finishValue;
     }
 
+    // Get price on what you can buy now
     function getCurrentPrice() public view returns (uint128) {
         return uint128((int256(_startValue) - _finishValue) * (int256(_openTime.finishTime) - now) / (int256(_openTime.finishTime) - _openTime.startTime) + _finishValue);
     }

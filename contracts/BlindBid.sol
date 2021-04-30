@@ -6,6 +6,7 @@ import "./Lib.sol";
 contract BlindBid {
     uint8 constant SEND_ALL_GAS_AND_DELETE = 160;
 
+
     address static _auction;
     address static _owner;
     uint256 static _hash;
@@ -20,6 +21,7 @@ contract BlindBid {
     constructor() public onlyAuction {
         tvm.accept();
     }
+
 
     function remove() onlyAuction responsible public view returns (address, uint256) {
         tvm.accept();

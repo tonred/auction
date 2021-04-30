@@ -16,6 +16,10 @@ contract DutchReverseAuction is DutchAuction {
         require(startValue < finishValue, Errors.START_MORE_THAN_FINISH);
     }
 
+    /*
+    @param value - Real value of bid
+    @value Must be enough for all gas used in this operation
+    */
     function buy(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _canBuy(value);
         _winner = Bid(msg.sender, msg.value);

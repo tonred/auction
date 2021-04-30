@@ -14,6 +14,10 @@ contract EnglishForwardAuction is EnglishAuction {
         uint32 openDuration
     ) public onlyRoot EnglishAuction(owner, fee, startValue, stepValue, startTime, openDuration) {}
 
+    /*
+    @param value - Real value of bid
+    @value You must send all tokens of your bid plus fee value
+    */
     function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
         _checkBid(value);
         _reserve(0);

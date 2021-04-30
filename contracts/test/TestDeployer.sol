@@ -11,10 +11,12 @@ contract TestDeployer is IAuctionDeployedCallback, IAuctionFinishCallback {
     mapping(uint64 => address) public deployedAuctions;
     mapping(uint64 => address) public finishedAuctions;
 
+
     constructor(address auctionRoot) public {
         tvm.accept();
         _auctionRoot = auctionRoot;
     }
+
 
     function deployAll(uint8 repeats, uint32 openDuration, uint32 confirmationDuration) public view {
         tvm.accept();

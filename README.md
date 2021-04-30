@@ -1,16 +1,24 @@
 # Free TON on-line Auctions
 
+Github: https://github.com/tonred/auction
+
+Viewer: https://auction-viewer.ton.red/?network=net.ton.dev&root=0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce
+
+Root address in net.ton.dev: 0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce
+
 ## Key features:
 * Six types of auctions
 * Custom configuration of each auction
-* Надеюсь мы придумаем что написать)
+* Infinity amount of auctions and bids, no mapping
+* Well-tested using `ts4`
+* Browser viewer for deployed auctions
 
 ## Build and run
 
 ### Requirements:
 * ton-solidity `0.39.0` from broxus (https://github.com/broxus/TON-Solidity-Compiler)
 * tvm-linker
-* python `>=3.7` with `tonos-ts4` lib
+* python `>=3.7`
 * nodejs
 
 ### Setup environment
@@ -25,12 +33,17 @@ Install node js dependencies:
 npm install
 ```
 
+Install test suit 4:
+```shell
+pip install tonos-ts4
+```
+
 For view all make instructions:
 ```shell
 make help
 ```
 
-Compile nad test:
+Compile and test:
 ```shell
 make build
 make tests
@@ -42,7 +55,10 @@ make tests
 
 ## Structure
 
-Я запихну схему наследований сюда
+Contract classes dependencies (as well as test classes) are displayed on this image.
+Easy to extend and add new auction types
+
+![structure.png](docs/structure.png)
 
 ## Types of auctions
 
@@ -56,6 +72,19 @@ When somebody makes a bid more than your bid, you will get back your crystals va
 In root use method `deployEnglishForwardAuction` or `deployEnglishForwardAuctionCustom` to create auction.
 Use method `makeBid` in auction to submit a bid
 
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployEnglishForwardAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+function deployEnglishForwardAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+// Auction
+function makeBid(uint128 value);
+```
+
+</details>
+
 ### English Reverse
 
 There are start value and step value. 
@@ -65,6 +94,19 @@ Bids must not be confirmed by real crystals.
 
 In root use method `deployEnglishReverseAuction` or `deployEnglishReverseAuctionCustom` to create auction.
 Use method `makeBid` in auction to submit a bid
+
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployEnglishReverseAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+function deployEnglishReverseAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+// Auction
+function makeBid(uint128 value);
+```
+
+</details>
 
 ### Dutch Forward
 
@@ -78,6 +120,19 @@ Winner is a first person who make a bid.
 In root use method `deployDutchForwardAuction` or `deployDutchForwardAuctionCustom` to create auction.
 Use method `buy` in auction to submit a bid (and make a buy)
 
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployDutchForwardAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+function deployDutchForwardAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+// Auction
+function buy(uint128 value);
+```
+
+</details>
+
 ### Dutch Reverse
 
 You must set start and finish values in a constructor.
@@ -90,6 +145,19 @@ Winner is a first person who make a bid.
 In root use method `deployDutchReverseAuction` or `deployDutchReverseAuctionCustom` to create auction.
 Use method `buy` in auction to submit a bid (and make a buy)
 
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployDutchReverseAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+function deployDutchReverseAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+// Auction
+function buy(uint128 value);
+```
+
+</details>
+
 ### Blind Forward
 
 Firstly you must make your bid in OPEN phase.
@@ -101,12 +169,28 @@ In CONFIRMATION phase nobody can do a new bid.
 You can remove your bid in OPEN phase.
 Winner is a person with the highest bid.
 
-_Important:_ there is a deposit value that you should to submit when you make a bid.
+**Important:** there is a deposit value that you should to submit when you make a bid.
 This deposit will be returned after confirmation.
 It is used to prevent spamming, when someone creates a lot of blind bids but don't confirm they.
 
 In root use method `deployBlindForwardAuction` or `deployBlindForwardAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
+
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployBlindForwardAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+function deployBlindForwardAuctionCustom(address owner, uint128 fee, uint128 deposit, uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+// Auction
+function makeBid(uint256 hash);
+function removeBid(uint256 hash);
+function confirmBid(uint128 value, uint256 salt);
+function calcBidHash(uint128 value, uint256 salt);  // call off-chain for secure
+```
+
+</details>
 
 ### Blind Reverse
 
@@ -119,12 +203,28 @@ In CONFIRMATION phase nobody can do a new bid.
 You can remove your bid in OPEN phase.
 Winner is a person with the lowest bid.
 
-_Important:_ there is a deposit value that you should to submit when you make a bid.
+**Important:** there is a deposit value that you should to submit when you make a bid.
 This deposit will be returned after confirmation.
 It is used to prevent spamming, when someone creates a lot of blind bids but don't confirm they.
 
 In root use method `deployBlindReverseAuction` or `deployBlindReverseAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
+
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployBlindReverseAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+function deployBlindReverseAuctionCustom(address owner, uint128 fee, uint128 deposit, uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+// Auction
+function makeBid(uint256 hash);
+function removeBid(uint256 hash);
+function confirmBid(uint128 value, uint256 salt);
+function calcBidHash(uint128 value, uint256 salt);  // call off-chain for secure
+```
+
+</details>
 
 ## Tests
 
@@ -133,14 +233,12 @@ To run tests use:
 make tests
 ```
 
-After updates in tests, run `errors_generator.py` to update python error's class.
+After updates in tests, run `errors_generator.py` to update python error's class
 
 Test is written on python using `unittest` and `tonos-ts4` libraries.
 There are tests for each type of auction (name of files in equals to auction type), and separate tests for root in `root.py`.
 Moreover, there is an integration test for all workflow in `workflow.py`.
-Test classes inheritance structure is the same as in auction.
-
-Они есть, я рожу четь
+Test classes inheritance structure is the same as in auction
 
 ## UI-фронт
 

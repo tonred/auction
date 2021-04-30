@@ -14,6 +14,7 @@ import "./interface/IAuctionDeployedCallback.sol";
 contract AuctionRoot is IAuctionRoot {
     uint8 constant SEND_ALL_GAS = 64;
 
+
     uint128 public _deployValue;
     uint128 public _defaultFeeValue;
     uint128 public _defaultDepositValue;
@@ -29,6 +30,10 @@ contract AuctionRoot is IAuctionRoot {
     bool _inited = false;
     uint64 public _counter = 0;
 
+
+    /*************
+     * MODIFIERS *
+     *************/
 
     modifier inited() {
         require(_inited == true, Errors.IS_NOT_INITED);
@@ -46,7 +51,17 @@ contract AuctionRoot is IAuctionRoot {
         _;
     }
 
+
+     /*********
+     * EVENTS *
+     *********/
+
     event NewAuctionDeployed(uint64 id, address auction, AuctionType auctionType, address owner, uint32 openDuration);
+
+
+    /***************
+     * CONSTRUCTOR *
+     **************/
 
     constructor(uint128 deployValue, uint128 defaultFeeValue, uint128 defaultDepositValue) public {
         tvm.accept();
@@ -55,6 +70,10 @@ contract AuctionRoot is IAuctionRoot {
         _defaultDepositValue = defaultDepositValue;
     }
 
+
+    /*************
+     * SET CODES *
+     ************/
 
     function setCodeEnglishForwardAuction(TvmCell code) notInited public {
         _codeEnglishForwardAuction = code;
@@ -84,6 +103,7 @@ contract AuctionRoot is IAuctionRoot {
         _codeBlindBid = code;
     }
 
+    // Called once, when all auction codes is set
     function finishInit() notInited public {
         require(  // Check if all 6 auctions codes are inited
             _isNotEmpty(_codeEnglishForwardAuction) && _isNotEmpty(_codeEnglishReverseAuction) &&
@@ -398,6 +418,10 @@ contract AuctionRoot is IAuctionRoot {
         });
     }
 
+
+     /*****************
+     * FINISH METHODS *
+     *****************/
 
     function finish(
         AuctionType auctionType,

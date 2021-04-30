@@ -7,7 +7,6 @@ import "../Lib.sol";
 
 abstract contract BlindAuction is BaseAuction {
     uint128 constant DEPLOY_BID_VALUE = 0.5 ton;
-    uint32 UINT32MAX = 2 ** 32 - 1;
 
 
     uint128 _fee;
@@ -51,6 +50,7 @@ abstract contract BlindAuction is BaseAuction {
      * CONSTRUCTOR *
      **************/
     /*
+    @param owner                Owner of this auction contract
     @param fee                  Non-returnable fee value for each bid
     @param deposit              Returnable deposit value for each bid
     @param startTime            Timestamp when auction will start
