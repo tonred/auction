@@ -6,7 +6,6 @@ import "../Lib.sol";
 
 abstract contract BaseAuction {
     uint8 constant SEND_ALL_GAS = 64;
-    uint128 constant LEAVE_VALUE = 10 nanoton;
 
 
     AuctionType static _type;

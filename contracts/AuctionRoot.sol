@@ -14,6 +14,7 @@ import "./interface/IAuctionDeployedCallback.sol";
 contract AuctionRoot is IAuctionRoot {
     uint8 constant SEND_ALL_GAS = 64;
 
+
     uint128 public _deployValue;
     uint128 public _defaultFeeValue;
     uint128 public _defaultDepositValue;

@@ -7,7 +7,6 @@ import "../Lib.sol";
 
 abstract contract BlindAuction is BaseAuction {
     uint128 constant DEPLOY_BID_VALUE = 0.5 ton;
-    uint32 UINT32MAX = 2 ** 32 - 1;
 
 
     uint128 _fee;

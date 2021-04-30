@@ -30,8 +30,7 @@ contract BlindReverseAuction is BlindAuction {
         msg.sender.transfer({value : 0, flag : SEND_ALL_GAS, bounce: false});
     }
 
-    // last argument (msgValue) is unused in reverse auction
-    function confirmBidCallback(address owner, uint256 hash, uint128 value, uint128) public {
+    function confirmBidCallback(address owner, uint256 hash, uint128 value, uint128 /*msgValue*/) public {
         _checkIsBidCallback(owner, hash);
         _bidsCount++;
         owner.transfer({value: _deposit - _fee, flag: 1, bounce: false});
