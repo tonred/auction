@@ -37,4 +37,7 @@ module.exports = {
     loadTestDeployerContract: async function (tw) {
         return await loadContract(tw, 'TestDeployer');
     },
+    loadDeBotContract: async function (tw) {
+        return await loadContract(tw, 'AuctionDebot');
+    },
 }
