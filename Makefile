@@ -143,6 +143,20 @@ deploy-test-deployer:
 	@echo "Deploying TestDeployer contract"
 	node migration/3-deploy-TestAuctionDeployer.js
 
+debot: build-debot deploy-debot start-debot
+
+build-debot:
+	@echo "Compiling DeNS DeBot"
+	$(call compile_all,./contracts/debot,AuctionDebot)
+
+deploy-debot:
+	@echo "Deploying DeBot contract"
+	node migration/4-deploy-Debot.js
+
+start-debot:
+	@echo "start-debot"
+	./tonos-cli --url=$(NETWORK) debot fetch `cat migration-log.json | jq -r '.DeBot.address'`
+
 define compile_all
 	$(call compile_sol,$(1),$(2))
 	$(call compile_tvm,$(2))
