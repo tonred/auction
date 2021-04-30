@@ -61,6 +61,19 @@ When somebody makes a bid more than your bid, you will get back your crystals va
 In root use method `deployEnglishForwardAuction` or `deployEnglishForwardAuctionCustom` to create auction.
 Use method `makeBid` in auction to submit a bid
 
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployEnglishForwardAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+function deployEnglishForwardAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+// Auction
+function makeBid(uint128 value);
+```
+
+</details>
+
 ### English Reverse
 
 There are start value and step value. 
@@ -70,6 +83,19 @@ Bids must not be confirmed by real crystals.
 
 In root use method `deployEnglishReverseAuction` or `deployEnglishReverseAuctionCustom` to create auction.
 Use method `makeBid` in auction to submit a bid
+
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployEnglishReverseAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+function deployEnglishReverseAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration);
+// Auction
+function makeBid(uint128 value);
+```
+
+</details>
 
 ### Dutch Forward
 
@@ -83,6 +109,19 @@ Winner is a first person who make a bid.
 In root use method `deployDutchForwardAuction` or `deployDutchForwardAuctionCustom` to create auction.
 Use method `buy` in auction to submit a bid (and make a buy)
 
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployDutchForwardAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+function deployDutchForwardAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+// Auction
+function buy(uint128 value);
+```
+
+</details>
+
 ### Dutch Reverse
 
 You must set start and finish values in a constructor.
@@ -94,6 +133,19 @@ Winner is a first person who make a bid.
 
 In root use method `deployDutchReverseAuction` or `deployDutchReverseAuctionCustom` to create auction.
 Use method `buy` in auction to submit a bid (and make a buy)
+
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployDutchReverseAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+function deployDutchReverseAuctionCustom(address owner, uint128 fee, uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration);
+// Auction
+function buy(uint128 value);
+```
+
+</details>
 
 ### Blind Forward
 
@@ -113,6 +165,22 @@ It is used to prevent spamming, when someone creates a lot of blind bids but don
 In root use method `deployBlindForwardAuction` or `deployBlindForwardAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
 
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployBlindForwardAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+function deployBlindForwardAuctionCustom(address owner, uint128 fee, uint128 deposit, uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+// Auction
+function makeBid(uint256 hash);
+function removeBid(uint256 hash);
+function confirmBid(uint128 value, uint256 salt);
+function calcBidHash(uint128 value, uint256 salt);  // call off-chain for secure
+```
+
+</details>
+
 ### Blind Reverse
 
 Firstly you must make your bid in OPEN phase.
@@ -130,6 +198,22 @@ It is used to prevent spamming, when someone creates a lot of blind bids but don
 
 In root use method `deployBlindReverseAuction` or `deployBlindReverseAuctionCustom` to create auction.
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
+
+<details>
+<summary>Click to learn more about methods</summary>
+
+```solidity
+// Root
+function deployBlindReverseAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+function deployBlindReverseAuctionCustom(address owner, uint128 fee, uint128 deposit, uint32 startTime, uint32 openDuration, uint32 confirmationDuration);
+// Auction
+function makeBid(uint256 hash);
+function removeBid(uint256 hash);
+function confirmBid(uint128 value, uint256 salt);
+function calcBidHash(uint128 value, uint256 salt);  // call off-chain for secure
+```
+
+</details>
 
 ## Tests
 
