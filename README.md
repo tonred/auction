@@ -1,12 +1,17 @@
 # Free TON on-line Auctions
 
+Github: https://github.com/tonred/auction
+
+Viewer: https://auction-viewer.ton.red
+
+DevNet address: 
+
 ## Key features:
 * Six types of auctions
 * Custom configuration of each auction
 * Infinity amount of auctions and bids, no mapping
 * Well-tested using `ts4`
-* Го еще четь
-* Про UI и деботов
+* Browser viewer for deployed auctions
 
 ## Build and run
 
