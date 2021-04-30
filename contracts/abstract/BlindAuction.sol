@@ -22,6 +22,12 @@ abstract contract BlindAuction is BaseAuction {
     uint128 _bidsCount;
 
 
+    /**********
+     * EVENTS *
+     **********/
+
+    event BidIsMade(address bettor, uint256 hash);
+
     /*************
      * MODIFIERS *
      *************/
@@ -141,6 +147,10 @@ abstract contract BlindAuction is BaseAuction {
     }
 
     function confirmBid(uint128 value, uint256 salt) virtual public view;
+
+    function updateAndGetPhase() public view doUpdate returns (Phase) {
+        return _phase;
+    }
 
     function update() doUpdate override virtual public {
         msg.sender.transfer({value: 0, flag: SEND_ALL_GAS, bounce: false});

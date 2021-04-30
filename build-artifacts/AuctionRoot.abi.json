@@ -15,7 +15,7 @@
 		{
 			"name": "setCodeEnglishForwardAuction",
 			"inputs": [
-				{"name":"codeEnglishForwardAuction","type":"cell"}
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -23,7 +23,7 @@
 		{
 			"name": "setCodeEnglishReverseAuction",
 			"inputs": [
-				{"name":"codeEnglishReverseAuction","type":"cell"}
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -31,7 +31,7 @@
 		{
 			"name": "setCodeDutchForwardAuction",
 			"inputs": [
-				{"name":"codeDutchForwardAuction","type":"cell"}
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -39,7 +39,7 @@
 		{
 			"name": "setCodeDutchReverseAuction",
 			"inputs": [
-				{"name":"codeDutchReverseAuction","type":"cell"}
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -47,7 +47,7 @@
 		{
 			"name": "setCodeBlindForwardAuction",
 			"inputs": [
-				{"name":"codeBlindForwardAuction","type":"cell"}
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -55,7 +55,7 @@
 		{
 			"name": "setCodeBlindReverseAuction",
 			"inputs": [
-				{"name":"codeBlindReverseAuction","type":"cell"}
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -63,7 +63,7 @@
 		{
 			"name": "setCodeBlindBid",
 			"inputs": [
-				{"name":"codeBlindBid","type":"cell"}
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -78,20 +78,17 @@
 		{
 			"name": "deployEnglishForwardAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"stepValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
 			"name": "deployEnglishForwardAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -100,7 +97,6 @@
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
@@ -115,20 +111,17 @@
 		{
 			"name": "deployEnglishReverseAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"stepValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
 			"name": "deployEnglishReverseAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -137,7 +130,6 @@
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
@@ -152,20 +144,17 @@
 		{
 			"name": "deployDutchForwardAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"finishValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
 			"name": "deployDutchForwardAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -174,7 +163,6 @@
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
@@ -189,20 +177,17 @@
 		{
 			"name": "deployDutchReverseAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startValue","type":"uint128"},
 				{"name":"finishValue","type":"uint128"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
 			"name": "deployDutchReverseAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"startValue","type":"uint128"},
@@ -211,7 +196,6 @@
 				{"name":"openDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
@@ -226,19 +210,16 @@
 		{
 			"name": "deployBlindForwardAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"},
 				{"name":"confirmationDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
 			"name": "deployBlindForwardAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"deposit","type":"uint128"},
@@ -247,7 +228,6 @@
 				{"name":"confirmationDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
@@ -262,19 +242,16 @@
 		{
 			"name": "deployBlindReverseAuction",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"},
 				{"name":"confirmationDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
 			"name": "deployBlindReverseAuctionCustom",
 			"inputs": [
-				{"name":"_answer_id","type":"uint32"},
 				{"name":"owner","type":"address"},
 				{"name":"fee","type":"uint128"},
 				{"name":"deposit","type":"uint128"},
@@ -283,7 +260,6 @@
 				{"name":"confirmationDuration","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
@@ -306,10 +282,46 @@
 			],
 			"outputs": [
 			]
+		},
+		{
+			"name": "_deployValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_deployValue","type":"uint128"}
+			]
+		},
+		{
+			"name": "_defaultFeeValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_defaultFeeValue","type":"uint128"}
+			]
+		},
+		{
+			"name": "_defaultDepositValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_defaultDepositValue","type":"uint128"}
+			]
 		}
 	],
 	"data": [
 	],
 	"events": [
+		{
+			"name": "NewAuctionDeployed",
+			"inputs": [
+				{"name":"id","type":"uint64"},
+				{"name":"auction","type":"address"},
+				{"name":"auctionType","type":"uint8"},
+				{"name":"owner","type":"address"},
+				{"name":"openDuration","type":"uint32"}
+			],
+			"outputs": [
+			]
+		}
 	]
 }

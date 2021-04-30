@@ -36,7 +36,7 @@ contract BlindForwardAuction is BlindAuction {
         _bidsCount++;
         uint128 leaveValue = msgValue + _deposit - value - _fee;
         if (leaveValue > 0) {
-            owner.transfer(leaveValue);
+            owner.transfer({value: leaveValue, flag: 1, bounce: false});
         }
         Bid bid = Bid(owner, value);
         _updateResults(bid);
@@ -56,7 +56,7 @@ contract BlindForwardAuction is BlindAuction {
     }
 
     function _returnBid(Bid bid) private pure {
-        bid.owner.transfer(bid.value);
+        bid.owner.transfer({value: bid.value, flag: 1, bounce: false});
     }
 
 }

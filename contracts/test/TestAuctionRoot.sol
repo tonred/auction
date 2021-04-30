@@ -5,37 +5,48 @@ import "../AuctionRoot.sol";
 
 contract TestAuctionRoot is AuctionRoot {
 
-    constructor(uint128 deployValue, uint128 defaultFeeValue, uint128 defaultDepositValue) public AuctionRoot(deployValue, defaultFeeValue, defaultDepositValue) {}
+    constructor(uint128 deployValue, uint128 defaultFeeValue, uint128 defaultDepositValue) public AuctionRoot(deployValue, defaultFeeValue, defaultDepositValue) {
+        tvm.accept();
+        _deployValue = 0;  // in order to pass `checkValue` modifier
+        _defaultFeeValue = 1 ton;
+        _defaultDepositValue = 10 ton;
+    }
 
 
     function testDeployEnglishForwardAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
-        return AuctionRoot.deployEnglishForwardAuction(startValue, stepValue, startTime, openDuration);
+        AuctionRoot.deployEnglishForwardAuction(startValue, stepValue, startTime, openDuration);
+        return address(0);
     }
 
     function testDeployEnglishReverseAuction(uint128 startValue, uint128 stepValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
-        return AuctionRoot.deployEnglishReverseAuction(startValue, stepValue, startTime, openDuration);
+        AuctionRoot.deployEnglishReverseAuction(startValue, stepValue, startTime, openDuration);
+        return address(0);
     }
 
     function testDeployDutchForwardAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
-        return AuctionRoot.deployDutchForwardAuction(startValue, finishValue, startTime, openDuration);
+        AuctionRoot.deployDutchForwardAuction(startValue, finishValue, startTime, openDuration);
+        return address(0);
     }
 
     function testDeployDutchReverseAuction(uint128 startValue, uint128 finishValue, uint32 startTime, uint32 openDuration) public returns (address) {
         tvm.accept();
-        return AuctionRoot.deployDutchReverseAuction(startValue, finishValue, startTime, openDuration);
+        AuctionRoot.deployDutchReverseAuction(startValue, finishValue, startTime, openDuration);
+        return address(0);
     }
 
     function testDeployBlindForwardAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration) public returns (address) {
         tvm.accept();
-        return AuctionRoot.deployBlindForwardAuction(startTime, openDuration, confirmationDuration);
+        AuctionRoot.deployBlindForwardAuction(startTime, openDuration, confirmationDuration);
+        return address(0);
     }
 
     function testDeployBlindReverseAuction(uint32 startTime, uint32 openDuration, uint32 confirmationDuration) public returns (address) {
         tvm.accept();
-        return AuctionRoot.deployBlindReverseAuction(startTime, openDuration, confirmationDuration);
+        AuctionRoot.deployBlindReverseAuction(startTime, openDuration, confirmationDuration);
+        return address(0);
     }
 
 

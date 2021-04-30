@@ -24,12 +24,12 @@ class WorkflowTest(unittest.TestCase):
         for auction_name in self.AUCTION_NAMES:
             code = ts4.load_code_cell(f'{auction_name}Auction')
             self.auction_root.call_method(f'setCode{auction_name}Auction', {
-                f'code{auction_name}Auction': code
+                f'code': code
             })
             ts4.dispatch_messages()
         code_blind_bid = ts4.load_code_cell(f'BlindBid')
         self.auction_root.call_method(f'setCodeBlindBid', {
-            f'codeBlindBid': code_blind_bid
+            f'code': code_blind_bid
         })
         ts4.dispatch_messages()
         self.auction_root.call_method('finishInit', {})

@@ -4,5 +4,11 @@ import "../Lib.sol";
 
 
 interface IAuctionFinishCallback {
-    function onAuctionFinish(address winnerAddress, uint128 winnerValue, TvmCell payload) external;
+    function onAuctionFinish(
+        uint64 auctionId,
+        address auction,
+        address winnerAddress,
+        uint128 winnerValue,
+        TvmCell payload
+    ) external;
 }
