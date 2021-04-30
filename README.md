@@ -2,7 +2,39 @@
 
 ## Key features:
 * Six types of auctions
+* Custom configuration of each auction
 * Надеюсь мы придумаем что написать)
+
+## Build and run
+
+### Requirements:
+* ton-solidity `0.39.0` from broxus (https://github.com/broxus/TON-Solidity-Compiler)
+* tvm-linker
+* python `>=3.7` with `tonos-ts4` lib
+* nodejs
+
+### Setup environment
+Copy `.env.dist` to `.env` and change variables up to you
+* `SOLC_BIN` - path to solc binary file
+* `TVM_LINKER_BIN` - path to tvm-linker binary file
+* `STDLIB_PATH` - path to `stdlib_sol.tvm` lib 
+* `NETWORK` - DApp server address or Node SE 
+
+Install node js dependencies:
+```shell
+npm install
+```
+
+For view all make instructions:
+```shell
+make help
+```
+
+Compile nad test:
+```shell
+make build
+make tests
+```
 
 ## Deployment
 
@@ -95,6 +127,18 @@ In root use method `deployBlindReverseAuction` or `deployBlindReverseAuctionCust
 Use method `makeBid`, `removeBid` and `confirmBid` in auction
 
 ## Tests
+
+To run tests use:
+```shell
+make tests
+```
+
+After updates in tests, run `errors_generator.py` to update python error's class.
+
+Test is written on python using `unittest` and `tonos-ts4` libraries.
+There are tests for each type of auction (name of files in equals to auction type), and separate tests for root in `root.py`.
+Moreover, there is an integration test for all workflow in `workflow.py`.
+Test classes inheritance structure is the same as in auction.
 
 Они есть, я рожу четь
 
