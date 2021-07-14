@@ -32,16 +32,7 @@ abstract contract BlindAuction is BaseAuction {
      *************/
 
     modifier doUpdate() {
-        if (_phase == Phase.WAIT && now >= _openTime.startTime) {
-            _phase = Phase.OPEN;
-        }
-        if (_phase == Phase.OPEN && now >= _confirmationTime.startTime) {
-            _phase = Phase.CONFIRMATION;
-        }
-        if (_phase == Phase.CONFIRMATION && now >= _confirmationTime.finishTime) {
-            _phase = Phase.CLOSE;
-            _sendFinish();
-        }
+        _update();
         _;
     }
 
@@ -75,7 +66,7 @@ abstract contract BlindAuction is BaseAuction {
         _phase = Phase.WAIT;
         _setupPhasesTime(startTime, openDuration, confirmationDuration);
         _bidCode = bidCode;
-        update();
+        _update();
     }
 
     // Used only in constructor
@@ -113,6 +104,20 @@ abstract contract BlindAuction is BaseAuction {
      *****************/
 
     /*
+    Update status of contract, then return all left gas
+    */
+    function update() public doUpdate override virtual {
+        msg.sender.transfer({value: 0, flag: SEND_ALL_GAS, bounce: false});
+    }
+
+    /*
+    Locally update status and get it
+    */
+    function updateAndGetPhase() public view doUpdate returns (Phase) {
+        return _phase;
+    }
+
+    /*
     @param hash Bid hash (can be calculated via `calcBidHash` method)
     @value Must be more than deposit
     */
@@ -148,14 +153,6 @@ abstract contract BlindAuction is BaseAuction {
 
     function confirmBid(uint128 value, uint256 salt) virtual public view;
 
-    function updateAndGetPhase() public view doUpdate returns (Phase) {
-        return _phase;
-    }
-
-    function update() doUpdate override virtual public {
-        msg.sender.transfer({value: 0, flag: SEND_ALL_GAS, bounce: false});
-    }
-
     /*
     Calculates hash of bid value
     Can be used off-chain before `makeBid` function
@@ -174,6 +171,19 @@ abstract contract BlindAuction is BaseAuction {
     /***********
      * PRIVATE *
      **********/
+
+    function _update() private {
+        if (_phase == Phase.WAIT && now >= _openTime.startTime) {
+            _phase = Phase.OPEN;
+        }
+        if (_phase == Phase.OPEN && now >= _confirmationTime.startTime) {
+            _phase = Phase.CONFIRMATION;
+        }
+        if (_phase == Phase.CONFIRMATION && now >= _confirmationTime.finishTime) {
+            _phase = Phase.CLOSE;
+            _sendFinish();
+        }
+    }
 
     function _checkIsBidCallback(address owner, uint256 hash) internal view {
         address bidAddress = _calcBidAddress(owner, hash);

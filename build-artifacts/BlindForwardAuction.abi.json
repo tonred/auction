@@ -69,6 +69,21 @@
 			]
 		},
 		{
+			"name": "update",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "updateAndGetPhase",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint8"}
+			]
+		},
+		{
 			"name": "makeBid",
 			"inputs": [
 				{"name":"hash","type":"uint256"}
@@ -89,21 +104,6 @@
 			"inputs": [
 				{"name":"owner","type":"address"},
 				{"name":"hash","type":"uint256"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "updateAndGetPhase",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"value0","type":"uint8"}
-			]
-		},
-		{
-			"name": "update",
-			"inputs": [
 			],
 			"outputs": [
 			]
