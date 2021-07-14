@@ -143,42 +143,15 @@ deploy-test-deployer:
 	@echo "Deploying TestDeployer contract"
 	node migration/3-deploy-TestAuctionDeployer.js
 
-debot: build-debot deploy-debot start-debot
-
-build-debot:
-	@echo "Compiling DeNS DeBot"
-	$(call compile_all,./contracts/debot,AuctionDebot)
-
-deploy-debot:
-	@echo "Deploying DeBot contract"
-	node migration/4-deploy-Debot.js
-
-start-debot:
-	@echo "start-debot"
-	./tonos-cli --url=$(NETWORK) debot fetch `cat migration-log.json | jq -r '.DeBot.address'`
-
 define compile_all
-	$(call compile_sol,$(1),$(2))
-	$(call compile_tvm,$(2))
-	$(call compile_client_code,$(ARTIFACTS_PATH)/$(2).sol)
+	$(call compile_tondev,$(1),$(2))
 	$(call tvc_to_base64,$(ARTIFACTS_PATH)/$(2))
 endef
 
-define compile_sol
-	$(SOLC_BIN) $(1)/$(2).sol --tvm-optimize
-	mv $(2).code $(ARTIFACTS_PATH)
+define compile_tondev
+	tondev sol compile $(1)/$(2).sol
 	mv $(2).abi.json $(ARTIFACTS_PATH)
-endef
-
-define compile_tvm
-	$(TVM_LINKER_BIN) compile $(ARTIFACTS_PATH)/$(1).code \
-							   --lib $(STDLIB_PATH) \
-							   --abi-json $(ARTIFACTS_PATH)/$(1).abi.json \
-							   -o $(ARTIFACTS_PATH)/$(1).tvc
-endef
-
-define compile_client_code
-	node $(CLIENT_JS_COMPILER) $(1)
+    mv $(2).tvc $(ARTIFACTS_PATH)
 endef
 
 define tvc_to_base64
