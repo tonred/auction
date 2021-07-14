@@ -24,7 +24,7 @@ class DutchAuctionTest(ABC, CommonAuctionTest):
         self._setup_phase_time(Phase.CLOSE, update=False)
         wallet = TestWallet()
         self._buy(wallet, bid_value=5, expect_ec=Errors.WRONG_PHASE)
-        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not returned')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not returned')
 
     @abstractmethod
     def _buy(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):

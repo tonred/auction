@@ -28,7 +28,7 @@ class BaseAuctionTest(unittest.TestCase):
 
     def _update(self):
         wallet = TestWallet()
-        wallet.update(self.contract.address(), 1 * ts4.GRAM)
+        wallet.update(self.contract.address, 1 * ts4.GRAM)
 
     def _phase(self) -> Phase:
         return Phase(self.contract.call_getter('getPhase'))

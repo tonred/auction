@@ -63,7 +63,7 @@ class BlindAuctionTest(BaseAuctionTest):
         salt = self._generate_salt()
         self._make_bid(wallet, value=10, bid_value=5, salt=salt)
         self._check_bids_count(1)
-        self.assertEqual((100 - 10) * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual((100 - 10) * ts4.GRAM, wallet.balance, 'Bid is not made')
 
     def test_remove_bid(self):
         wallet = TestWallet()
@@ -75,7 +75,7 @@ class BlindAuctionTest(BaseAuctionTest):
 
         self._remove_bid(wallet, value=1, bid_value=5, salt=salt)
         self._check_bids_count(0)  # bid really removed
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance(), 'Bid is not removed')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet.balance, 'Bid is not removed')
 
     def test_low_bid_value(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -83,7 +83,7 @@ class BlindAuctionTest(BaseAuctionTest):
         salt = self._generate_salt()
         self._make_bid(wallet, value=9, bid_value=5, salt=salt, expect_ec=Errors.VALUE_LESS_THAN_DEPOSIT)
         self._check_bids_count(0)
-        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not made')
 
     def _wrong_phase_bid_test(self):
         wallet = TestWallet()
@@ -91,7 +91,7 @@ class BlindAuctionTest(BaseAuctionTest):
         self._make_bid(wallet, value=10, bid_value=5, salt=salt, expect_ec=Errors.WRONG_PHASE)
         self._check_bids_count(0)
         self._check_confirmed_bids_count(0)
-        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not returned')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not returned')
 
     def _setup_phase_time(self, phase: Phase, update: bool = False):
         if phase == Phase.WAIT:
@@ -115,21 +115,21 @@ class BlindAuctionTest(BaseAuctionTest):
         self.assertEqual(expected, actual, 'Wrong confirmed bids count')
 
     def _make_bid(self, wallet: TestWallet, value: float, bid_value: float, salt: int, expect_ec: int = 0):
-        destination = self.contract.address()
+        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         hash_ = self._calc_hash(bid_value, salt)
         value = int(value * ts4.GRAM)
         wallet.blind_make_bid(destination, value, hash_, expect_ec=expect_ec)
 
     def _remove_bid(self, wallet: TestWallet, value: float, bid_value: float, salt: int, expect_ec: int = 0):
-        destination = self.contract.address()
+        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         hash_ = self._calc_hash(bid_value, salt)
         value = int(value * ts4.GRAM)
         wallet.blind_remove_bid(destination, value, hash_, expect_ec=expect_ec)
 
     def _confirm_bid(self, wallet: TestWallet, value: float, bid_value: float, salt: int, expect_ec: int = 0):
-        destination = self.contract.address()
+        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         value = int(value * ts4.GRAM)
         wallet.blind_confirm_bid(destination, value, bid_value, salt, expect_ec=expect_ec)

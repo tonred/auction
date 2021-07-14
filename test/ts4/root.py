@@ -46,7 +46,7 @@ class RootAuctionTest(unittest.TestCase):
             'defaultDepositValue': 10 * ts4.GRAM,
         }, nickname='AuctionRoot', override_address=random_address())
 
-        for auction_name in self.AUCTION_NAMES[:-1]:  # forget about 1 auction code
+        for auction_name in self.AUCTION_NAMES[:-1]:  # special forget to init code of auction first
             code = ts4.load_code_cell(f'{auction_name}Auction')
             self.auction_root.call_method(f'setCode{auction_name}Auction', {
                 f'code': code

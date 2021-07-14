@@ -1,5 +1,3 @@
-import unittest
-
 import tonos_ts4.ts4 as ts4
 
 from abstract.english import EnglishAuctionTest
@@ -27,7 +25,7 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
         wallet = TestWallet()
         self._make_bid(wallet, bid_value=5)
         self._check_bids_count(1)
-        self.assertEqual((100 - (5 + 1)) * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual((100 - (5 + 1)) * ts4.GRAM, wallet.balance, 'Bid is not made')
 
     def test_increasing_bids(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -41,9 +39,9 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
         self._check_bids_count(3)
 
         self.assertEqual(12 * ts4.GRAM, self.contract.call_getter('getWinnerValue'), 'Bid is not made')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet_1.balance(), 'Bid is not returned')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet_2.balance(), 'Bid is not returned')
-        self.assertEqual((100 - 13) * ts4.GRAM, wallet_3.balance(), 'Bid is not made')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet_1.balance, 'Bid is not returned')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet_2.balance, 'Bid is not returned')
+        self.assertEqual((100 - 13) * ts4.GRAM, wallet_3.balance, 'Bid is not made')
 
     def test_low_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -64,18 +62,14 @@ class EnglishForwardAuctionTest(EnglishAuctionTest):
         wallet_2 = TestWallet()
 
         self._make_bid(wallet_1, bid_value=3)  # first bid
-        self.assertEqual((100 - (3 + 1)) * ts4.GRAM, wallet_1.balance(), 'Bid is not made')
+        self.assertEqual((100 - (3 + 1)) * ts4.GRAM, wallet_1.balance, 'Bid is not made')
 
         self._make_bid(wallet_2, bid_value=4)  # second bid
-        self.assertEqual((100 - (4 + 1)) * ts4.GRAM, wallet_2.balance(), 'Bid is not made')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet_1.balance(), 'Bid is not returned')
+        self.assertEqual((100 - (4 + 1)) * ts4.GRAM, wallet_2.balance, 'Bid is not made')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet_1.balance, 'Bid is not returned')
 
     def _make_bid(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):
-        destination = self.contract.address()
+        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         value = bid_value + 1 * ts4.GRAM
         wallet.make_bid(destination, value, bid_value, expect_ec=expect_ec)
-
-
-if __name__ == '__main__':
-    unittest.main()

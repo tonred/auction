@@ -1,5 +1,3 @@
-import unittest
-
 import tonos_ts4.ts4 as ts4
 
 from abstract.blind import BlindAuctionTest
@@ -35,7 +33,7 @@ class BlindForwardAuctionTest(BlindAuctionTest):
         self._setup_phase_time(Phase.CONFIRMATION, update=True)
         self._confirm_bid(wallet, value=5, bid_value=5, salt=salt)
         self._check_confirmed_bids_count(1)  # bid really confirmed
-        self.assertEqual((100 - (5 + 1)) * ts4.GRAM, wallet.balance(), 'Bid is not confirmed')
+        self.assertEqual((100 - (5 + 1)) * ts4.GRAM, wallet.balance, 'Bid is not confirmed')
 
     def test_several_bids(self):
         wallet1 = TestWallet()
@@ -57,9 +55,9 @@ class BlindForwardAuctionTest(BlindAuctionTest):
         self._confirm_bid(wallet3, value=50, bid_value=5, salt=salt3)
         self._check_confirmed_bids_count(3)
 
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet1.balance(), 'Bid is not returned')
-        self.assertEqual((100 - (25 + 1)) * ts4.GRAM, wallet2.balance(), 'Bid is not confirmed')
-        self.assertEqual((100 - 1) * ts4.GRAM, wallet3.balance(), 'Bid is not returned')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet1.balance, 'Bid is not returned')
+        self.assertEqual((100 - (25 + 1)) * ts4.GRAM, wallet2.balance, 'Bid is not confirmed')
+        self.assertEqual((100 - 1) * ts4.GRAM, wallet3.balance, 'Bid is not returned')
 
     def test_low_confirmation_value(self):
         wallet = TestWallet()
@@ -74,8 +72,4 @@ class BlindForwardAuctionTest(BlindAuctionTest):
         self._check_confirmed_bids_count(0)
 
         # (100 - 10) - deposit is not returned because bid is not confirmed
-        self.assertEqual((100 - 10) * ts4.GRAM, wallet.balance(), 'Confirmation bid is not returned')
-
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertEqual((100 - 10) * ts4.GRAM, wallet.balance, 'Confirmation bid is not returned')

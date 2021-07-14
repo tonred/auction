@@ -1,5 +1,3 @@
-import unittest
-
 import tonos_ts4.ts4 as ts4
 
 from abstract.dutch import DutchAuctionTest
@@ -40,7 +38,7 @@ class DutchReverseAuctionTest(DutchAuctionTest):
         wallet = TestWallet()
         self._buy(wallet, bid_value=5)
         self.assertEqual(Phase.CLOSE, self._phase(), 'Auction is not finished')
-        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not made')
 
     def test_high_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -53,11 +51,7 @@ class DutchReverseAuctionTest(DutchAuctionTest):
         self._buy(wallet, bid_value=6.5, expect_ec=Errors.VALUE_MORE_THAN_CURRENT_PRICE)
 
     def _buy(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):
-        destination = self.contract.address()
+        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         value = 1 * ts4.GRAM
         wallet.buy(destination, value, bid_value, expect_ec=expect_ec)
-
-
-if __name__ == '__main__':
-    unittest.main()

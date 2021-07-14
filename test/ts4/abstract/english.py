@@ -27,7 +27,7 @@ class EnglishAuctionTest(ABC, CommonAuctionTest):
         wallet = TestWallet()
         self._make_bid(wallet, bid_value=5, expect_ec=Errors.WRONG_PHASE)
         self._check_bids_count(0)
-        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not returned')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not returned')
 
     def _check_bids_count(self, expected: int):
         actual = self.contract.call_getter('getBidsCount')

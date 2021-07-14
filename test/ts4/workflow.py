@@ -37,7 +37,7 @@ class WorkflowTest(unittest.TestCase):
 
     def test_workflow(self):
         user = ts4.BaseContract('TestUsage', {
-            'auctionRoot': self.auction_root.address(),
+            'auctionRoot': self.auction_root.address,
         }, nickname='User', override_address=random_address())
         wallet = TestWallet()
 
@@ -55,7 +55,7 @@ class WorkflowTest(unittest.TestCase):
         ts4.dispatch_messages()
 
         best_person = user.call_getter('getBestPerson')
-        self.assertEqual(best_person, wallet.address())
+        self.assertEqual(best_person, wallet.address)
         print(best_person)
 
     def deploy(self) -> ts4.Address:

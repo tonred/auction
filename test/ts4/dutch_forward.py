@@ -1,5 +1,3 @@
-import unittest
-
 import tonos_ts4.ts4 as ts4
 
 from abstract.dutch import DutchAuctionTest
@@ -40,7 +38,7 @@ class DutchForwardAuctionTest(DutchAuctionTest):
         wallet = TestWallet()
         self._buy(wallet, bid_value=9)
         self.assertEqual(Phase.CLOSE, self._phase(), 'Auction is not finished')
-        self.assertEqual((100 - (9 + 1)) * ts4.GRAM, wallet.balance(), 'Bid is not made')
+        self.assertEqual((100 - (9 + 1)) * ts4.GRAM, wallet.balance, 'Bid is not made')
 
     def test_low_bids_start(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -55,16 +53,12 @@ class DutchForwardAuctionTest(DutchAuctionTest):
     def test_low_msg_value(self):
         self._setup_phase_time(Phase.OPEN, update=True)
         wallet = TestWallet()
-        wallet.buy(self.contract.address(), value=1 * ts4.GRAM, bid_value=9 * ts4.GRAM, expect_ec=Errors.LOW_MSG_VALUE)
+        wallet.buy(self.contract.address, value=1 * ts4.GRAM, bid_value=9 * ts4.GRAM, expect_ec=Errors.LOW_MSG_VALUE)
         self.assertEqual(Phase.OPEN, self._phase(), 'Auction is suddenly finished')
-        self.assertEqual(100 * ts4.GRAM, wallet.balance(), 'Bid is not returned')
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not returned')
 
     def _buy(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):
-        destination = self.contract.address()
+        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         value = bid_value + 1 * ts4.GRAM
         wallet.buy(destination, value, bid_value, expect_ec=expect_ec)
-
-
-if __name__ == '__main__':
-    unittest.main()
