@@ -1,4 +1,5 @@
 import json
+import os
 import unittest
 
 from tonclient.types import CallSet
@@ -75,6 +76,7 @@ class WorkflowTest(unittest.TestCase):
 
     @staticmethod
     def _load_abi() -> dict:
-        with open('../../build-artifacts/EnglishForwardAuction.abi.json', 'r') as file:
+        path = os.path.join(BUILD_ARTIFACTS_PATH, 'EnglishForwardAuction.abi.json')
+        with open(path, 'r') as file:
             content = file.read()
         return json.loads(content)
