@@ -1,4 +1,4 @@
-import tonos_ts4.ts4 as ts4
+from tonos_ts4 import ts4
 
 from abstract.base import BaseAuctionTest
 from utils.phase import Phase

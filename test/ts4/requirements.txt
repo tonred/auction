@@ -1,2 +1,2 @@
 tonos-ts4==0.3.0
-# ton-client-py
+ton-client-py==1.20.0.0

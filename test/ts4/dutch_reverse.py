@@ -1,4 +1,4 @@
-import tonos_ts4.ts4 as ts4
+from tonos_ts4 import ts4
 
 from abstract.dutch import DutchAuctionTest
 from test_wallet import TestWallet
@@ -51,7 +51,12 @@ class DutchReverseAuctionTest(DutchAuctionTest):
         self._buy(wallet, bid_value=6.5, expect_ec=Errors.VALUE_MORE_THAN_CURRENT_PRICE)
 
     def _buy(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):
-        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         value = 1 * ts4.GRAM
-        wallet.buy(destination, value, bid_value, expect_ec=expect_ec)
+        self._call_buy(
+            wallet=wallet,
+            destination=self.contract.address,
+            value=value,
+            bid_value=bid_value,
+            expect_ec=expect_ec
+        )

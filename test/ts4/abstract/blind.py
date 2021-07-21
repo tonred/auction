@@ -1,6 +1,7 @@
 import random
 
-import tonos_ts4.ts4 as ts4
+from tonclient.types import CallSet
+from tonos_ts4 import ts4
 
 from abstract.base import BaseAuctionTest
 from test_wallet import TestWallet
@@ -119,20 +120,23 @@ class BlindAuctionTest(BaseAuctionTest):
         bid_value = int(bid_value * ts4.GRAM)
         hash_ = self._calc_hash(bid_value, salt)
         value = int(value * ts4.GRAM)
-        wallet.blind_make_bid(destination, value, hash_, expect_ec=expect_ec)
+        call_set = CallSet('makeBid', input={'hash': str(hash_)})
+        wallet.send_call_set(destination, value, call_set=call_set, abi=self.contract.abi_, expect_ec=expect_ec)
 
     def _remove_bid(self, wallet: TestWallet, value: float, bid_value: float, salt: int, expect_ec: int = 0):
         destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         hash_ = self._calc_hash(bid_value, salt)
         value = int(value * ts4.GRAM)
-        wallet.blind_remove_bid(destination, value, hash_, expect_ec=expect_ec)
+        call_set = CallSet('removeBid', input={'hash': str(hash_)})
+        wallet.send_call_set(destination, value, call_set=call_set, abi=self.contract.abi_, expect_ec=expect_ec)
 
     def _confirm_bid(self, wallet: TestWallet, value: float, bid_value: float, salt: int, expect_ec: int = 0):
         destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         value = int(value * ts4.GRAM)
-        wallet.blind_confirm_bid(destination, value, bid_value, salt, expect_ec=expect_ec)
+        call_set = CallSet('confirmBid', input={'value': bid_value, 'salt': str(salt)})
+        wallet.send_call_set(destination, value, call_set=call_set, abi=self.contract.abi_, expect_ec=expect_ec)
 
     @staticmethod
     def _generate_salt() -> int:

@@ -1,4 +1,4 @@
-import tonos_ts4.ts4 as ts4
+from tonos_ts4 import ts4
 
 from abstract.english import EnglishAuctionTest
 from test_wallet import TestWallet
@@ -48,6 +48,7 @@ class EnglishReverseAuctionTest(EnglishAuctionTest):
         wallet = TestWallet()
         self._make_bid(wallet, bid_value=100, expect_ec=Errors.VALUE_MORE_THAN_START_VALUE)
         self._check_bids_count(0)
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not returned')
 
     def test_low_bids_step(self):
         self._setup_phase_time(Phase.OPEN, update=True)
@@ -55,9 +56,15 @@ class EnglishReverseAuctionTest(EnglishAuctionTest):
         self._make_bid(wallet, bid_value=10)  # good bid
         self._make_bid(wallet, bid_value=9.9, expect_ec=Errors.VALUE_MORE_THAN_STEP_FROM_LOWEST_VALUE)
         self._check_bids_count(1)
+        self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not returned')
 
     def _make_bid(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):
-        destination = self.contract.address
         bid_value = int(bid_value * ts4.GRAM)
         value = 1 * ts4.GRAM
-        wallet.make_bid(destination, value, bid_value, expect_ec=expect_ec)
+        self._call_make_bid(
+            wallet=wallet,
+            destination=self.contract.address,
+            value=value,
+            bid_value=bid_value,
+            expect_ec=expect_ec
+        )

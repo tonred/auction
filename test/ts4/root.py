@@ -1,6 +1,6 @@
 import unittest
 
-import tonos_ts4.ts4 as ts4
+from tonos_ts4 import ts4
 
 from config import BUILD_ARTIFACTS_PATH, VERBOSE
 from utils.errors import Errors
@@ -8,9 +8,11 @@ from utils.utils import random_address
 
 
 class RootAuctionTest(unittest.TestCase):
-    AUCTION_NAMES = ('EnglishForward', 'EnglishReverse',
-                     'DutchForward', 'DutchReverse',
-                     'BlindForward', 'BlindReverse')
+    AUCTION_NAMES = (
+        'EnglishForward', 'EnglishReverse',
+        'DutchForward', 'DutchReverse',
+        'BlindForward', 'BlindReverse'
+    )
 
     def setUp(self):
         ts4.init(BUILD_ARTIFACTS_PATH, verbose=VERBOSE)

@@ -1,6 +1,8 @@
+import json
 import unittest
 
-import tonos_ts4.ts4 as ts4
+from tonclient.types import CallSet
+from tonos_ts4 import ts4
 
 from config import BUILD_ARTIFACTS_PATH, VERBOSE
 from test_wallet import TestWallet
@@ -8,9 +10,11 @@ from utils.utils import random_address
 
 
 class WorkflowTest(unittest.TestCase):
-    AUCTION_NAMES = ('EnglishForward', 'EnglishReverse',
-                     'DutchForward', 'DutchReverse',
-                     'BlindForward', 'BlindReverse')
+    AUCTION_NAMES = (
+        'EnglishForward', 'EnglishReverse',
+        'DutchForward', 'DutchReverse',
+        'BlindForward', 'BlindReverse'
+    )
 
     def setUp(self):
         ts4.init(BUILD_ARTIFACTS_PATH, verbose=VERBOSE)
@@ -36,39 +40,41 @@ class WorkflowTest(unittest.TestCase):
         ts4.dispatch_messages()
 
     def test_workflow(self):
-        user = ts4.BaseContract('TestUsage', {
+        # Create organizer and participant contracts
+        organizer = ts4.BaseContract('TestUsage', {
             'auctionRoot': self.auction_root.address,
         }, nickname='User', override_address=random_address())
-        wallet = TestWallet()
+        participant = TestWallet()
 
-        user.call_method('createAuction')
+        # Organizer creates auction
+        organizer.call_method('createAuction')
         ts4.dispatch_messages()
-        auction_contact = user.call_getter('getAuctionContract')
+        auction_contract_address = organizer.call_getter('getAuctionContract')
         ts4.dispatch_messages()
 
+        # Start auction
         ts4.core.set_now(30)
-        wallet.update(auction_contact, 1 * ts4.GRAM)
-        wallet.make_bid(auction_contact, value=10 * ts4.GRAM, bid_value=9 * ts4.GRAM)
+        participant.update(auction_contract_address, 1 * ts4.GRAM)
 
+        # Participant makes bid
+        abi = self._load_abi()
+        bid_value = 9 * ts4.GRAM
+        value = 10 * ts4.GRAM
+        call_set = CallSet('makeBid', input={'value': bid_value})
+        participant.send_call_set(auction_contract_address, value, call_set=call_set, abi=abi)
+
+        # Finish auction
         ts4.core.set_now(100)
-        wallet.update(auction_contact, 1 * ts4.GRAM)
+        participant.update(auction_contract_address, 1 * ts4.GRAM)
         ts4.dispatch_messages()
 
-        best_person = user.call_getter('getBestPerson')
-        self.assertEqual(best_person, wallet.address)
-        print(best_person)
-
-    def deploy(self) -> ts4.Address:
-        address = self.auction_root.call_method(f'testDeployEnglishForwardAuction', {
-            'startValue': 1 * ts4.GRAM,
-            'stepValue': 1 * ts4.GRAM,
-            'startTime': self.START_TIME,
-            'openDuration': self.OPEN_DURATION,
-        })
-        ts4.dispatch_messages()
-        return address
+        # Organizer can get winner
+        winner_address = organizer.call_getter('getWinner')
+        self.assertEqual(winner_address, participant.address)
+        print(f'Winner: {winner_address}')
 
     @staticmethod
-    def update(address: ts4.Address):
-        wallet = TestWallet()
-        wallet.update(address, 1 * ts4.GRAM)
+    def _load_abi() -> dict:
+        with open('../../build-artifacts/EnglishForwardAuction.abi.json', 'r') as file:
+            content = file.read()
+        return json.loads(content)

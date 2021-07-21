@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from tonclient.types import CallSet
 from tonos_ts4 import ts4
 
 from abstract.common import CommonAuctionTest
@@ -26,9 +27,20 @@ class DutchAuctionTest(ABC, CommonAuctionTest):
         self._buy(wallet, bid_value=5, expect_ec=Errors.WRONG_PHASE)
         self.assertEqual(100 * ts4.GRAM, wallet.balance, 'Bid is not returned')
 
+    def _current_price(self) -> int:
+        return self.contract.call_getter('getCurrentPrice')
+
     @abstractmethod
     def _buy(self, wallet: TestWallet, bid_value: float, expect_ec: int = 0):
         pass
 
-    def _current_price(self) -> int:
-        return self.contract.call_getter('getCurrentPrice')
+    def _call_buy(
+            self,
+            wallet: TestWallet,
+            destination: ts4.Address,
+            value: int,
+            bid_value: int,
+            expect_ec: int = 0
+    ):
+        call_set = CallSet('buy', input={'value': bid_value})
+        wallet.send_call_set(destination, value, call_set=call_set, abi=self.contract.abi_, expect_ec=expect_ec)

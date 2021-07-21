@@ -1,4 +1,4 @@
-import tonos_ts4.ts4 as ts4
+from tonos_ts4 import ts4
 
 from abstract.blind import BlindAuctionTest
 from test_wallet import TestWallet

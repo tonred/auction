@@ -25,7 +25,7 @@ contract TestUsage is IAuctionFinishCallback, IAuctionDeployedCallback {
         return _auctionContract;
     }
 
-    function getBestPerson() public view returns (address) {
+    function getWinner() public view returns (address) {
         return _winner;
     }
 
