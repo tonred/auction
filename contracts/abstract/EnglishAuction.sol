@@ -16,9 +16,9 @@ abstract contract EnglishAuction is CommonAuction {
      **************/
     /*
     @param owner        Owner of this auction contract
-    @param fee          Fee value for each bid
-    @param startValue   Value when auction is started
-    @param stepValue    Value on which next bid must be greater/lower
+    @param fee          Fee value for each bid [in TON]
+    @param startValue   Value when auction is started [in TIP3]
+    @param stepValue    Value on which next bid must be greater/lower [in TIP3]
     @param startTime    Timestamp when auction will start
     @param openDuration Duration of auction in seconds
     */
@@ -28,8 +28,9 @@ abstract contract EnglishAuction is CommonAuction {
         uint128 startValue,
         uint128 stepValue,
         uint32 startTime,
-        uint32 openDuration
-    ) public onlyRoot CommonAuction(owner, fee, startTime, openDuration) {
+        uint32 openDuration,
+        address tip3_root
+    ) public onlyRoot CommonAuction(owner, fee, startTime, openDuration, tip3_root) {
         require(stepValue > 0, Errors.LOW_STEP_VALUE);
         _startValue = startValue;
         _stepValue = stepValue;
@@ -50,7 +51,5 @@ abstract contract EnglishAuction is CommonAuction {
     function getWinnerValue() public view returns (uint128) {
         return _winner.value;
     }
-
-    function makeBid(uint128 value) virtual public;
 
 }

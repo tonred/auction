@@ -10,6 +10,7 @@ struct PhaseTime {
 
 struct Bid {
     address owner;
+    address wallet;
     uint128 value;
 }
 
@@ -55,4 +56,8 @@ library Errors {
     uint16 constant LOW_DEPLOY_VALUE = 503;
     uint16 constant AUCTIONS_CODES_NOT_INITED = 504;
     uint16 constant IS_NOT_FROM_AUCTION = 505;
+
+    // TIP3
+    uint16 constant IS_NOT_TIP3_ROOT = 601;
+    uint16 constant IS_NOT_TIP3_OWNER = 602;
 }

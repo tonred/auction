@@ -2,6 +2,7 @@ from tonos_ts4 import ts4
 
 from abstract.base import BaseAuctionTest
 from utils.phase import Phase
+from utils.user import User
 
 
 class CommonAuctionTest(BaseAuctionTest):
@@ -37,3 +38,8 @@ class CommonAuctionTest(BaseAuctionTest):
 
         if update:
             self._update()
+
+    def _make_bid(self, user: User, value: int, expect_ec: int = 0):
+        contract_tip3_address = self.contract.call_getter('getTIP3Wallet')
+        print(contract_tip3_address)
+        user.transfer_tip3(contract_tip3_address, value, expect_ec=expect_ec)

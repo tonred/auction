@@ -2,9 +2,10 @@ pragma ton-solidity >= 0.39.0;
 
 import "../interface/IAuctionRoot.sol";
 import "../Lib.sol";
+import "./ITIP3Manager.sol";
 
 
-abstract contract BaseAuction {
+abstract contract BaseAuction is ITIP3Manager {
     uint8 constant SEND_ALL_GAS = 64;
 
 
@@ -35,8 +36,13 @@ abstract contract BaseAuction {
         _;
     }
 
-    modifier inPhase(Phase p) {
-        require(_phase == p, Errors.WRONG_PHASE);
+    modifier inPhase(Phase p, uint128 tokens_amount, address sender_wallet) {
+        if (_phase != p) {
+            if (tokens_amount > 0 && sender_wallet != address(0)) {  // if need to return tip3 tokens
+                _transferTokens(sender_wallet, tokens_amount);
+            }
+            tvm.exit();
+        }
         _;
     }
 
@@ -45,7 +51,7 @@ abstract contract BaseAuction {
      * CONSTRUCTOR *
      **************/
 
-    constructor(address owner) public onlyRoot {
+    constructor(address owner, address tip3_root) public onlyRoot ITIP3Manager(owner, tip3_root) {
         tvm.accept();
         _owner = owner;
         _phase = Phase.WAIT;

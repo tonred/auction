@@ -4,9 +4,9 @@ from tonclient.types import CallSet
 from tonos_ts4 import ts4
 
 from abstract.base import BaseAuctionTest
-from test_wallet import TestWallet
 from utils.errors import Errors
 from utils.phase import Phase
+from utils.test_wallet import TestWallet
 
 
 class BlindAuctionTest(BaseAuctionTest):

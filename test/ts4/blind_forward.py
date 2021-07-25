@@ -1,9 +1,9 @@
 from tonos_ts4 import ts4
 
 from abstract.blind import BlindAuctionTest
-from test_wallet import TestWallet
 from utils.errors import Errors
 from utils.phase import Phase
+from utils.test_wallet import TestWallet
 from utils.utils import random_address
 
 

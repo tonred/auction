@@ -11,33 +11,36 @@ contract EnglishForwardAuction is EnglishAuction {
         uint128 startValue,
         uint128 stepValue,
         uint32 startTime,
-        uint32 openDuration
-    ) public onlyRoot EnglishAuction(owner, fee, startValue, stepValue, startTime, openDuration) {}
+        uint32 openDuration,
+        address tip3_root
+    ) public onlyRoot EnglishAuction(owner, fee, startValue, stepValue, startTime, openDuration, tip3_root) {}
 
-    /*
-    @param value - Real value of bid
-    @value You must send all tokens of your bid plus fee value
-    */
-    function makeBid(uint128 value) doUpdate inPhase(Phase.OPEN) override public {
-        _checkBid(value);
-        _reserve(0);
 
-        if (_winner.owner != address(0)) {
-            _winner.owner.transfer({value: _winner.value, flag: 1, bounce: false});
+    function _tokensReceivedProcess(
+        uint128 tokens_amount,
+        address sender_address,
+        address sender_wallet
+    ) override internal doUpdate inPhase(Phase.OPEN, tokens_amount, sender_wallet) {
+        bool accept = _checkBid(tokens_amount);
+        if (!accept) {
+            _transferTokens(sender_wallet, tokens_amount);
+        } else {
+            if (_winner.owner != address(0)) {
+                _transferTokens(_winner.wallet, _winner.value);
+            }
+            _winner = Bid(sender_address, sender_wallet, tokens_amount);
+            _bidsCount++;
+            emit BidIsMade(sender_address, tokens_amount);
         }
-        _winner = Bid(msg.sender, value);
-        _bidsCount++;
-        emit BidIsMade(msg.sender, value);
     }
 
-    function _checkBid(uint128 value) private view {
-        require(msg.value >= value + _fee, Errors.LOW_MSG_VALUE);
-
+    function _checkBid(uint128 tokens_amount) private view returns (bool) {
+        require(msg.value >= _fee, Errors.LOW_MSG_VALUE);
         if (_winner.owner == address(0)) {
-            require(value >= _startValue, Errors.VALUE_LESS_THAN_START_VALUE);
+            return tokens_amount >= _startValue;
         } else {
             uint128 highest = getWinnerValue();
-            require(value >= highest + _stepValue, Errors.VALUE_LESS_THAN_STEP_FROM_HIGHEST_VALUE);
+            return tokens_amount >= highest + _stepValue;
         }
     }
 

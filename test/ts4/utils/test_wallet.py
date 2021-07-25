@@ -10,7 +10,8 @@ from utils.utils import random_address
 class TestWallet(ts4.BaseContract):
 
     def __init__(self):
-        super().__init__('TestWallet', {}, nickname='TestWallet', override_address=random_address())
+        super().__init__('TestWallet', {}, nickname='TestWallet', override_address=random_address(),
+                         keypair=ts4.make_keypair())
 
     def update(self, dest: ts4.Address, value: int):
         self.call_method('update', {
@@ -19,7 +20,15 @@ class TestWallet(ts4.BaseContract):
         })
         ts4.dispatch_messages()
 
-    def send_call_set(self, dest: ts4.Address, value: int, call_set: CallSet, abi: dict, expect_ec: int = 0):
+    def send_call_set(
+            self,
+            dest: ts4.Address,
+            value: int,
+            call_set: CallSet,
+            abi: dict,
+            expect_ec: int = 0,
+            skip_before_expect: int = 0
+    ):
         encode_params = ParamsOfEncodeMessageBody(
             abi=Abi.Json(json.dumps(abi)),
             signer=Signer.NoSigner(),
@@ -27,7 +36,8 @@ class TestWallet(ts4.BaseContract):
             is_internal=True,
         )
         message = sync_core_client.abi.encode_message_body(params=encode_params)
-        self.send_transaction(dest, value, payload=message.body, expect_ec=expect_ec)
+        payload = message.body
+        self.send_transaction(dest, value, payload=payload, expect_ec=expect_ec, skip_before_expect=skip_before_expect)
 
     def send_transaction(
             self,
@@ -36,7 +46,8 @@ class TestWallet(ts4.BaseContract):
             bounce: bool = True,
             flags: int = 1,
             payload: str = ts4.EMPTY_CELL,
-            expect_ec: int = 0
+            expect_ec: int = 0,
+            skip_before_expect: int = 0,
     ):
         self.call_method('sendTransaction', {
             'dest': dest,
@@ -44,6 +55,8 @@ class TestWallet(ts4.BaseContract):
             'bounce': bounce,
             'flags': flags,
             'payload': payload,
-        })
+        }, private_key=self.private_key_)
+        for _ in range(skip_before_expect):
+            ts4.dispatch_one_message()
         ts4.dispatch_one_message(expect_ec=expect_ec)
         ts4.dispatch_messages()

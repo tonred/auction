@@ -6,7 +6,7 @@ from tonclient.types import CallSet
 from tonos_ts4 import ts4
 
 from config import BUILD_ARTIFACTS_PATH, VERBOSE
-from test_wallet import TestWallet
+from utils.test_wallet import TestWallet
 from utils.utils import random_address
 
 

@@ -1,8 +1,9 @@
 pragma ton-solidity >=0.39.0;
 
-import "../abstract/EnglishAuction.sol";
-import "../abstract/DutchAuction.sol";
-import "../abstract/BlindAuction.sol";
+pragma AbiHeader time;
+pragma AbiHeader expire;
+
+import "../abstract/BaseAuction.sol";
 
 
 contract TestWallet {
@@ -12,7 +13,7 @@ contract TestWallet {
     }
 
     function sendTransaction(
-        address payable dest,
+        address dest,
         uint128 value,
         bool bounce,
         uint8 flags,
@@ -31,4 +32,18 @@ contract TestWallet {
     fallback() external {}
 
     receive() external {}
+
+    function afterSignatureCheck(TvmSlice body, TvmCell message) private inline returns (TvmSlice) {
+        // Via TvmSlice methods we read header fields from the message body
+
+        tvm.accept();
+        body.decode(uint64); // The first 64 bits contain timestamp which is usually used to differentiate messages.
+        uint32 expireAt = body.decode(uint32);
+        tvm.log(format("{}", expireAt));
+        tvm.log(format("{}", now));
+
+        // After reading message headers this function must return the rest of the body slice.
+        return body;
+    }
+
 }

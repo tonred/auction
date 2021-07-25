@@ -1,9 +1,9 @@
 from tonos_ts4 import ts4
 
 from abstract.english import EnglishAuctionTest
-from test_wallet import TestWallet
 from utils.errors import Errors
 from utils.phase import Phase
+from utils.test_wallet import TestWallet
 from utils.utils import random_address
 
 
