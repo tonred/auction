@@ -12,7 +12,7 @@ TG: @Abionics
 
 
 *Addresses for testnet is same, but testnet is often rebooted. You can contact us in TG and we will redeploy
-**[Testnet viewer](https://auction-viewer.ton.red/?network=dev.ton.dev&root=0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118)
+**[Testnet viewer](https://auction-viewer.ton.red/?network=net.ton.dev&root=0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118)
 
 ## Key features:
 * Six types of auctions
