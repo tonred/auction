@@ -2,13 +2,17 @@
 
 Github: https://github.com/tonred/auction
 
-Viewer mainnet: https://auction-viewer.ton.red/?network=main.ton.dev&root=0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118
+Viewer mainnet**: https://auction-viewer.ton.red/?network=main.ton.dev&root=0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118
 
-Root address in mainnet: `0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118`
+Root address in mainnet*: `0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118`
 
-DeBot address in mainnet: `0:b7ab4ab8db821a73c2e7d14ac8545f7900a0d6e176d169489fee0ba8038a006d`
+DeBot address in mainnet*: `0:b7ab4ab8db821a73c2e7d14ac8545f7900a0d6e176d169489fee0ba8038a006d`
 
 TG: @Abionics
+
+
+*Addresses for testnet is same, but testnet is often rebooted. You can contact us in TG and we will redeploy
+**[Testnet viewer](https://auction-viewer.ton.red/?network=dev.ton.dev&root=0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118)
 
 ## Key features:
 * Six types of auctions
@@ -23,7 +27,7 @@ TG: @Abionics
 * tondev
 * tvm-linker
 * python `>=3.7`
-* ts4 `==0.3.0`
+* `ts4==0.3.0`
 * nodejs
 
 ### Setup environment
@@ -38,9 +42,9 @@ Install node js dependencies:
 npm install
 ```
 
-Install test suit 4:
+Install test suit 4 and ton client:
 ```shell
-pip install tonos-ts4
+pip install -r test/ts4/requirements.txt
 ```
 
 For view all make instructions:
