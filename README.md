@@ -248,7 +248,24 @@ There are tests for each type of auction (name of files in equals to auction typ
 Moreover, there is an integration test for all workflow in `workflow.py`.
 Test classes inheritance structure is the same as in auction
 
-## UI
+![tests.png](docs/tests.png)
+
+## Viewer
+
+Viewer listen for events and display all auctions from root in one table.
+You can click on any auction to see more info
 
 ![viewer.png](docs/viewer.png)
 ![info.png](docs/info.png)
+
+## Debot
+
+![debot1.png](docs/debot1.png)
+![debot2.png](docs/debot2.png)
+![debot3.png](docs/debot3.png)
+
+## TIP3
+
+In branch `tip3` there is a demo of a TIP3 English Forward Auction.
+It contains ts4 tests.
+Another auctions will be done in such way.
