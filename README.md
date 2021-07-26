@@ -260,6 +260,8 @@ You can click on any auction to see more info
 
 ## Debot
 
+**! Important !** You must call "Set Multisig” before deploying any type of auction
+
 ![debot1.png](docs/debot1.png)
 ![debot2.png](docs/debot2.png)
 ![debot3.png](docs/debot3.png)
@@ -267,5 +269,9 @@ You can click on any auction to see more info
 ## TIP3
 
 In branch `tip3` there is a demo of a TIP3 English Forward Auction.
-It contains ts4 tests.
+It contains `ts4` tests.
 Another auctions will be done in such way.
+Used broxus TIP3 implementation (see realization [here](https://github.com/broxus/ton-eth-bridge-token-contracts/tree/master/free-ton/contracts) - 
+RootTokenContract.sol and TONTokenWallet.sol contacts)
+
+![tests_tip3.png](docs/tests_tip3.png)
