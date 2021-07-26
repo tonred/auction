@@ -27,7 +27,7 @@ interface IMultisig {
         bool bounce,
         bool allBalance,
         TvmCell payload)
-    external;
+    external returns (uint64 transId);
 }
 
 contract AuctionDebot is Debot {
@@ -130,34 +130,34 @@ contract AuctionDebot is Debot {
     function choiceAuctionTypeCreateAuction(uint32 index) public {
         auctionTypeChoice = index;
         if (auctionTypeChoice == 0 /*EnglishForward*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 100);
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
         }
         else if (auctionTypeChoice == 1 /*EnglishReverse*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 100);
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
         }
         else if (auctionTypeChoice == 2 /*DutchForward*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 100);
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
 
         }
         else if (auctionTypeChoice == 3 /*DutchReverse*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 100);
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
         }
         else if (auctionTypeChoice == 4 /*BlindForward*/) {
             AmountInput.get(tvm.functionId(choiceConfirmationDuration), "Enter confirmation duration: ", 0, 1, 1 << 32);
 
         }
         else if (auctionTypeChoice == 5 /*BlindReverse*/) {
-            AmountInput.get(tvm.functionId(choiceConfirmationDuration), "Enter confirmation duration: ", 1, 1, 1 << 32);
+            AmountInput.get(tvm.functionId(choiceConfirmationDuration), "Enter confirmation duration: ", 0, 1, 1 << 32);
         }
     }
 
     function choiceAuctionStartValue(uint128 value) public{
         auctionStartValue = value;
         if (auctionTypeChoice == 2 || auctionTypeChoice == 3){
-            AmountInput.get(tvm.functionId(choiceAuctionFinishValue), "Enter finish value: ", 0, 1, 100);
+            AmountInput.get(tvm.functionId(choiceAuctionFinishValue), "Enter finish value: ", 0, 1, 1000);
         }
         else {
-            AmountInput.get(tvm.functionId(choiceAuctionStepValue), "Enter step value: ", 0, 1, 100);
+            AmountInput.get(tvm.functionId(choiceAuctionStepValue), "Enter step value: ", 0, 1, 1000);
         }
     }
 
@@ -200,28 +200,24 @@ contract AuctionDebot is Debot {
     }
 
     function onSuccess(uint64 transId) public {
-        transId;
-        Terminal.print(0, "Succeded");
+        Terminal.print(0, "Success"));
     }
 
     function onError(uint32 sdkError, uint32 exitCode) public {
-        sdkError = sdkError;
-        exitCode = exitCode;
         Terminal.print(0, format("Operation failed: {} {}", sdkError, exitCode));
     }
 
     function deployEnglishForward() public {
-        Terminal.print(0, format("Your address: {}", _addrMultisig));
         TvmCell body = tvm.encodeBody(AuctionRoot.deployEnglishForwardAuction, auctionStartValue * 1 ton, auctionStepValue * 1 ton, now, auctionOpenDuration);
         IMultisig(_addrMultisig).submitTransaction{
-            abiVer : 2,
-            extMsg : true,
-            sign : true,
-            pubkey : pubkey,
-            time : uint64(now),
-            expire : 0,
-            callbackId : tvm.functionId(onSuccess),
-            onErrorId : tvm.functionId(onError)
+            abiVer: 2,
+            extMsg: true,
+            sign: true,
+            pubkey: pubkey,
+            time: uint64(now),
+            expire: 0,
+            callbackId: tvm.functionId(onSuccess),
+            onErrorId: tvm.functionId(onError)
         }(auctionRootAddress, 2 ton, true, false, body);
         _start();
     }
@@ -327,7 +323,7 @@ contract AuctionDebot is Debot {
                 expire: 0,
                 callbackId: 0,
                 onErrorId: 0
-            }(auctionAddressInput, 2 ton, true, true, body);
+            }(auctionAddressInput, 2 ton, true, false, body);
         } else if (auctionTypeChoice == 3 /*DutchReverse*/) {
             TvmCell body = tvm.encodeBody(DutchReverseAuction.buy, bidValue);
             IMultisig(_addrMultisig).submitTransaction{
@@ -339,7 +335,7 @@ contract AuctionDebot is Debot {
                 expire: 0,
                 callbackId: 0,
                 onErrorId: 0
-            }(auctionAddressInput, 2 ton, true, true, body);
+            }(auctionAddressInput, 2 ton, true, false, body);
         } else if (auctionTypeChoice == 2 /*DutchForward*/) {
             TvmCell body = tvm.encodeBody(DutchForwardAuction.buy, bidValue);
             IMultisig(_addrMultisig).submitTransaction{
@@ -351,7 +347,7 @@ contract AuctionDebot is Debot {
                 expire: 0,
                 callbackId: 0,
                 onErrorId: 0
-            }(auctionAddressInput, bidValue + 2 ton, true, true, body);
+            }(auctionAddressInput, bidValue + 2 ton, true, false, body);
         } else if (auctionTypeChoice == 1 /*EnglishReverse*/) {
             TvmCell body = tvm.encodeBody(EnglishReverseAuction.makeBid, bidValue);
             IMultisig(_addrMultisig).submitTransaction{
@@ -363,7 +359,7 @@ contract AuctionDebot is Debot {
                 expire: 0,
                 callbackId: 0,
                 onErrorId: 0
-            }(auctionAddressInput, 2 ton, true, true, body);
+            }(auctionAddressInput, 2 ton, true, false, body);
         } else if (auctionTypeChoice == 0 /*EnglishForward*/) {
             TvmCell body = tvm.encodeBody(EnglishForwardAuction.makeBid, bidValue);
             IMultisig(_addrMultisig).submitTransaction{
@@ -375,7 +371,7 @@ contract AuctionDebot is Debot {
                 expire: 0,
                 callbackId: 0,
                 onErrorId: 0
-            }(auctionAddressInput, bidValue + 2 ton, true, true, body);
+            }(auctionAddressInput, bidValue + 2 ton, true, false, body);
         }
         _start();
     }
