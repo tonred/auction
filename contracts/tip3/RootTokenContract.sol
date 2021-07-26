@@ -141,7 +141,6 @@ IPausable, ITransferOwner, ISendSurplusGas, IVersioned {
         override
         external
     {
-        tvm.log("sendExpectedWalletAddress");
         tvm.rawReserve(address(this).balance - msg.value, 2);
 
         address wallet = getExpectedWalletAddress(wallet_public_key_, owner_address_);
@@ -248,7 +247,6 @@ IPausable, ITransferOwner, ISendSurplusGas, IVersioned {
     returns (
         address
     ) {
-        tvm.log("deployEmptyWallet");
         require((owner_address_.value != 0 && wallet_public_key_ == 0) ||
                 (owner_address_.value == 0 && wallet_public_key_ != 0),
                 RootTokenContractErrors.error_define_public_key_or_owner_address);
@@ -267,8 +265,6 @@ IPausable, ITransferOwner, ISendSurplusGas, IVersioned {
                 owner_address: owner_address_
             }
         }();
-        tvm.log(format("wallet wallet wallet {}", wallet));
-
         if (gas_back_address.value != 0) {
             gas_back_address.transfer({ value: 0, flag: 128 });
         } else {

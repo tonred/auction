@@ -28,15 +28,12 @@ abstract contract ITIP3Manager is ITokensReceivedCallback, IExpectedWalletAddres
     constructor(address owner, address tip3_root) public {
         tvm.accept();
         _tip3_root = tip3_root;
-        tvm.log("ITIP3Manager constructor");
-        tvm.log(format("{}", msg.value));
         ITIP3Manager(address(this)).setup{value: 0, flag: 128, bounce: false}(owner);
     }
 
     function setup(address owner) public view {
         require(msg.pubkey() == tvm.pubkey() || msg.sender == address(this), Errors.IS_NOT_TIP3_OWNER);
         tvm.accept();
-        tvm.log("ITIP3Manager setup");
         IRootTokenContract(_tip3_root)
             .deployEmptyWallet {
                 value: DEPLOY_EMPTY_WALLET_VALUE,
@@ -47,7 +44,6 @@ abstract contract ITIP3Manager is ITokensReceivedCallback, IExpectedWalletAddres
                 address(this),              // owner_address
                 owner                       // gas_back_address
             );
-        tvm.log("ITIP3Manager constructor 2");
         IRootTokenContract(_tip3_root)
             .sendExpectedWalletAddress {
                 value: SEND_EXPECTED_WALLET_VALUE,
@@ -57,7 +53,6 @@ abstract contract ITIP3Manager is ITokensReceivedCallback, IExpectedWalletAddres
                 address(this),  // owner_address_
                 address(this)   // to
             );
-        tvm.log("ITIP3Manager constructor 3");
     }
 
     function getTIP3Root() public view returns (address) {
@@ -74,15 +69,12 @@ abstract contract ITIP3Manager is ITokensReceivedCallback, IExpectedWalletAddres
         uint256 wallet_public_key,
         address owner_address
     ) override public {
-        tvm.log("expectedWalletAddressCallback 1");
         require(msg.sender == _tip3_root, Errors.IS_NOT_TIP3_ROOT);
         require(wallet_public_key == 0, Errors.IS_NOT_TIP3_OWNER);
         require(owner_address == address(this), Errors.IS_NOT_TIP3_OWNER);
 
         tvm.accept();
         _tip3_wallet = wallet;
-        tvm.log("expectedWalletAddressCallback 2");
-        tvm.log(format("{}", _tip3_wallet.value));
         ITONTokenWallet(_tip3_wallet)
             .setReceiveCallback {
                 value: 0,
@@ -94,7 +86,7 @@ abstract contract ITIP3Manager is ITokensReceivedCallback, IExpectedWalletAddres
     }
 
     function notifyWalletDeployed(address /*root*/) override public {
-        tvm.log("notifyWalletDeployed");
+//        tvm.log("notifyWalletDeployed");
     }
 
     function tokensReceivedCallback(

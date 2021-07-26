@@ -18,7 +18,6 @@ contract TestTIP3Deployer  {
 
     function deployTestRootTIP3() public view returns (address) {
         tvm.accept();
-        tvm.log("deployTestRootTIP3");
         TvmCell stateInit = tvm.buildStateInit({
             contr: RootTokenContract,
             varInit: {
@@ -33,13 +32,11 @@ contract TestTIP3Deployer  {
             stateInit: stateInit,
             value: 10 ton
         }(0, address(this));
-        tvm.log(format("{}", test_root));
         return test_root;
     }
 
     function deployUserTIP3Wallet(address root, address owner) public view returns (address) {
         tvm.accept();
-        tvm.log("deployUserTIP3Wallet");
         TvmCell stateInit = tvm.buildStateInit({
             contr: TONTokenWallet,
             varInit: {

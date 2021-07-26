@@ -33,14 +33,12 @@ contract TestWallet {
 
     receive() external {}
 
-    function afterSignatureCheck(TvmSlice body, TvmCell message) private inline returns (TvmSlice) {
+    function afterSignatureCheck(TvmSlice body, TvmCell message) private inline returns (TvmSlice) {  // todo fix mock
         // Via TvmSlice methods we read header fields from the message body
 
         tvm.accept();
         body.decode(uint64); // The first 64 bits contain timestamp which is usually used to differentiate messages.
         uint32 expireAt = body.decode(uint32);
-        tvm.log(format("{}", expireAt));
-        tvm.log(format("{}", now));
 
         // After reading message headers this function must return the rest of the body slice.
         return body;
