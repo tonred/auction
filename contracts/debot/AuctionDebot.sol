@@ -200,7 +200,7 @@ contract AuctionDebot is Debot {
     }
 
     function onSuccess(uint64 transId) public {
-        Terminal.print(0, "Success"));
+        Terminal.print(0, "Success");
     }
 
     function onError(uint32 sdkError, uint32 exitCode) public {
