@@ -2,11 +2,11 @@
 
 Github: https://github.com/tonred/auction
 
-Viewer: https://auction-viewer.ton.red/?network=net.ton.dev&root=0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce
+Viewer mainnet: https://auction-viewer.ton.red/?network=main.ton.dev&root=0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118
 
-Root address in net.ton.dev: `0:18ec0f775d7b1cf71c6331860b5f7786d26922d67abc6d3c224259a5eb7a76ce`
+Root address in mainnet: `0:3d3efe33d552f2ebc2cafb9fbe8547b929c557426eed4dd68d37a9b933d1b118`
 
-DeBot address in net.ton.dev: `0:718d360c0aab56ea0aabf40cb28740c5f38e1f6e179cbb70ca8adabd9b5c27d5`
+DeBot address in mainnet: `0:b7ab4ab8db821a73c2e7d14ac8545f7900a0d6e176d169489fee0ba8038a006d`
 
 TG: @Abionics
 
@@ -20,9 +20,10 @@ TG: @Abionics
 ## Build and run
 
 ### Requirements:
-* ton-solidity `0.39.0` from broxus (https://github.com/broxus/TON-Solidity-Compiler)
+* tondev
 * tvm-linker
 * python `>=3.7`
+* ts4 `==0.3.0`
 * nodejs
 
 ### Setup environment
@@ -55,7 +56,10 @@ make tests
 
 ## Deployment
 
-Он же должен быть
+```shell
+make deploy-root
+make deploy-debot
+```
 
 ## Structure
 
