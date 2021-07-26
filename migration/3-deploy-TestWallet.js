@@ -15,6 +15,16 @@ async function deployTestWallet(tonWrapper, migration) {
     });
 }
 
+if (require.main === module) {
+    (async () => {
+        const _tonWrapper = await loadTonWrapper();
+        await _tonWrapper.setup(1);
+        const _migration = new TONTestingSuite.Migration(_tonWrapper);
+        await deployTestWallet(_tonWrapper, _migration)
+        process.exit(0);
+    })();
+}
+
 module.exports = {
     deployTestWallet: deployTestWallet
 }
