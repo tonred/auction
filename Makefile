@@ -164,9 +164,7 @@ define compile_all
 endef
 
 define compile_tondev
-	tondev sol compile $(1)/$(2).sol
-	mv $(2).abi.json $(ARTIFACTS_PATH)
-    mv $(2).tvc $(ARTIFACTS_PATH)
+	tondev sol compile $(1)/$(2).sol -o ./build-artifacts
 endef
 
 define tvc_to_base64
