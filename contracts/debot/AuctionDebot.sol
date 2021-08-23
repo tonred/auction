@@ -112,7 +112,7 @@ contract AuctionDebot is Debot {
 
     function saveAuctionAddress(address value) public {
         auctionAddressInput = value;
-        AmountInput.get(tvm.functionId(getAuctionBuyEnterBidValue), "Enter Bid Value: ", 0, 1, 100000);
+        AmountInput.get(tvm.functionId(getAuctionBuyEnterBidValue), "Enter Bid Value: ", 0, 1, 1e9);
     }
 
 
@@ -130,21 +130,19 @@ contract AuctionDebot is Debot {
     function choiceAuctionTypeCreateAuction(uint32 index) public {
         auctionTypeChoice = index;
         if (auctionTypeChoice == 0 /*EnglishForward*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1e9);
         }
         else if (auctionTypeChoice == 1 /*EnglishReverse*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1e9);
         }
         else if (auctionTypeChoice == 2 /*DutchForward*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
-
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1e9);
         }
         else if (auctionTypeChoice == 3 /*DutchReverse*/) {
-            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1000);
+            AmountInput.get(tvm.functionId(choiceAuctionStartValue), "Enter start value: ", 0, 1, 1e9);
         }
         else if (auctionTypeChoice == 4 /*BlindForward*/) {
             AmountInput.get(tvm.functionId(choiceConfirmationDuration), "Enter confirmation duration: ", 0, 1, 1 << 32);
-
         }
         else if (auctionTypeChoice == 5 /*BlindReverse*/) {
             AmountInput.get(tvm.functionId(choiceConfirmationDuration), "Enter confirmation duration: ", 0, 1, 1 << 32);
@@ -153,11 +151,13 @@ contract AuctionDebot is Debot {
 
     function choiceAuctionStartValue(uint128 value) public{
         auctionStartValue = value;
-        if (auctionTypeChoice == 2 || auctionTypeChoice == 3){
-            AmountInput.get(tvm.functionId(choiceAuctionFinishValue), "Enter finish value: ", 0, 1, 1000);
+        if (auctionTypeChoice == 2) {
+            AmountInput.get(tvm.functionId(choiceAuctionFinishValue), "Enter finish value: ", 0, 1, value - 1);
+        } else if (auctionTypeChoice == 3) {
+            AmountInput.get(tvm.functionId(choiceAuctionFinishValue), "Enter finish value: ", 0, value + 1, 1e9);
         }
         else {
-            AmountInput.get(tvm.functionId(choiceAuctionStepValue), "Enter step value: ", 0, 1, 1000);
+            AmountInput.get(tvm.functionId(choiceAuctionStepValue), "Enter step value: ", 0, 1, 1e9);
         }
     }
 
@@ -174,7 +174,7 @@ contract AuctionDebot is Debot {
             Terminal.print(tvm.functionId(deployDutchForward), "Deploying!");
         }
         else if (auctionTypeChoice == 3 /*DutchReverse*/){
-            Terminal.print(tvm.functionId(deployDutchReverse), "Deploying!");
+            Terminal.print(tvm.functionId(deployDutchReverse), "Deploying!+");
         }
         else if (auctionTypeChoice == 4 /*BlindForward*/){
             Terminal.print(tvm.functionId(deployBlindForward), "Deploying!");
@@ -208,7 +208,8 @@ contract AuctionDebot is Debot {
     }
 
     function deployEnglishForward() public {
-        TvmCell body = tvm.encodeBody(AuctionRoot.deployEnglishForwardAuction, auctionStartValue * 1 ton, auctionStepValue * 1 ton, now, auctionOpenDuration);
+        uint128 _tmpAuctionStepValue = uint128(auctionStepValue);
+        TvmCell body = tvm.encodeBody(AuctionRoot.deployEnglishForwardAuction, auctionStartValue * 1 ton, _tmpAuctionStepValue * 1 ton, now, auctionOpenDuration);
         IMultisig(_addrMultisig).submitTransaction{
             abiVer: 2,
             extMsg: true,
@@ -223,7 +224,8 @@ contract AuctionDebot is Debot {
     }
 
     function deployEnglishReverse() public {
-        TvmCell body = tvm.encodeBody(AuctionRoot.deployEnglishReverseAuction, auctionStartValue * 1 ton, auctionStepValue * 1 ton, now, auctionOpenDuration);
+        uint128 _tmpAuctionStepValue = uint128(auctionStepValue);
+        TvmCell body = tvm.encodeBody(AuctionRoot.deployEnglishReverseAuction, auctionStartValue * 1 ton, _tmpAuctionStepValue * 1 ton, now, auctionOpenDuration);
         IMultisig(_addrMultisig).submitTransaction{
             abiVer : 2,
             extMsg : true,
@@ -239,7 +241,8 @@ contract AuctionDebot is Debot {
 
 
     function deployDutchForward() public {
-        TvmCell body = tvm.encodeBody(AuctionRoot.deployDutchForwardAuction, auctionStartValue * 1 ton, auctionStepValue * 1 ton, now, auctionOpenDuration);
+        uint128 _tmpAuctionFinishValue = uint128(auctionFinishValue);
+        TvmCell body = tvm.encodeBody(AuctionRoot.deployDutchForwardAuction, auctionStartValue * 1 ton, _tmpAuctionFinishValue * 1 ton, now, auctionOpenDuration);
         IMultisig(_addrMultisig).submitTransaction{
             abiVer : 2,
             extMsg : true,
@@ -255,7 +258,8 @@ contract AuctionDebot is Debot {
 
 
     function deployDutchReverse() public {
-        TvmCell body = tvm.encodeBody(AuctionRoot.deployDutchReverseAuction, auctionStartValue * 1 ton, auctionStepValue * 1 ton, now, auctionOpenDuration);
+        uint128 _tmpAuctionFinishValue = uint128(auctionFinishValue);
+        TvmCell body = tvm.encodeBody(AuctionRoot.deployDutchReverseAuction, auctionStartValue * 1 ton, _tmpAuctionFinishValue * 1 ton, now, auctionOpenDuration);
         IMultisig(_addrMultisig).submitTransaction{
             abiVer : 2,
             extMsg : true,
@@ -304,15 +308,13 @@ contract AuctionDebot is Debot {
 //    }
 
     function getAuctionBuyEnterBidValue(uint128 value) public {
-        Terminal.print(0, format("{}", value));
         bidValue = value * 1 ton;
-        Terminal.print(0, format("{}", bidValue));
         if (auctionTypeChoice == 4 || auctionTypeChoice == 5 /*BlindForward*/ /*BlindReverse*/) {
+            rnd.shuffle();
             uint256 salt = rnd.next();
             bidSalt = salt;
-            Terminal.print(0, format("Your salt: {} \n REMIND IT!", salt));
+            Terminal.print(0, format("Your salt: {}\nREMEMBER IT!", salt));
             uint256 bidHash = calcHash(bidValue, bidSalt);
-            Terminal.print(0, format("Your bidHash: {}", bidHash));
             TvmCell body = tvm.encodeBody(BlindAuction.makeBid, bidHash);
             IMultisig(_addrMultisig).submitTransaction{
                 abiVer: 2,
@@ -323,7 +325,7 @@ contract AuctionDebot is Debot {
                 expire: 0,
                 callbackId: 0,
                 onErrorId: 0
-            }(auctionAddressInput, 2 ton, true, false, body);
+            }(auctionAddressInput, 7 ton, true, false, body);
         } else if (auctionTypeChoice == 3 /*DutchReverse*/) {
             TvmCell body = tvm.encodeBody(DutchReverseAuction.buy, bidValue);
             IMultisig(_addrMultisig).submitTransaction{
