@@ -21,6 +21,7 @@ abstract contract EnglishAuction is CommonAuction {
     @param stepValue    Value on which next bid must be greater/lower [in TIP3]
     @param startTime    Timestamp when auction will start
     @param openDuration Duration of auction in seconds
+    @param tip3_root    Address of TIP3 root contract
     */
     constructor(
         address owner,

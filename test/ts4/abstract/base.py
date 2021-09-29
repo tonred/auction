@@ -57,3 +57,7 @@ class BaseAuctionTest(unittest.TestCase):
 
     def _phase(self) -> Phase:
         return Phase(self.contract.call_getter('getPhase'))
+
+    def _send_tip3(self, user: User, value: int, payload: str = ts4.EMPTY_CELL, expect_ec: int = 0):
+        contract_tip3_address = self.contract.call_getter('getTIP3Wallet')
+        user.transfer_tip3(contract_tip3_address, value, payload=payload, expect_ec=expect_ec)

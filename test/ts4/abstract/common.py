@@ -38,7 +38,3 @@ class CommonAuctionTest(BaseAuctionTest):
 
         if update:
             self._update()
-
-    def _make_bid(self, user: User, value: int, expect_ec: int = 0):
-        contract_tip3_address = self.contract.call_getter('getTIP3Wallet')
-        user.transfer_tip3(contract_tip3_address, value, expect_ec=expect_ec)

@@ -20,14 +20,14 @@ class User:
         address = tip3_deployer.deploy_tip3_wallet(owner)
         return ts4.BaseContract('TONTokenWallet', {}, nickname='TONTokenWallet', address=address)
 
-    def transfer_tip3(self, destination: ts4.Address, value: int, expect_ec: int = 0):
+    def transfer_tip3(self, destination: ts4.Address, value: int, payload: str = ts4.EMPTY_CELL, expect_ec: int = 0):
         call_set = CallSet('transfer', input={
             'to': destination.str(),
             'tokens': value,
             'grams': 0,
             'send_gas_to': self.ton_wallet.address.str(),
             'notify_receiver': True,
-            'payload': ts4.EMPTY_CELL,
+            'payload': payload,
         })
         skip_before_expect = 0 if expect_ec == 0 else 2  # skip 2 messages - send_transaction and callback
         abi = self._load_tip3_wallet_abi()
@@ -50,3 +50,7 @@ class User:
     @property
     def tip3_balance(self) -> int:
         return self.tip3_wallet.call_getter('balance', {'_answer_id': 0})
+
+    @property
+    def ton_balance(self) -> int:
+        return self.ton_wallet.balance

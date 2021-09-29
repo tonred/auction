@@ -15,12 +15,12 @@ contract EnglishForwardAuction is EnglishAuction {
         address tip3_root
     ) public onlyRoot EnglishAuction(owner, fee, startValue, stepValue, startTime, openDuration, tip3_root) {}
 
-
     function _tokensReceivedProcess(
         uint128 tokens_amount,
         address sender_address,
-        address sender_wallet
-    ) override internal doUpdate inPhase(Phase.OPEN, tokens_amount, sender_wallet) {
+        address sender_wallet,
+        TvmCell /*payload*/
+    ) override internal doUpdate inPhaseReturnable(Phase.OPEN, tokens_amount, sender_wallet) {
         bool accept = _checkBid(tokens_amount);
         if (!accept) {
             _transferTokens(sender_wallet, tokens_amount);
@@ -35,7 +35,9 @@ contract EnglishForwardAuction is EnglishAuction {
     }
 
     function _checkBid(uint128 tokens_amount) private view returns (bool) {
-        require(msg.value >= _fee, Errors.LOW_MSG_VALUE);
+        if (msg.value < _fee) {
+            return false;
+        }
         if (_winner.owner == address(0)) {
             return tokens_amount >= _startValue;
         } else {

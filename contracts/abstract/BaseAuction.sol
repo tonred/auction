@@ -36,8 +36,13 @@ abstract contract BaseAuction is ITIP3Manager {
         _;
     }
 
-    modifier inPhase(Phase p, uint128 tokens_amount, address sender_wallet) {
-        if (_phase != p) {
+    modifier inPhase(Phase phase) {
+        require(_phase == phase, Errors.WRONG_PHASE);
+        _;
+    }
+
+    modifier inPhaseReturnable(Phase phase, uint128 tokens_amount, address sender_wallet) {
+        if (_phase != phase) {
             if (tokens_amount > 0 && sender_wallet != address(0)) {  // if need to return tip3 tokens
                 _transferTokens(sender_wallet, tokens_amount);
             }

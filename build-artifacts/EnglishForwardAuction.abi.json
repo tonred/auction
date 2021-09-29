@@ -180,7 +180,7 @@
 				{"name":"sender_wallet","type":"address"},
 				{"name":"value6","type":"address"},
 				{"name":"value7","type":"uint128"},
-				{"name":"value8","type":"cell"}
+				{"name":"payload","type":"cell"}
 			],
 			"outputs": [
 			]

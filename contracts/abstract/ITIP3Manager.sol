@@ -72,8 +72,8 @@ abstract contract ITIP3Manager is ITokensReceivedCallback, IExpectedWalletAddres
         require(msg.sender == _tip3_root, Errors.IS_NOT_TIP3_ROOT);
         require(wallet_public_key == 0, Errors.IS_NOT_TIP3_OWNER);
         require(owner_address == address(this), Errors.IS_NOT_TIP3_OWNER);
-
         tvm.accept();
+
         _tip3_wallet = wallet;
         ITONTokenWallet(_tip3_wallet)
             .setReceiveCallback {
@@ -98,22 +98,23 @@ abstract contract ITIP3Manager is ITokensReceivedCallback, IExpectedWalletAddres
         address sender_wallet,
         address /*original_gas_to*/,
         uint128 /*updated_balance*/,
-        TvmCell /*payload*/
+        TvmCell payload
     ) override public {
-        tvm.accept();
         require(msg.sender == _tip3_wallet, Errors.IS_NOT_TIP3_OWNER);
         require(sender_public_key == 0, Errors.IS_NOT_TIP3_OWNER);
         require(token_wallet == _tip3_wallet, Errors.IS_NOT_TIP3_OWNER);
+        tvm.accept();
 
         tvm.rawReserve(INITIAL_BALANCE, 2);
-        _tokensReceivedProcess(tokens_amount, sender_address, sender_wallet);
+        _tokensReceivedProcess(tokens_amount, sender_address, sender_wallet, payload);
         sender_address.transfer({value: 0, flag: REMAINING_GAS, bounce: false});
     }
 
     function _tokensReceivedProcess(
         uint128 tokens_amount,
         address sender_address,
-        address sender_wallet
+        address sender_wallet,
+        TvmCell payload
     ) virtual internal;
 
     function _transferTokens(address destination, uint128 value) internal view {

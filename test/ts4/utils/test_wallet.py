@@ -10,8 +10,13 @@ from utils.utils import random_address
 class TestWallet(ts4.BaseContract):
 
     def __init__(self):
-        super().__init__('TestWallet', {}, nickname='TestWallet', override_address=random_address(),
-                         keypair=ts4.make_keypair())
+        super().__init__(
+            'TestWallet',
+            {},
+            nickname='TestWallet',
+            override_address=random_address(),
+            keypair=ts4.make_keypair(),
+        )
 
     def update(self, dest: ts4.Address, value: int):
         self.call_method('update', {
@@ -27,7 +32,7 @@ class TestWallet(ts4.BaseContract):
             call_set: CallSet,
             abi: dict,
             expect_ec: int = 0,
-            skip_before_expect: int = 0
+            skip_before_expect: int = 0,
     ):
         encode_params = ParamsOfEncodeMessageBody(
             abi=Abi.Json(json.dumps(abi)),
