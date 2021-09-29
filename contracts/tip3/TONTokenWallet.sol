@@ -278,7 +278,7 @@ contract TONTokenWallet is ITONTokenWallet, IDestroyable, IBurnableByOwnerTokenW
             tvm.rawReserve(reserve, 2);
             balance_ -= tokens;
 
-            ITONTokenWallet(to).internalTransfer{ value: 0, flag: 129, bounce: true }(
+            ITONTokenWallet(to).internalTransfer{ value: msg.value, flag: 1, bounce: true }(
                 tokens,
                 wallet_public_key,
                 owner_address,
@@ -395,7 +395,7 @@ contract TONTokenWallet is ITONTokenWallet, IDestroyable, IBurnableByOwnerTokenW
         balance_ += tokens;
 
         if (notify_receiver && receive_callback.value != 0) {
-            ITokensReceivedCallback(receive_callback).tokensReceivedCallback{ value: 0, flag: 128 }(
+            ITokensReceivedCallback(receive_callback).tokensReceivedCallback{ value: msg.value, flag: 1 }(
                 address(this),
                 root_address,
                 tokens,

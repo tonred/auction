@@ -11,18 +11,20 @@
 				{"name":"startTime","type":"uint32"},
 				{"name":"openDuration","type":"uint32"},
 				{"name":"confirmationDuration","type":"uint32"},
-				{"name":"bidCode","type":"cell"}
+				{"name":"bidCode","type":"cell"},
+				{"name":"tip3_root","type":"address"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "confirmBid",
+			"name": "buildConfirmPayload",
 			"inputs": [
 				{"name":"value","type":"uint128"},
 				{"name":"salt","type":"uint256"}
 			],
 			"outputs": [
+				{"name":"value0","type":"cell"}
 			]
 		},
 		{
@@ -31,7 +33,8 @@
 				{"name":"owner","type":"address"},
 				{"name":"hash","type":"uint256"},
 				{"name":"value","type":"uint128"},
-				{"name":"msgValue","type":"uint128"}
+				{"name":"msgValue","type":"uint128"},
+				{"name":"wallet","type":"address"}
 			],
 			"outputs": [
 			]
@@ -172,6 +175,80 @@
 			"inputs": [
 			],
 			"outputs": [
+			]
+		},
+		{
+			"name": "setup",
+			"inputs": [
+				{"name":"owner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getTIP3Root",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "getTIP3Wallet",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "expectedWalletAddressCallback",
+			"inputs": [
+				{"name":"wallet","type":"address"},
+				{"name":"wallet_public_key","type":"uint256"},
+				{"name":"owner_address","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "notifyWalletDeployed",
+			"inputs": [
+				{"name":"value0","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "tokensReceivedCallback",
+			"inputs": [
+				{"name":"token_wallet","type":"address"},
+				{"name":"value1","type":"address"},
+				{"name":"tokens_amount","type":"uint128"},
+				{"name":"sender_public_key","type":"uint256"},
+				{"name":"sender_address","type":"address"},
+				{"name":"sender_wallet","type":"address"},
+				{"name":"value6","type":"address"},
+				{"name":"value7","type":"uint128"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_tip3_root",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_tip3_root","type":"address"}
+			]
+		},
+		{
+			"name": "_tip3_wallet",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_tip3_wallet","type":"address"}
 			]
 		}
 	],
